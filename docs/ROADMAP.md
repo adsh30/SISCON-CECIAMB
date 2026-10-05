@@ -18,11 +18,11 @@ Cada entregable incluye **backend + frontend**. Cada fase se trabaja en ramas `f
 
 ## Fase 0 — Setup
 - [x] Instalar MariaDB 13 (servicio Windows `MariaDB`); crear `siscon_db` y usuario `siscon_app`.
-- [ ] Commit inicial en `main`, crear rama `dev`.
-- [ ] Monorepo npm workspaces (`server/`, `client/`), ESLint + Prettier, `.env.example`, `.gitignore`.
-- [ ] Server: Express 5, knex + mysql2, healthcheck `GET /api/v1/health` que consulta la BD.
+- [x] Commit inicial en `main`, crear rama `dev`.
+- [x] Monorepo npm workspaces (`server/`, `client/`), oxlint + Prettier, `.env.example`, `.gitignore`.
+- [x] Server: Express 5, knex + mysql2, healthcheck `GET /api/v1/health` que consulta la BD.
 - [ ] Client: React + Vite + Tailwind v4, layout base (sidebar estilo Sparrow), página que muestra el healthcheck.
-- [ ] Script `npm run dev` que levanta ambos.
+- [x] Script `npm run dev` que levanta ambos.
 
 ## Fase 1 — Seguridad y auditoría
 - [ ] Migraciones: `roles`, `usuarios`, `bitacora`. Seed: roles + admin.
