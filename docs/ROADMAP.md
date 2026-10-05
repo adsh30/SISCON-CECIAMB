@@ -1,0 +1,61 @@
+# ROADMAP — SISCON-CECIAMB
+
+Cada entregable incluye **backend + frontend**. Cada fase se trabaja en ramas `feature/*` → `dev`; al cerrar la fase, `dev` → `main` con tag.
+
+| Fase | Release | Contenido | Estado |
+|---|---|---|---|
+| 0 | v0.0.1 | Setup | ⬜ |
+| 1 | v0.1.0 | Autenticación, usuarios, roles, bitácora base | ⬜ |
+| 2 | v0.2.0 | Empresa, ejercicios y períodos | ⬜ |
+| 3 | v0.3.0 | Plan de cuentas | ⬜ |
+| 4 | v0.4.0 | Comprobantes (núcleo) — **MVP interno** | ⬜ |
+| 5 | v0.5.0 | Libro Diario y Libro Mayor (PDF/Excel) — **MVP usable** | ⬜ |
+| 6 | v0.6.0 | Cierre de período, dashboard, importación de resúmenes | ⬜ |
+| 7 | v1.0.0 | Endurecimiento, migración de datos Sparrow, capacitación | ⬜ |
+| 8 | v1.x | Extras: Balance de Comprobación, Estados Financieros, multimoneda, conciliación | ⬜ |
+
+---
+
+## Fase 0 — Setup
+- [x] Instalar MariaDB 13 (servicio Windows `MariaDB`); crear `siscon_db` y usuario `siscon_app`.
+- [ ] Commit inicial en `main`, crear rama `dev`.
+- [ ] Monorepo npm workspaces (`server/`, `client/`), ESLint + Prettier, `.env.example`, `.gitignore`.
+- [ ] Server: Express 5, knex + mysql2, healthcheck `GET /api/v1/health` que consulta la BD.
+- [ ] Client: React + Vite + Tailwind v4, layout base (sidebar estilo Sparrow), página que muestra el healthcheck.
+- [ ] Script `npm run dev` que levanta ambos.
+
+## Fase 1 — Seguridad y auditoría
+- [ ] Migraciones: `roles`, `usuarios`, `bitacora`. Seed: roles + admin.
+- [ ] API: login/logout/me, CRUD usuarios, middleware `requireRole`, servicio `bitacora.registrar()`.
+- [ ] UI: login, gestión de usuarios, guardas de ruta por rol, consulta de bitácora.
+
+## Fase 2 — Empresa y períodos
+- [ ] API + UI: datos de empresa, ejercicios, generación de 12 períodos, abrir/cerrar.
+
+## Fase 3 — Plan de cuentas
+- [ ] API: CRUD jerárquico, validación de códigos y niveles, búsqueda, bloqueo de borrado con movimientos.
+- [ ] UI: árbol de cuentas expandible, formulario, buscador; componente `AccountPicker` reutilizable.
+- [ ] Seed: plan de cuentas base para centro de salud (VEN-NIF).
+- [ ] (S) Centros de costo.
+
+## Fase 4 — Comprobantes
+- [ ] Migraciones: `tipos_comprobante`, `correlativos`, `comprobantes`, `comprobante_detalle`.
+- [ ] API: crear/editar borrador, aprobar, anular, duplicar, listar con filtros (**por categoría o todos**), detalle, PDF.
+- [ ] Tests de reglas: cuadre, período abierto, cuentas de movimiento, correlativo, inmutabilidad, bitácora.
+- [ ] UI: listado con pestañas por categoría (Todos · Ventas · Compras · Honorarios · Nómina · Diario · Ajustes…), grilla de captura de renglones con teclado, totales y diferencia en vivo, historial de auditoría.
+
+## Fase 5 — Libros
+- [ ] API: Libro Diario (rango/período/categoría), Libro Mayor (cuenta o rango, saldo anterior y acumulado); exportar PDF y Excel.
+- [ ] UI: filtros, vista previa en pantalla, botones de exportación.
+- [ ] Test: Σ Diario = Σ Mayor = Σ comprobantes aprobados.
+
+## Fase 6 — Operación
+- [ ] Cierre/reapertura de período con validaciones.
+- [ ] Dashboard (pendientes por aprobar, comprobantes por categoría).
+- [ ] Importación CSV/Excel de resúmenes (ventas, compras, honorarios, nómina) → comprobante en borrador.
+- [ ] Adjuntos de documentos soporte.
+
+## Fase 7 — Release v1.0
+- [ ] Migración de plan de cuentas (y saldos/histórico) desde Sparrow.
+- [ ] Revisión de seguridad, backups automáticos con `mysqldump`, manual de usuario.
+- [ ] Pruebas de aceptación con los contadores.
