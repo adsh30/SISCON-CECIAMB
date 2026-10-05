@@ -15,6 +15,24 @@ export function formatoPorcentaje(valor) {
   return `${montoFmt.format(Number(valor))} %`
 }
 
+const MESES = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic']
+
+/** 'YYYY-MM-DD' → '05-oct.' */
+export function formatoFechaCorta(iso) {
+  if (!iso) return ''
+  const [, m, d] = iso.slice(0, 10).split('-')
+  return `${d}-${MESES[Number(m) - 1]}.`
+}
+
+/** 'YYYY-MM-DD HH:mm:ss' en UTC → hora local '2:35 p. m.' */
+export function formatoHora(utc) {
+  if (!utc) return ''
+  return new Date(utc.replace(' ', 'T') + 'Z').toLocaleTimeString('es-VE', {
+    hour: 'numeric',
+    minute: '2-digit',
+  })
+}
+
 /** 'YYYY-MM-DD' → 'dd/mm/aaaa' */
 export function formatoFecha(iso) {
   if (!iso) return ''

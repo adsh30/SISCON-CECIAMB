@@ -11,7 +11,10 @@ export class AppError extends Error {
 
 export function notFound(req, res) {
   res.status(404).json({
-    error: { code: 'NO_ENCONTRADO', message: `Ruta no encontrada: ${req.method} ${req.originalUrl}` },
+    error: {
+      code: 'NO_ENCONTRADO',
+      message: `Ruta no encontrada: ${req.method} ${req.originalUrl}`,
+    },
   })
 }
 

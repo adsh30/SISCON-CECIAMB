@@ -43,7 +43,11 @@ export async function login({ email, password }, ctx) {
     throw credencialesInvalidas()
   }
   if (!usuario.activo) {
-    throw new AppError(403, 'USUARIO_INACTIVO', 'Su usuario está desactivado. Contacte al administrador')
+    throw new AppError(
+      403,
+      'USUARIO_INACTIVO',
+      'Su usuario está desactivado. Contacte al administrador',
+    )
   }
   if (usuario.bloqueado_hasta && fechaUtc(usuario.bloqueado_hasta) > new Date()) {
     throw usuarioBloqueado()

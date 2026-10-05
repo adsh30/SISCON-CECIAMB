@@ -59,7 +59,9 @@ export default function LoginPage() {
 
         <div className="mx-auto flex w-full max-w-sm flex-1 flex-col justify-center py-10">
           <h1 className="text-3xl font-bold tracking-tight">Iniciar sesión</h1>
-          <p className="mt-2 text-pizarra">Use el correo y la contraseña que le asignó el administrador.</p>
+          <p className="mt-2 text-pizarra">
+            Use el correo y la contraseña que le asignó el administrador.
+          </p>
 
           <form onSubmit={handleSubmit(onSubmit)} noValidate className="mt-8 space-y-5">
             {login.isError && (

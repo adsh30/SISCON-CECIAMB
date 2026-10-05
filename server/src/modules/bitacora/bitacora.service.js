@@ -9,13 +9,17 @@ export const ACCIONES = {
   EDITAR: 'EDITAR',
   APROBAR: 'APROBAR',
   ANULAR: 'ANULAR',
+  ACTUALIZAR: 'ACTUALIZAR',
 }
 
 /**
  * Registra un evento en la bitácora (solo inserción).
  * Pasar `trx` para que quede dentro de la misma transacción que la operación.
  */
-export async function registrar(trx, { usuarioId, accion, entidad, entidadId, antes, despues, ctx }) {
+export async function registrar(
+  trx,
+  { usuarioId, accion, entidad, entidadId, antes, despues, ctx },
+) {
   await (trx ?? db)('bitacora').insert({
     usuario_id: usuarioId ?? null,
     accion,

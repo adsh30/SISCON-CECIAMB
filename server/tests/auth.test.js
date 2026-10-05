@@ -57,7 +57,9 @@ describe('POST /api/v1/auth/login', () => {
 
   it(`bloquea el usuario tras ${MAX_INTENTOS} intentos fallidos`, async () => {
     for (let i = 1; i < MAX_INTENTOS; i++) {
-      await request(app).post('/api/v1/auth/login').send({ ...credenciales, password: 'mala' })
+      await request(app)
+        .post('/api/v1/auth/login')
+        .send({ ...credenciales, password: 'mala' })
     }
     const ultimo = await request(app)
       .post('/api/v1/auth/login')

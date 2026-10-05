@@ -3,7 +3,9 @@ import { db } from '../../config/db.js'
 export async function obtenerEstado() {
   const inicio = Date.now()
   try {
-    const [rows] = await db.raw('SELECT VERSION() AS version, DATABASE() AS base_datos, NOW() AS hora')
+    const [rows] = await db.raw(
+      'SELECT VERSION() AS version, DATABASE() AS base_datos, NOW() AS hora',
+    )
     return {
       api: 'ok',
       baseDatos: {

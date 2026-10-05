@@ -19,7 +19,12 @@ export async function api(path, { method = 'GET', body, ...opts } = {}) {
   const json = await res.json().catch(() => ({}))
   if (!res.ok) {
     const e = json.error ?? {}
-    throw new ApiError(res.status, e.code ?? 'ERROR', e.message ?? 'Error de comunicación', e.details)
+    throw new ApiError(
+      res.status,
+      e.code ?? 'ERROR',
+      e.message ?? 'Error de comunicación',
+      e.details,
+    )
   }
   return json
 }
