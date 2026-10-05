@@ -25,7 +25,7 @@ export default function InicioPage() {
         })}
       </p>
 
-      <section className="mt-10 rounded-2xl border border-linea bg-white p-6">
+      <section className="mt-10 rounded-2xl border border-linea bg-superficie p-6">
         <h2 className="font-semibold">El sistema está listo para empezar</h2>
         <p className="mt-2 max-w-2xl leading-relaxed text-pizarra">
           Los módulos de comprobantes, libros, plan de cuentas y bitácora se irán habilitando en el

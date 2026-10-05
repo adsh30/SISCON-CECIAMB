@@ -68,7 +68,7 @@ export default function LandingPage() {
           </div>
         </section>
 
-        <section className="border-t border-linea bg-white">
+        <section className="border-t border-linea bg-superficie">
           <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
             <h2 className="text-2xl font-bold tracking-tight">Lo que hace el sistema</h2>
             <dl className="mt-8 grid gap-x-12 sm:grid-cols-2">

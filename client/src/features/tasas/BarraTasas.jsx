@@ -3,16 +3,15 @@ import { useTasas } from '../../api/tasas.js'
 import { formatoFechaCorta, formatoMonto, formatoPorcentaje } from '../../lib/formato.js'
 import { ConversorTasas } from './ConversorTasas.jsx'
 
-function Brecha({ valor }) {
+// Margen de ahorro pagando a tasa BCV en vez de Binance: (BIN − BCV) ÷ BIN × 100
+function Margen({ valor }) {
   if (valor == null) return null
-  const sube = Number(valor) >= 0
   return (
     <span
-      className={sube ? 'text-marca' : 'text-alerta'}
-      title="Diferencia de Binance respecto a la tasa oficial del BCV"
+      className={`hidden sm:inline ${Number(valor) > 0 ? 'text-exito' : 'text-pizarra'}`}
+      title="Margen de ahorro pagando a tasa BCV en vez de Binance"
     >
-      <span aria-hidden="true">{sube ? '↓' : '↑'}</span>
-      {formatoPorcentaje(Math.abs(Number(valor)))}
+      ↓{formatoPorcentaje(valor)}
     </span>
   )
 }
@@ -59,7 +58,8 @@ export function BarraTasas() {
         onClick={() => setAbierto((v) => !v)}
         aria-expanded={abierto}
         aria-haspopup="dialog"
-        className="cifras inline-flex items-center gap-x-3 rounded-full border border-linea bg-papel px-4 py-2 text-sm whitespace-nowrap transition-colors hover:border-marca/40"
+        title="Tasas de referencia en bolívares. Haga clic para convertir montos"
+        className="cifras inline-flex items-center gap-x-3 rounded-lg border border-linea bg-papel px-3 py-2 text-sm whitespace-nowrap transition-colors hover:border-marca/40"
       >
         {bcv && (
           <span className="inline-flex items-center gap-2">
@@ -68,15 +68,17 @@ export function BarraTasas() {
             {bcv.eur && <span className="hidden lg:inline">€ {formatoMonto(bcv.eur)}</span>}
           </span>
         )}
-        {bcv && binance && <span className="h-4 w-px bg-linea" aria-hidden="true" />}
+        {bcv && binance && (
+          <span className="hidden h-4 w-px bg-linea sm:inline-block" aria-hidden="true" />
+        )}
         {binance && (
-          <span className="inline-flex items-center gap-2">
+          <span className="hidden items-center gap-2 sm:inline-flex">
             <span className="font-semibold text-acento">BIN</span>
             <span>Bs {formatoMonto(binance.usdt)}</span>
-            <Brecha valor={brecha} />
+            <Margen valor={brecha} />
           </span>
         )}
-        <span className="hidden text-xs text-pizarra xl:inline">
+        <span className="hidden text-xs text-pizarra lg:inline">
           {formatoFechaCorta(bcv?.fecha ?? binance?.fecha)}
         </span>
         {avisos?.length > 0 && (

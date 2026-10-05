@@ -24,3 +24,11 @@ export async function postLogout(req, res) {
 export async function getMe(req, res) {
   res.json({ data: await service.perfil(req.user.id) })
 }
+
+export async function postCambiarClave(req, res) {
+  res.json({ data: await service.cambiarClave(req.user.id, req.body, requestContext(req)) })
+}
+
+export async function putPerfil(req, res) {
+  res.json({ data: await service.actualizarPerfil(req.user.id, req.body, requestContext(req)) })
+}

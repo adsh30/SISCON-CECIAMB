@@ -6,7 +6,9 @@ import { env } from './config/env.js'
 import { errorHandler, notFound } from './middlewares/errorHandler.js'
 import { authRoutes } from './modules/auth/auth.routes.js'
 import { healthRoutes } from './modules/health/health.routes.js'
+import { rolesRoutes } from './modules/roles/roles.routes.js'
 import { tasasRoutes } from './modules/tasas/tasas.routes.js'
+import { usuariosRoutes } from './modules/usuarios/usuarios.routes.js'
 
 export function createApp() {
   const app = express()
@@ -22,6 +24,8 @@ export function createApp() {
   api.use('/health', healthRoutes)
   api.use('/auth', authRoutes)
   api.use('/tasas', tasasRoutes)
+  api.use('/usuarios', usuariosRoutes)
+  api.use('/roles', rolesRoutes)
   app.use('/api/v1', api)
 
   app.use(notFound)

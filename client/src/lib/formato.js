@@ -39,3 +39,12 @@ export function formatoFecha(iso) {
   const [a, m, d] = iso.slice(0, 10).split('-')
   return `${d}/${m}/${a}`
 }
+
+/** 'YYYY-MM-DD HH:mm:ss' en UTC → '05/10/2026 2:35 p. m.' en hora local */
+export function formatoFechaHora(utc) {
+  if (!utc) return ''
+  const d = new Date(utc.replace(' ', 'T') + 'Z')
+  return `${d.toLocaleDateString('es-VE', { day: '2-digit', month: '2-digit', year: 'numeric' })} ${d.toLocaleTimeString('es-VE', { hour: 'numeric', minute: '2-digit' })}`
+}
+
+export const nombreCompleto = (u) => [u?.nombre, u?.apellido].filter(Boolean).join(' ')

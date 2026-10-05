@@ -43,13 +43,13 @@ export function ConversorTasas({ tasas }) {
   const [origen, destino] = haciaBs ? [moneda?.simbolo, 'Bs'] : ['Bs', moneda?.simbolo]
 
   const campo =
-    'block w-full rounded-lg border border-linea bg-white px-3 py-2 focus:border-marca focus:ring-3 focus:ring-marca/15 focus:outline-none'
+    'block w-full rounded-lg border border-linea bg-superficie px-3 py-2 focus:border-marca focus:ring-3 focus:ring-marca/15 focus:outline-none'
 
   return (
     <div
       role="dialog"
       aria-label="Conversor de tasas"
-      className="absolute right-0 z-20 mt-2 w-[22rem] rounded-2xl border border-linea bg-white p-5 shadow-xl shadow-tinta/10"
+      className="absolute right-0 z-20 mt-2 w-[22rem] rounded-2xl border border-linea bg-superficie p-5 shadow-xl shadow-tinta/10"
     >
       <h2 className="font-semibold">Conversor</h2>
 
