@@ -1,1 +1,68 @@
+@import '@fontsource-variable/public-sans/wght.css';
 @import 'tailwindcss';
+
+@theme {
+  --font-sans: 'Public Sans Variable', ui-sans-serif, system-ui, sans-serif;
+
+  /* Paleta SISCON-CECIAMB: clínica, sutil y legible */
+  --color-tinta: #1e3a5f; /* texto principal, títulos */
+  --color-pizarra: #5b6b7f; /* texto secundario */
+  --color-papel: #f6f9f8; /* fondo general */
+  --color-linea: #dce8e4; /* bordes y renglones */
+  --color-salud: #0e7c74; /* acento principal */
+  --color-salud-oscuro: #0a5f59;
+  --color-salud-claro: #e4f3f0;
+  --color-alerta: #b42318;
+  --color-alerta-claro: #fdecea;
+  --color-aviso: #a15c07;
+  --color-aviso-claro: #fdf3e2;
+}
+
+@layer base {
+  html {
+    color-scheme: light;
+  }
+  body {
+    @apply bg-papel text-tinta antialiased;
+  }
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-salud;
+  }
+}
+
+@utility cifras {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Renglones de libro contable para fondos decorativos */
+@utility renglones {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 31px,
+    color-mix(in srgb, var(--color-salud) 14%, transparent) 31px,
+    color-mix(in srgb, var(--color-salud) 14%, transparent) 32px
+  );
+}
+
+@keyframes renglon-entra {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes sello {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}

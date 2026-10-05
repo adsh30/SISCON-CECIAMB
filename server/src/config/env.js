@@ -24,4 +24,15 @@ export const env = {
     password: required('DB_PASSWORD'),
     database: required('DB_NAME'),
   },
+  auth: {
+    jwtSecret: required('JWT_SECRET'),
+    jwtExpiresIn: process.env.JWT_EXPIRES_IN ?? '8h',
+    cookieMaxAgeMs: 8 * 60 * 60 * 1000,
+  },
+  tasas: {
+    bcvUsdUrl: process.env.BCV_USD_URL ?? 'https://ve.dolarapi.com/v1/dolares/oficial',
+    bcvEurUrl: process.env.BCV_EUR_URL ?? 'https://ve.dolarapi.com/v1/euros/oficial',
+    binanceP2pUrl:
+      process.env.BINANCE_P2P_URL ?? 'https://p2p.binance.com/bapi/c2c/v2/friendly/c2c/adv/search',
+  },
 }

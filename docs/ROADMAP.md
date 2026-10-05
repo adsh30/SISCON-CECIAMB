@@ -21,11 +21,13 @@ Cada entregable incluye **backend + frontend**. Cada fase se trabaja en ramas `f
 - [x] Commit inicial en `main`, crear rama `dev`.
 - [x] Monorepo npm workspaces (`server/`, `client/`), oxlint + Prettier, `.env.example`, `.gitignore`.
 - [x] Server: Express 5, knex + mysql2, healthcheck `GET /api/v1/health` que consulta la BD.
-- [ ] Client: React + Vite + Tailwind v4, layout base (sidebar estilo Sparrow), página que muestra el healthcheck.
+- [x] Client: React + Vite + Tailwind v4, layout base (sidebar), estado del sistema (healthcheck) en la landing.
 - [x] Script `npm run dev` que levanta ambos.
 
 ## Fase 1 — Seguridad y auditoría
-- [ ] Migraciones: `roles`, `usuarios`, `bitacora`. Seed: roles + admin.
+- [x] Migraciones: `roles`, `usuarios`, `bitacora`. Seed: roles + admin.
+- [x] Login/logout/me con cookie httpOnly, bloqueo tras 5 intentos, registro en bitácora.
+- [x] UI: landing page, login, pantalla interna protegida.
 - [ ] API: login/logout/me, CRUD usuarios, middleware `requireRole`, servicio `bitacora.registrar()`.
 - [ ] UI: login, gestión de usuarios, guardas de ruta por rol, consulta de bitácora.
 
