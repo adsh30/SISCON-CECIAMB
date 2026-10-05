@@ -1,6 +1,8 @@
 @import '@fontsource-variable/public-sans/wght.css';
 @import 'tailwindcss';
 
+@custom-variant dark (&:where([data-tema='oscuro'], [data-tema='oscuro'] *));
+
 @theme {
   --font-sans: 'Public Sans Variable', ui-sans-serif, system-ui, sans-serif;
 
@@ -9,6 +11,8 @@
   --color-tinta: #15294a; /* texto principal, títulos */
   --color-pizarra: #5a6782; /* texto secundario */
   --color-papel: #f5f7fb; /* fondo general */
+  --color-superficie: #ffffff; /* tarjetas, menú, modales */
+  --color-superficie-2: #eef2f8; /* filas resaltadas, hover */
   --color-linea: #dfe5ef; /* bordes y renglones */
   --color-marca: #004191; /* azul del logo: acción principal */
   --color-marca-oscuro: #00316e;
@@ -16,21 +20,50 @@
   --color-acento: #e2001a; /* rojo del logo: solo detalles */
   --color-acento-claro: #fdecee;
   --color-exito: #1e8a5a;
+  --color-exito-claro: #e6f4ec;
   --color-alerta: #b42318;
   --color-alerta-claro: #fdecea;
   --color-aviso: #a15c07;
   --color-aviso-claro: #fdf3e2;
 }
 
+/* Tema oscuro: mismos nombres, valores ajustados para contraste sobre azul noche */
+:root[data-tema='oscuro'] {
+  --color-tinta: #e6ecf5;
+  --color-pizarra: #9aa7bd;
+  --color-papel: #0d1524;
+  --color-superficie: #131e33;
+  --color-superficie-2: #1a2843;
+  --color-linea: #24344f;
+  --color-marca: #3d76d4;
+  --color-marca-oscuro: #2c60b5;
+  --color-marca-claro: #172a4a;
+  --color-acento: #ff4a5c;
+  --color-acento-claro: #3a1822;
+  --color-exito: #3fc98a;
+  --color-exito-claro: #12301f;
+  --color-alerta: #ff7a72;
+  --color-alerta-claro: #3b1a1c;
+  --color-aviso: #f0b54a;
+  --color-aviso-claro: #3a2c12;
+}
+
 @layer base {
   html {
     color-scheme: light;
+  }
+  html[data-tema='oscuro'] {
+    color-scheme: dark;
   }
   body {
     @apply bg-papel text-tinta antialiased;
   }
   :focus-visible {
     @apply outline-2 outline-offset-2 outline-marca;
+  }
+  /* Ayudas (textos explicativos) ocultables desde el botón (?) */
+  html.ayudas-ocultas .ayuda {
+    display: none !important;
   }
 }
 
@@ -44,8 +77,8 @@
     to bottom,
     transparent 0,
     transparent 31px,
-    color-mix(in srgb, var(--color-marca) 14%, transparent) 31px,
-    color-mix(in srgb, var(--color-marca) 14%, transparent) 32px
+    color-mix(in srgb, var(--color-marca) 12%, transparent) 31px,
+    color-mix(in srgb, var(--color-marca) 12%, transparent) 32px
   );
 }
 
@@ -69,4 +102,8 @@
     opacity: 1;
     transform: none;
   }
+}
+
+dialog::backdrop {
+  background: color-mix(in srgb, #0b1426 45%, transparent);
 }

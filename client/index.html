@@ -5,6 +5,15 @@
     <link rel="icon" type="image/svg+xml" href="/logo.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sistema contable CECIAMB</title>
+    <script>
+      // Aplica el tema antes de pintar para evitar un destello de colores
+      try {
+        var t = localStorage.getItem('siscon.tema') || 'sistema'
+        if (t === 'sistema') t = matchMedia('(prefers-color-scheme: dark)').matches ? 'oscuro' : 'claro'
+        document.documentElement.dataset.tema = t
+        if (localStorage.getItem('siscon.ayudas.ocultas') === '1') document.documentElement.classList.add('ayudas-ocultas')
+      } catch (e) {}
+    </script>
   </head>
   <body>
     <div id="root"></div>

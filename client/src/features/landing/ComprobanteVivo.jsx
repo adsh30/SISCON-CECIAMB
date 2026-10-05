@@ -16,7 +16,7 @@ const entrada = 'motion-safe:animate-[renglon-entra_500ms_ease-out_both]'
 export function ComprobanteVivo() {
   return (
     <figure
-      className="relative rounded-2xl border border-linea bg-white p-5 shadow-xl shadow-tinta/5 sm:p-6"
+      className="relative rounded-2xl border border-linea bg-superficie p-5 shadow-xl shadow-tinta/5 sm:p-6"
       aria-label="Ejemplo de comprobante contable cuadrado"
     >
       <figcaption className="flex flex-wrap items-baseline justify-between gap-2 border-b border-linea pb-4">

@@ -1,9 +1,9 @@
 import { Router } from 'express'
-import { auth, requireRole } from '../../middlewares/auth.js'
+import { auth, claveVigente, requirePermiso } from '../../middlewares/auth.js'
 import { getActual, postActualizar } from './tasas.controller.js'
 
 export const tasasRoutes = Router()
 
-tasasRoutes.use(auth)
+tasasRoutes.use(auth, claveVigente)
 tasasRoutes.get('/actual', getActual)
-tasasRoutes.post('/actualizar', requireRole('ADMIN', 'CONTADOR'), postActualizar)
+tasasRoutes.post('/actualizar', requirePermiso('tasas', 'escritura'), postActualizar)

@@ -29,8 +29,9 @@ Cada entregable incluye **backend + frontend**. Cada fase se trabaja en ramas `f
 - [x] Migraciones: `roles`, `usuarios`, `bitacora`. Seed: roles + admin.
 - [x] Login/logout/me con cookie httpOnly, bloqueo tras 5 intentos, registro en bitácora.
 - [x] UI: landing page, login, pantalla interna protegida.
-- [ ] API: login/logout/me, CRUD usuarios, middleware `requireRole`, servicio `bitacora.registrar()`.
-- [ ] UI: login, gestión de usuarios, guardas de ruta por rol, consulta de bitácora.
+- [x] API: login/logout/me, CRUD usuarios, roles dinámicos y matriz de permisos por módulo (ver/modificar/control total) verificada en el servidor, `bitacora.registrar()`.
+- [x] UI: gestión de usuarios (crear con clave temporal, editar, habilitar/deshabilitar, archivar, restablecer clave), roles y permisos, cambio de clave obligatorio, Ajustes (perfil, tema claro/oscuro, ayudas), menú lateral estilo MGG.
+- [ ] UI: consulta de bitácora.
 
 ## Fase 2 — Empresa y períodos
 - [ ] API + UI: datos de empresa, ejercicios, generación de 12 períodos, abrir/cerrar.

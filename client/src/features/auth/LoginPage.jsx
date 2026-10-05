@@ -13,7 +13,7 @@ const loginSchema = z.object({
 })
 
 const campo =
-  'mt-1.5 block w-full rounded-lg border bg-white px-3.5 py-2.5 text-tinta placeholder:text-pizarra/60 transition-colors focus:border-marca focus:ring-3 focus:ring-marca/15 focus:outline-none'
+  'mt-1.5 block w-full rounded-lg border bg-superficie px-3.5 py-2.5 text-tinta placeholder:text-pizarra/60 transition-colors focus:border-marca focus:ring-3 focus:ring-marca/15 focus:outline-none'
 
 export default function LoginPage() {
   const { data: usuario } = useSesion()
