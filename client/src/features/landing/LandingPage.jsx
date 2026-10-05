@@ -34,7 +34,12 @@ export default function LandingPage() {
   const accion = usuario ? 'Ir al sistema' : 'Iniciar sesión'
 
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="relative flex min-h-screen flex-col">
+      {/* Fondo de ondas azul y rojo del sitio de CECIAMB, atenuado para no competir con el contenido */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[46rem] bg-[url(/img/fondo-ceciamb.webp)] bg-cover bg-right-top opacity-45 [mask-image:linear-gradient(to_bottom,black_55%,transparent)] dark:opacity-15"
+      />
       <header className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-5 sm:px-6">
         <Logo />
         <Link to={destino} className={buttonClass('secundario')}>
@@ -63,7 +68,7 @@ export default function LandingPage() {
           </div>
 
           <div className="relative">
-            <div className="renglones absolute -inset-6 -z-10 rounded-3xl bg-marca-claro/60" />
+            <div className="renglones absolute -inset-6 -z-10 rounded-3xl bg-superficie/50 backdrop-blur-sm" />
             <ComprobanteVivo />
           </div>
         </section>
@@ -81,12 +86,61 @@ export default function LandingPage() {
             </dl>
           </div>
         </section>
+        <section className="border-t border-linea">
+          <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 py-14 sm:px-6 lg:grid-cols-[0.9fr_1.1fr]">
+            <img
+              src="/img/fachada-hospital.webp"
+              alt="Fachada del Hospital de Clínicas CECIAMB con la entrada de emergencia"
+              width="512"
+              height="512"
+              loading="lazy"
+              className="aspect-[4/3] w-full rounded-2xl object-cover shadow-lg shadow-tinta/10"
+            />
+            <div>
+              <h2 className="text-2xl font-bold tracking-tight">Hospital de Clínicas CECIAMB</h2>
+              <p className="mt-2 text-lg font-medium text-marca">
+                Salud total y accesible con sensibilidad humana
+              </p>
+              <p className="mt-4 max-w-xl leading-relaxed text-pizarra">
+                Desde 1991 el Grupo CECIAMB atiende a Ciudad Guayana con hospitalización, cirugía,
+                maternidad, laboratorio, banco de sangre, imagenología y rehabilitación. Este
+                sistema lleva la contabilidad de esa operación con el mismo cuidado.
+              </p>
+              <dl className="mt-8 grid grid-cols-3 gap-4 border-t border-linea pt-6">
+                {[
+                  ['+30', 'años de trayectoria'],
+                  ['24 h', 'los 365 días del año'],
+                  ['1991', 'año de fundación'],
+                ].map(([cifra, texto]) => (
+                  <div key={texto}>
+                    <dt className="sr-only">{texto}</dt>
+                    <dd>
+                      <span className="cifras block text-2xl font-bold text-marca">{cifra}</span>
+                      <span className="text-sm text-pizarra">{texto}</span>
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+          </div>
+        </section>
       </main>
 
-      <footer className="border-t border-linea">
-        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-4 py-5 text-sm text-pizarra sm:px-6">
-          <span>Sistema contable de CECIAMB Hospital de Clínicas, de uso interno</span>
-          <EstadoSistema />
+      <footer className="border-t border-linea bg-superficie">
+        <div className="mx-auto flex max-w-6xl flex-wrap items-start justify-between gap-6 px-4 py-6 text-sm text-pizarra sm:px-6">
+          <address className="not-italic leading-relaxed">
+            <strong className="font-semibold text-tinta">Hospital de Clínicas CECIAMB</strong>
+            <br />
+            Carrera Yuruani, detrás del C.C. Río Caura, Unare 2, Ciudad Guayana, Bolívar
+            <br />
+            <a href="tel:+582867120100" className="hover:text-marca">
+              0286-712 01 00
+            </a>
+          </address>
+          <div className="flex flex-col items-end gap-1">
+            <EstadoSistema />
+            <span>Sistema contable de uso interno</span>
+          </div>
         </div>
       </footer>
     </div>

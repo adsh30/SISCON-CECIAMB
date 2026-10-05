@@ -36,15 +36,24 @@ export default function LoginPage() {
 
   return (
     <div className="grid min-h-screen lg:grid-cols-[1fr_1.1fr]">
-      <aside className="renglones relative hidden flex-col justify-between bg-marca-claro p-10 lg:flex">
-        <Link to="/" className="self-start">
-          <Logo size="lg" />
+      <aside className="relative hidden flex-col justify-between overflow-hidden p-10 lg:flex">
+        {/* Fachada del hospital bajo un velo azul de la marca */}
+        <img
+          src="/img/fachada-hospital.webp"
+          alt=""
+          className="absolute inset-0 -z-20 size-full object-cover"
+        />
+        <div className="absolute inset-0 -z-10 bg-linear-to-t from-[#00214a]/95 via-[#003272]/70 to-[#004191]/35" />
+        <Link to="/" className="self-start rounded-2xl bg-white/95 px-4 py-3 shadow-lg">
+          <Logo fijo />
         </Link>
-        <div className="max-w-sm">
+        <div className="max-w-sm text-white">
           <p className="text-2xl leading-snug font-semibold text-balance">
             Cada comprobante cuadrado, cada cambio registrado.
           </p>
-          <p className="mt-3 leading-relaxed text-pizarra">CECIAMB Hospital de Clínicas.</p>
+          <p className="mt-3 leading-relaxed text-white/80">
+            Hospital de Clínicas CECIAMB. Salud total y accesible con sensibilidad humana.
+          </p>
         </div>
       </aside>
 

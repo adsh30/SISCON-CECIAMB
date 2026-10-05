@@ -13,15 +13,16 @@ const piezasAzules = [
   '174.5,156 185.5,166 185.5,249 174.5,259 163.5,249 163.5,166',
 ]
 
-export function LogoMark({ className = 'h-10 w-auto' }) {
+// fijo: colores oficiales sin adaptar al tema (sobre fondos blancos o fotos)
+export function LogoMark({ className = 'h-10 w-auto', fijo = false }) {
   return (
     <svg viewBox="0 0 264 292" className={className} aria-hidden="true">
-      <g className="fill-acento">
+      <g className={fijo ? 'fill-[#e2001a]' : 'fill-acento'}>
         {piezasRojas.map((p) => (
           <polygon key={p} points={p} />
         ))}
       </g>
-      <g className="fill-marca">
+      <g className={fijo ? 'fill-[#004191]' : 'fill-marca'}>
         {piezasAzules.map((p) => (
           <polygon key={p} points={p} />
         ))}
@@ -30,21 +31,23 @@ export function LogoMark({ className = 'h-10 w-auto' }) {
   )
 }
 
-export function Logo({ size = 'md' }) {
+export function Logo({ size = 'md', fijo = false }) {
   const grande = size === 'lg'
   return (
     <span
       className="inline-flex items-center gap-3"
       aria-label="CECIAMB Hospital de Clínicas, sistema contable"
     >
-      <LogoMark className={grande ? 'h-14 w-auto' : 'h-10 w-auto'} />
+      <LogoMark className={grande ? 'h-14 w-auto' : 'h-10 w-auto'} fijo={fijo} />
       <span className="leading-none">
         <span
-          className={`block font-extrabold tracking-tight text-marca ${grande ? 'text-2xl' : 'text-lg'}`}
+          className={`block font-extrabold tracking-tight ${fijo ? 'text-[#004191]' : 'text-marca'} ${grande ? 'text-2xl' : 'text-lg'}`}
         >
           CECIAMB
         </span>
-        <span className={`block text-pizarra ${grande ? 'mt-1 text-sm' : 'mt-0.5 text-xs'}`}>
+        <span
+          className={`block ${fijo ? 'text-[#5a6782]' : 'text-pizarra'} ${grande ? 'mt-1 text-sm' : 'mt-0.5 text-xs'}`}
+        >
           Sistema contable
         </span>
       </span>
