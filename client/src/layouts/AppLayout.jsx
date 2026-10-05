@@ -43,7 +43,7 @@ export default function AppLayout() {
                 end={item.fin}
                 className={({ isActive }) =>
                   `block rounded-lg px-3 py-2 font-medium ${
-                    isActive ? 'bg-salud-claro text-salud-oscuro' : 'text-tinta hover:bg-papel'
+                    isActive ? 'bg-marca-claro text-marca-oscuro' : 'text-tinta hover:bg-papel'
                   }`
                 }
               >
@@ -73,7 +73,7 @@ export default function AppLayout() {
           </div>
           <div className="flex items-center gap-3">
             <span
-              className="grid size-9 place-items-center rounded-full bg-salud-claro text-sm font-semibold text-salud-oscuro"
+              className="grid size-9 place-items-center rounded-full bg-marca-claro text-sm font-semibold text-marca-oscuro"
               aria-hidden="true"
             >
               {iniciales(usuario?.nombre)}
