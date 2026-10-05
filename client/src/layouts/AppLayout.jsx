@@ -2,6 +2,7 @@ import { NavLink, Outlet, useNavigate } from 'react-router'
 import { useLogout, useSesion } from '../api/auth.js'
 import { Button } from '../components/ui/Button.jsx'
 import { Logo } from '../components/ui/Logo.jsx'
+import { BarraTasas } from '../features/tasas/BarraTasas.jsx'
 
 const navegacion = [
   { to: '/app', etiqueta: 'Inicio', fin: true },
@@ -26,7 +27,8 @@ export default function AppLayout() {
   const logout = useLogout()
   const navigate = useNavigate()
 
-  const salir = () => logout.mutate(undefined, { onSettled: () => navigate('/', { replace: true }) })
+  const salir = () =>
+    logout.mutate(undefined, { onSettled: () => navigate('/', { replace: true }) })
 
   return (
     <div className="flex min-h-screen">
@@ -66,7 +68,9 @@ export default function AppLayout() {
           <div className="md:hidden">
             <Logo />
           </div>
-          <div id="barra-superior" className="hidden flex-1 md:block" />
+          <div className="hidden flex-1 justify-end md:flex">
+            <BarraTasas />
+          </div>
           <div className="flex items-center gap-3">
             <span
               className="grid size-9 place-items-center rounded-full bg-salud-claro text-sm font-semibold text-salud-oscuro"

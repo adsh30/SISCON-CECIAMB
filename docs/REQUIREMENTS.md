@@ -30,7 +30,7 @@ Usuarios previstos: ~3 contables + administrador(es) + auditoría.
 - RF-02.1 Datos de la empresa: razón social, RIF, dirección, moneda base (Bs.), logo para reportes.
 - RF-02.2 Ejercicio económico (año fiscal) y **períodos mensuales** con estado: Abierto / Cerrado.
 - RF-02.3 No se puede registrar ni modificar comprobantes en períodos cerrados.
-- RF-02.4 (S) Moneda secundaria (USD) con tasa de cambio por comprobante.
+- RF-02.4 (M) **Multimoneda Bs. / $ / €**: tasa oficial BCV (USD y EUR) obtenida automáticamente de ve.dolarapi.com y referencia Binance P2P (USDT/VES), con historial en `tasas_cambio`, barra de tasas visible en todo el sistema y conversor Bs ⇄ $/€. Cada comprobante guardará la tasa usada.
 
 ### RF-03 Plan de cuentas (M) — igual que Sparrow
 - RF-03.1 Catálogo jerárquico con código por niveles (ej. `1`, `1.1`, `1.1.01`, `1.1.01.001`), máscara configurable.
@@ -134,7 +134,7 @@ bitacora(id, usuario_id, accion, entidad, entidad_id, datos_antes JSON, datos_de
 
 ## 6. Preguntas abiertas (a confirmar con el cliente)
 
-1. ¿Multimoneda Bs./USD obligatoria desde el MVP? ¿Fuente de la tasa (BCV)?
+1. ~~¿Multimoneda Bs./USD?~~ Sí: Bs., $ y €, tasa BCV + referencia Binance (resuelto 05/10/2026).
 2. ¿Una sola empresa o varias (multiempresa como Sparrow)?
 3. ¿Se dispone del plan de cuentas actual de Sparrow para migrarlo? ¿Y del histórico de comprobantes?
 4. ¿Formato exacto de Libro Diario/Mayor exigido (modelo impreso actual)?

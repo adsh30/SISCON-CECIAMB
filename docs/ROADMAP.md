@@ -6,6 +6,7 @@ Cada entregable incluye **backend + frontend**. Cada fase se trabaja en ramas `f
 |---|---|---|---|
 | 0 | v0.0.1 | Setup | ⬜ |
 | 1 | v0.1.0 | Autenticación, usuarios, roles, bitácora base | ⬜ |
+| 1b | v0.1.1 | Tasas BCV/Binance y conversor Bs ⇄ $/€ | ✅ |
 | 2 | v0.2.0 | Empresa, ejercicios y períodos | ⬜ |
 | 3 | v0.3.0 | Plan de cuentas | ⬜ |
 | 4 | v0.4.0 | Comprobantes (núcleo) — **MVP interno** | ⬜ |

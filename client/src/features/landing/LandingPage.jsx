@@ -23,7 +23,8 @@ const modulos = [
   },
   {
     titulo: 'Bolívares y dólares',
-    texto: 'Tasa oficial del BCV del día y referencia del mercado para convertir montos entre Bs. y $.',
+    texto:
+      'Tasa oficial del BCV del día y referencia del mercado para convertir montos entre Bs. y $.',
   },
 ]
 
@@ -55,7 +56,9 @@ export default function LandingPage() {
               <Link to={destino} className={buttonClass('primario', 'px-6 py-3 text-base')}>
                 {accion}
               </Link>
-              <span className="text-sm text-pizarra">Acceso exclusivo para el personal autorizado</span>
+              <span className="text-sm text-pizarra">
+                Acceso exclusivo para el personal autorizado
+              </span>
             </div>
           </div>
 
