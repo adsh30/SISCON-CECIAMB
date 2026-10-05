@@ -191,7 +191,7 @@ function Sesion({ usuario }) {
         {[
           ['Correo', usuario.email],
           ['Rol', usuario.rolNombre],
-          ['Ingreso anterior', formatoFechaHora(usuario.ultimoAcceso) || '—'],
+          ['Último ingreso', formatoFechaHora(usuario.ultimoAcceso) || '—'],
         ].map(([k, v]) => (
           <div
             key={k}
