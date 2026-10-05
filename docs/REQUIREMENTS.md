@@ -90,7 +90,7 @@ Usuarios previstos: ~3 contables + administrador(es) + auditoría.
 | RNF-04 | **Rendimiento**: listados < 1 s con 100 000 renglones; libros de un año < 5 s. Índices en fecha, cuenta, tipo, estado. |
 | RNF-05 | **Usabilidad**: español, formato numérico venezolano (`1.234.567,89`), fechas `dd/mm/aaaa`, captura de renglones con teclado (Tab/Enter, autocompletar cuenta). Responsive, prioridad escritorio. |
 | RNF-06 | **Respaldo**: script de backup diario `mysqldump` documentado. |
-| RNF-07 | **Mantenibilidad**: JavaScript (ESM), ESLint + Prettier, estructura por módulos, tests (Vitest/Supertest) en reglas contables críticas. |
+| RNF-07 | **Mantenibilidad**: JavaScript (ESM), oxlint + Prettier, estructura por módulos, tests (Vitest/Supertest) en reglas contables críticas. |
 | RNF-08 | **Despliegue**: local (red interna), Node 24 LTS + MariaDB 13 (compatible MySQL). |
 | RNF-09 | **Normativa**: libros conforme a práctica venezolana (VEN-NIF / requerimientos SENIAT); comprobantes numerados correlativos sin huecos. |
 
