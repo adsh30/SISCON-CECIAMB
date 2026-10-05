@@ -8,7 +8,7 @@ export function EstadoSistema() {
     ? ['bg-pizarra/40', 'Comprobando conexión…']
     : isError || !ok
       ? ['bg-alerta', 'Sin conexión con el servidor']
-      : ['bg-salud', 'Sistema en línea']
+      : ['bg-exito', 'Sistema en línea']
 
   return (
     <span className="inline-flex items-center gap-2" role="status">

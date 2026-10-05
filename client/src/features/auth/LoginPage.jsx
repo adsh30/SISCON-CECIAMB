@@ -13,7 +13,7 @@ const loginSchema = z.object({
 })
 
 const campo =
-  'mt-1.5 block w-full rounded-lg border bg-white px-3.5 py-2.5 text-tinta placeholder:text-pizarra/60 transition-colors focus:border-salud focus:ring-3 focus:ring-salud/15 focus:outline-none'
+  'mt-1.5 block w-full rounded-lg border bg-white px-3.5 py-2.5 text-tinta placeholder:text-pizarra/60 transition-colors focus:border-marca focus:ring-3 focus:ring-marca/15 focus:outline-none'
 
 export default function LoginPage() {
   const { data: usuario } = useSesion()
@@ -36,7 +36,7 @@ export default function LoginPage() {
 
   return (
     <div className="grid min-h-screen lg:grid-cols-[1fr_1.1fr]">
-      <aside className="renglones relative hidden flex-col justify-between bg-salud-claro p-10 lg:flex">
+      <aside className="renglones relative hidden flex-col justify-between bg-marca-claro p-10 lg:flex">
         <Link to="/" className="self-start">
           <Logo size="lg" />
         </Link>
@@ -44,9 +44,7 @@ export default function LoginPage() {
           <p className="text-2xl leading-snug font-semibold text-balance">
             Cada comprobante cuadrado, cada cambio registrado.
           </p>
-          <p className="mt-3 leading-relaxed text-pizarra">
-            Sistema contable de la clínica CECIAMB.
-          </p>
+          <p className="mt-3 leading-relaxed text-pizarra">CECIAMB Hospital de Clínicas.</p>
         </div>
       </aside>
 
@@ -104,7 +102,7 @@ export default function LoginPage() {
                 <button
                   type="button"
                   onClick={() => setVerClave((v) => !v)}
-                  className="text-sm text-salud hover:text-salud-oscuro"
+                  className="text-sm text-marca hover:text-marca-oscuro"
                 >
                   {verClave ? 'Ocultar' : 'Mostrar'}
                 </button>

@@ -46,7 +46,7 @@ export default function LandingPage() {
         <section className="mx-auto grid max-w-6xl items-center gap-12 px-4 pt-8 pb-16 sm:px-6 lg:grid-cols-[1.05fr_1fr] lg:pt-16 lg:pb-24">
           <div>
             <h1 className="max-w-xl text-4xl leading-[1.1] font-bold tracking-tight text-balance sm:text-5xl">
-              La contabilidad de la clínica, siempre cuadrada y con su historia.
+              La contabilidad del hospital, siempre cuadrada y con su historia.
             </h1>
             <p className="mt-6 max-w-lg text-lg leading-relaxed text-pizarra">
               Registre los comprobantes del día, consulte el Libro Diario y el Mayor, y sepa en todo
@@ -63,7 +63,7 @@ export default function LandingPage() {
           </div>
 
           <div className="relative">
-            <div className="renglones absolute -inset-6 -z-10 rounded-3xl bg-salud-claro/60" />
+            <div className="renglones absolute -inset-6 -z-10 rounded-3xl bg-marca-claro/60" />
             <ComprobanteVivo />
           </div>
         </section>
@@ -85,7 +85,7 @@ export default function LandingPage() {
 
       <footer className="border-t border-linea">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-4 py-5 text-sm text-pizarra sm:px-6">
-          <span>SISCON-CECIAMB, sistema contable de uso interno</span>
+          <span>Sistema contable de CECIAMB Hospital de Clínicas, de uso interno</span>
           <EstadoSistema />
         </div>
       </footer>

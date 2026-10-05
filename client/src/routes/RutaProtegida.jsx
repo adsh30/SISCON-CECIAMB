@@ -9,7 +9,7 @@ export function RutaProtegida({ roles }) {
   if (isPending) {
     return (
       <div className="grid min-h-screen place-items-center">
-        <LogoMark className="size-10 animate-pulse" />
+        <LogoMark className="h-12 w-auto animate-pulse" />
       </div>
     )
   }

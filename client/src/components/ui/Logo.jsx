@@ -1,10 +1,31 @@
-export function LogoMark({ className = 'size-9' }) {
+// Isotipo de CECIAMB Hospital de Clínicas, redibujado en vectores desde public/logo1.jpeg
+const piezasRojas = [
+  '5,21 17,5 73,5 85,21 73,37 17,37',
+  '5,145.5 17,129.5 73,129.5 85,145.5 73,161.5 17,161.5',
+  '178,145.5 190,129.5 246,129.5 258,145.5 246,161.5 190,161.5',
+  '178,270 190,254 246,254 258,270 246,286 190,286',
+]
+const piezasAzules = [
+  '88,31 99,41 99,125 88,135 77,125 77,41',
+  '175,32 186,42 186,124 175,134 164,124 164,42',
+  '92,145.5 104,129.5 158,129.5 170,145.5 158,161.5 104,161.5',
+  '87.5,156 98.5,166 98.5,249 87.5,259 76.5,249 76.5,166',
+  '174.5,156 185.5,166 185.5,249 174.5,259 163.5,249 163.5,166',
+]
+
+export function LogoMark({ className = 'h-10 w-auto' }) {
   return (
-    <svg viewBox="0 0 64 64" className={className} aria-hidden="true">
-      <rect width="64" height="64" rx="16" className="fill-salud" />
-      <rect x="27" y="11" width="10" height="42" rx="3" fill="#fff" />
-      <rect x="11" y="27" width="13" height="10" rx="3" fill="#fff" />
-      <rect x="40" y="27" width="13" height="10" rx="3" fill="#fff" />
+    <svg viewBox="0 0 264 292" className={className} aria-hidden="true">
+      <g className="fill-acento">
+        {piezasRojas.map((p) => (
+          <polygon key={p} points={p} />
+        ))}
+      </g>
+      <g className="fill-marca">
+        {piezasAzules.map((p) => (
+          <polygon key={p} points={p} />
+        ))}
+      </g>
     </svg>
   )
 }
@@ -12,14 +33,19 @@ export function LogoMark({ className = 'size-9' }) {
 export function Logo({ size = 'md' }) {
   const grande = size === 'lg'
   return (
-    <span className="inline-flex items-center gap-3">
-      <LogoMark className={grande ? 'size-12' : 'size-9'} />
+    <span
+      className="inline-flex items-center gap-3"
+      aria-label="CECIAMB Hospital de Clínicas, sistema contable"
+    >
+      <LogoMark className={grande ? 'h-14 w-auto' : 'h-10 w-auto'} />
       <span className="leading-none">
-        <span className={`block font-bold tracking-tight ${grande ? 'text-2xl' : 'text-lg'}`}>
-          SISCON
+        <span
+          className={`block font-extrabold tracking-tight text-marca ${grande ? 'text-2xl' : 'text-lg'}`}
+        >
+          CECIAMB
         </span>
         <span className={`block text-pizarra ${grande ? 'mt-1 text-sm' : 'mt-0.5 text-xs'}`}>
-          Contabilidad CECIAMB
+          Sistema contable
         </span>
       </span>
     </span>

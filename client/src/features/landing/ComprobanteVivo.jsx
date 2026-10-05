@@ -60,7 +60,7 @@ export function ComprobanteVivo() {
       </table>
 
       <p
-        className="mt-2 inline-flex items-center gap-2 rounded-full bg-salud-claro px-3 py-1.5 text-sm font-semibold text-salud-oscuro motion-safe:animate-[sello_400ms_ease-out_both]"
+        className="mt-2 inline-flex items-center gap-2 rounded-full bg-marca-claro px-3 py-1.5 text-sm font-semibold text-marca-oscuro motion-safe:animate-[sello_400ms_ease-out_both]"
         style={retraso(renglones.length + 1)}
       >
         <svg viewBox="0 0 20 20" className="size-4" aria-hidden="true">

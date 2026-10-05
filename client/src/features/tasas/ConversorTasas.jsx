@@ -43,7 +43,7 @@ export function ConversorTasas({ tasas }) {
   const [origen, destino] = haciaBs ? [moneda?.simbolo, 'Bs'] : ['Bs', moneda?.simbolo]
 
   const campo =
-    'block w-full rounded-lg border border-linea bg-white px-3 py-2 focus:border-salud focus:ring-3 focus:ring-salud/15 focus:outline-none'
+    'block w-full rounded-lg border border-linea bg-white px-3 py-2 focus:border-marca focus:ring-3 focus:ring-marca/15 focus:outline-none'
 
   return (
     <div
@@ -67,7 +67,7 @@ export function ConversorTasas({ tasas }) {
         <button
           type="button"
           onClick={() => setHaciaBs((v) => !v)}
-          className="rounded-lg border border-linea px-3 py-2 text-sm hover:bg-salud-claro/60"
+          className="rounded-lg border border-linea px-3 py-2 text-sm hover:bg-marca-claro/60"
           title="Invertir conversión"
         >
           ⇄
@@ -89,9 +89,9 @@ export function ConversorTasas({ tasas }) {
         </select>
       </label>
 
-      <output className="cifras mt-4 block rounded-xl bg-salud-claro px-4 py-3">
+      <output className="cifras mt-4 block rounded-xl bg-marca-claro px-4 py-3">
         <span className="block text-sm text-pizarra">Equivale a</span>
-        <span className="block text-2xl font-semibold text-salud-oscuro">
+        <span className="block text-2xl font-semibold text-marca-oscuro">
           {resultado ? `${destino} ${formatoMonto(resultado)}` : '—'}
         </span>
         {texto && !monto && (
@@ -121,7 +121,7 @@ export function ConversorTasas({ tasas }) {
           type="button"
           onClick={() => actualizar.mutate()}
           disabled={actualizar.isPending}
-          className="mt-3 text-sm font-semibold text-salud hover:text-salud-oscuro disabled:text-pizarra"
+          className="mt-3 text-sm font-semibold text-marca hover:text-marca-oscuro disabled:text-pizarra"
         >
           {actualizar.isPending ? 'Consultando tasas…' : 'Actualizar tasas ahora'}
         </button>

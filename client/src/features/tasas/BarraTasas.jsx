@@ -8,7 +8,7 @@ function Brecha({ valor }) {
   const sube = Number(valor) >= 0
   return (
     <span
-      className={sube ? 'text-salud' : 'text-alerta'}
+      className={sube ? 'text-marca' : 'text-alerta'}
       title="Diferencia de Binance respecto a la tasa oficial del BCV"
     >
       <span aria-hidden="true">{sube ? '↓' : '↑'}</span>
@@ -59,11 +59,11 @@ export function BarraTasas() {
         onClick={() => setAbierto((v) => !v)}
         aria-expanded={abierto}
         aria-haspopup="dialog"
-        className="cifras inline-flex items-center gap-x-3 rounded-full border border-linea bg-papel px-4 py-2 text-sm whitespace-nowrap transition-colors hover:border-salud/40"
+        className="cifras inline-flex items-center gap-x-3 rounded-full border border-linea bg-papel px-4 py-2 text-sm whitespace-nowrap transition-colors hover:border-marca/40"
       >
         {bcv && (
           <span className="inline-flex items-center gap-2">
-            <span className="font-semibold text-salud">BCV</span>
+            <span className="font-semibold text-marca">BCV</span>
             <span>$ {formatoMonto(bcv.usd)}</span>
             {bcv.eur && <span className="hidden lg:inline">€ {formatoMonto(bcv.eur)}</span>}
           </span>
@@ -71,7 +71,7 @@ export function BarraTasas() {
         {bcv && binance && <span className="h-4 w-px bg-linea" aria-hidden="true" />}
         {binance && (
           <span className="inline-flex items-center gap-2">
-            <span className="font-semibold text-aviso">BIN</span>
+            <span className="font-semibold text-acento">BIN</span>
             <span>Bs {formatoMonto(binance.usdt)}</span>
             <Brecha valor={brecha} />
           </span>
