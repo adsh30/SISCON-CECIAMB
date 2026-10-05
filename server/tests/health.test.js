@@ -13,7 +13,7 @@ describe('GET /api/v1/health', () => {
     expect(res.status).toBe(200)
     expect(res.body.data.api).toBe('ok')
     expect(res.body.data.baseDatos.estado).toBe('ok')
-    expect(res.body.data.baseDatos.nombre).toBe('siscon_db')
+    expect(res.body.data.baseDatos.nombre).toBe('siscon_test')
   })
 })
 

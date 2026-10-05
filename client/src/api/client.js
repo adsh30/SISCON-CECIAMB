@@ -15,6 +15,7 @@ export async function api(path, { method = 'GET', body, ...opts } = {}) {
     body: body ? JSON.stringify(body) : undefined,
     ...opts,
   })
+  if (res.status === 204) return null
   const json = await res.json().catch(() => ({}))
   if (!res.ok) {
     const e = json.error ?? {}
