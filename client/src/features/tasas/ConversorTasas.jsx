@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useSesion } from '../../api/auth.js'
+import { usePermisos } from '../../api/auth.js'
 import { useActualizarTasas } from '../../api/tasas.js'
 import { formatoFecha, formatoHora, formatoMonto } from '../../lib/formato.js'
 import { dividir, multiplicar } from '../../lib/money.js'
@@ -12,10 +12,8 @@ function normalizarMonto(texto) {
   return /^\d+(\.\d+)?$/.test(s) ? s : null
 }
 
-const ROLES_ACTUALIZAN = ['ADMIN', 'CONTADOR']
-
 export function ConversorTasas({ tasas }) {
-  const { data: usuario } = useSesion()
+  const { can } = usePermisos()
   const actualizar = useActualizarTasas()
   const opciones = [
     tasas.bcv && { id: 'usd', etiqueta: 'Dólar BCV', simbolo: '$', tasa: tasas.bcv.usd },
@@ -116,7 +114,7 @@ export function ConversorTasas({ tasas }) {
         ))}
       </div>
 
-      {ROLES_ACTUALIZAN.includes(usuario?.rol) && (
+      {can('tasas', 'escritura') && (
         <button
           type="button"
           onClick={() => actualizar.mutate()}

@@ -135,7 +135,15 @@ export default function LoginPage() {
           </form>
 
           <p className="mt-8 text-sm text-pizarra">
-            ¿Olvidó su contraseña? Pida al administrador del sistema que se la restablezca.
+            ¿Olvidó su contraseña? Pida al administrador del sistema que se la restablezca.{' '}
+            <a
+              href="/manual.html"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-marca hover:underline"
+            >
+              Ver el manual
+            </a>
           </p>
         </div>
       </main>

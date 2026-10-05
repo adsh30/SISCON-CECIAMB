@@ -22,7 +22,10 @@ Toda petición se entrega completa. Nunca solo API ni solo UI. Si una capa no ap
    - Hook TanStack Query en `client/src/api/`.
    - Pantalla/componentes con Tailwind, reutilizando `components/ui/` (MoneyInput, AccountPicker, Table…).
    - Validación con React Hook Form + el mismo esquema zod; formato `1.234.567,89` y `dd/mm/aaaa`; ruta protegida por rol.
+   - Permisos: `requirePermiso('<modulo>', 'lectura'|'escritura'|'full')` en el back, `usePermisos().can()` y `RequireModulo` en el front. Módulos nuevos se agregan en `permisos.catalogo.js` y su copia `client/src/lib/permisos.js`.
+   - Colores solo con tokens (`bg-superficie`, `text-tinta`, `text-marca`…) para que funcione el tema claro y oscuro. Nunca `bg-white`.
 5. **Tests**: Vitest/Supertest para reglas de negocio del backend.
+5b. **Manual**: actualizar `client/public/manual.html` con la funcionalidad nueva (textos exactos de botones y mensajes).
 6. **Verificar**: `npm run lint && npm test` y probar el flujo en el navegador.
 7. **Commit** (Conventional Commits en español) → PR a `dev`. `dev` → `main` solo en releases.
 
