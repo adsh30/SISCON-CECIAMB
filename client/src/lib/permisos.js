@@ -5,6 +5,7 @@ export const MODULOS = [
   { clave: 'libros', nombre: 'Libro Diario y Mayor' },
   { clave: 'plan_cuentas', nombre: 'Plan de cuentas' },
   { clave: 'periodos', nombre: 'Ejercicios y períodos' },
+  { clave: 'empresa', nombre: 'Datos de la empresa' },
   { clave: 'tasas', nombre: 'Tasas de cambio' },
   { clave: 'bitacora', nombre: 'Bitácora de auditoría' },
   { clave: 'usuarios', nombre: 'Usuarios y roles' },
