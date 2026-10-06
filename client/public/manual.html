@@ -337,6 +337,8 @@
           <li><a href="#usuarios">Usuarios</a></li>
           <li><a href="#roles">Roles y permisos</a></li>
           <li><a href="#ajustes">Ajustes</a></li>
+          <li><a href="#empresa">Datos de la empresa</a></li>
+          <li><a href="#periodos">Ejercicios y períodos</a></li>
           <li><a href="#bitacora">Bitácora de auditoría: consultar y exportar</a></li>
           <li><a href="#problemas">Problemas frecuentes</a></li>
           <li><a href="#proximamente">Próximos módulos</a></li>
@@ -463,8 +465,8 @@
         <ul>
           <li>
             Está dividido en <strong>Contabilidad</strong> (Inicio, Comprobantes, Libro Diario,
-            Libro Mayor, Plan de cuentas, Períodos) y <strong>Sistema</strong> (Usuarios y roles,
-            Bitácora, Ajustes, Manual del sistema).
+            Libro Mayor, Plan de cuentas, Períodos) y <strong>Sistema</strong> (Empresa, Usuarios y
+            roles, Bitácora, Ajustes, Manual del sistema).
           </li>
           <li>La opción en la que está aparece resaltada en azul con una barra a la izquierda.</li>
           <li>
@@ -508,6 +510,12 @@
         <p>
           Es lo primero que ve al entrar. Resume el estado del sistema y se actualiza sola cada 5
           minutos. Cada bloque aparece solo si su rol puede ver ese módulo.
+        </p>
+        <p>
+          Arriba se indica el <strong>Período contable actual</strong> y si está abierto o cerrado
+          (enlace <strong>Ver períodos</strong>). Si no existe un período para hoy, el aviso es
+          naranja: no se podrán registrar comprobantes con esa fecha hasta crear el ejercicio. Al
+          administrador también se le avisa si falta el RIF de la empresa.
         </p>
         <div class="tabla-scroll">
           <table>
@@ -897,7 +905,13 @@
               </tr>
               <tr>
                 <td>Ejercicios y períodos</td>
-                <td class="si">Control total</td>
+                <td>Ver y Modificar (crea ejercicios y cierra períodos)</td>
+                <td>Ver</td>
+                <td>Ver</td>
+              </tr>
+              <tr>
+                <td>Datos de la empresa</td>
+                <td>Ver</td>
                 <td>Ver</td>
                 <td>Ver</td>
               </tr>
@@ -981,8 +995,127 @@
         </p>
       </section>
 
+      <section id="empresa">
+        <h2>9. Datos de la empresa</h2>
+        <p>
+          Entre en <strong>Empresa</strong> (menú lateral, sección Sistema). Aquí están los datos
+          que identifican al hospital en los libros, comprobantes y reportes impresos. Todos los
+          roles pueden verlos; solo el <strong>Administrador</strong> puede cambiarlos.
+        </p>
+        <ol>
+          <li>
+            Complete <strong>Razón social</strong> y <strong>RIF</strong> (obligatorios), y si
+            quiere nombre comercial, dirección fiscal, ciudad, estado, teléfono, correo y sitio web.
+          </li>
+          <li>
+            El RIF se puede escribir con o sin guiones (<code>j401234567</code> o
+            <code>J-40123456-7</code>): el sistema lo guarda siempre como <code>J-12345678-9</code>.
+            Acepta las letras J, G, V, E, P y C.
+          </li>
+          <li>
+            Pulse <span class="boton">Guardar datos</span>. Aparece el aviso
+            <strong>Datos de la empresa actualizados</strong>.
+          </li>
+        </ol>
+        <p>
+          La <strong>Moneda base</strong> es siempre Bolívares (Bs.). Mientras falte el RIF, la
+          pantalla muestra <strong>Falta el RIF</strong> y en Inicio el administrador verá un aviso
+          con el enlace <strong>Completar datos</strong>.
+        </p>
+        <h3>Logo para reportes</h3>
+        <p>
+          Con <span class="boton">Subir logo</span> elija una imagen PNG, JPG o WEBP de hasta 500 KB
+          (mejor horizontal y con fondo blanco o transparente). Para reemplazarla use
+          <span class="boton">Cambiar logo</span>; para dejar los reportes sin logo,
+          <span class="boton">Quitar logo</span>. Cada cambio queda en la bitácora.
+        </p>
+      </section>
+
+      <section id="periodos">
+        <h2>10. Ejercicios y períodos</h2>
+        <p>
+          Entre en <strong>Períodos</strong> (menú lateral, sección Contabilidad). Un
+          <strong>ejercicio económico</strong> es el año contable y se divide en
+          <strong>12 períodos mensuales</strong>. Cada período está <strong>Abierto</strong> (acepta
+          comprobantes) o <strong>Cerrado</strong> (no se pueden registrar ni modificar comprobantes
+          con fecha dentro de ese mes).
+        </p>
+        <p>
+          Arriba se indica el <strong>Período actual</strong> (el mes de hoy, hora de Caracas) y
+          cuál es el <strong>Próximo a cerrar</strong>. Si no hay período para la fecha de hoy, el
+          aviso es naranja: hay que crear el ejercicio. Inicio muestra el mismo aviso.
+        </p>
+
+        <h3>Crear un ejercicio</h3>
+        <ol>
+          <li>Pulse <span class="boton">Nuevo ejercicio</span>.</li>
+          <li>
+            Escriba el <strong>Año</strong> y elija el <strong>Mes de inicio</strong> (Enero si el
+            año fiscal coincide con el calendario). Debajo verá las fechas y los 12 períodos que se
+            crearán.
+          </li>
+          <li>
+            Pulse <span class="boton">Crear ejercicio</span>. Aparece el aviso
+            <strong>Ejercicio creado</strong>; los 12 períodos quedan abiertos.
+          </li>
+        </ol>
+        <p>
+          Los ejercicios van uno detrás de otro, sin huecos: el nuevo debe empezar el día siguiente
+          al cierre del último, o terminar el día anterior al primero (para cargar años anteriores).
+          Si no, el sistema indica la fecha correcta. Pueden crearlos el Administrador y el Contador
+          general.
+        </p>
+        <p>
+          Con varios ejercicios, elija cuál ver con los botones <strong>Ejercicio 2026</strong>,
+          <strong>Ejercicio 2027</strong>… La barra <strong>Cerrados</strong> muestra cuántos de sus
+          12 meses están cerrados; con los 12, el ejercicio figura como
+          <strong>Ejercicio cerrado</strong>.
+        </p>
+
+        <h3>Cerrar un período</h3>
+        <ol>
+          <li>
+            Los períodos se cierran <strong>en orden</strong>: el botón
+            <span class="boton">Cerrar período</span> aparece solo en el primer mes abierto, y solo
+            si ese mes ya comenzó.
+          </li>
+          <li>Púlselo y confirme con <span class="boton">Cerrar período</span>.</li>
+          <li>
+            La tarjeta pasa a <strong>Cerrado</strong> y muestra quién lo cerró y cuándo. Queda en
+            la bitácora como <em>Cierre de período</em>.
+          </li>
+        </ol>
+        <p>Pueden cerrar el Administrador y el Contador general.</p>
+
+        <h3>Reabrir un período</h3>
+        <p>
+          Solo quien tiene <strong>Control total</strong> en Ejercicios y períodos (por defecto, el
+          Administrador) puede reabrir, y siempre empezando por el <strong>último</strong> período
+          cerrado.
+        </p>
+        <ol>
+          <li>En ese período pulse <span class="boton">Reabrir</span>.</li>
+          <li>
+            Escriba el <strong>Motivo de la reapertura</strong> (mínimo 10 caracteres), por ejemplo
+            «registrar una factura de proveedor recibida tarde».
+          </li>
+          <li>
+            Pulse <span class="boton">Reabrir período</span>. El motivo queda visible en la tarjeta
+            del mes y en la bitácora como <em>Reapertura de período</em>.
+          </li>
+        </ol>
+
+        <h3>Eliminar un ejercicio</h3>
+        <p>
+          Sirve solo para corregir un ejercicio creado por error. Aparece
+          <span class="boton">Eliminar</span> si usted tiene Control total, el ejercicio es el
+          primero o el último y ninguno de sus meses está cerrado. Se borran el ejercicio y sus 12
+          períodos.
+        </p>
+      </section>
+
       <section id="bitacora">
-        <h2>9. Bitácora de auditoría</h2>
+        <h2>11. Bitácora de auditoría</h2>
         <p>
           El sistema guarda automáticamente quién hizo cada acción, cuándo, desde qué equipo y qué
           datos cambiaron (antes y después). <strong>Nadie puede modificar ni borrar</strong> estos
@@ -1053,7 +1186,7 @@
       </section>
 
       <section id="problemas">
-        <h2>10. Problemas frecuentes</h2>
+        <h2>12. Problemas frecuentes</h2>
         <h3>No veo un módulo en el menú</h3>
         <p>
           Su rol no tiene permiso de Ver en ese módulo, o el módulo aún dice <em>pronto</em>. Pida
@@ -1074,6 +1207,17 @@
           Espere a que termine «Guardando…». Si su rol no tiene permiso de Modificar en Usuarios y
           roles, las casillas se ven pero no se pueden cambiar.
         </p>
+        <h3>No aparece el botón «Cerrar período»</h3>
+        <p>
+          Solo aparece en el primer mes abierto y si ese mes ya comenzó: cierre antes los meses
+          anteriores. Si no lo ve en ningún mes, su rol no tiene permiso de Modificar en Ejercicios
+          y períodos.
+        </p>
+        <h3>No puedo reabrir un período</h3>
+        <p>
+          Hace falta Control total (por defecto, el Administrador) y se reabre primero el último mes
+          cerrado. Escriba un motivo de al menos 10 caracteres.
+        </p>
         <h3>Las tasas no cambian</h3>
         <p>
           Revise la conexión a internet del servidor. Mientras tanto, el sistema usa la última tasa
@@ -1082,7 +1226,7 @@
       </section>
 
       <section id="proximamente">
-        <h2>11. Próximos módulos</h2>
+        <h2>13. Próximos módulos</h2>
         <p>
           Los siguientes módulos aparecen en el menú con la palabra <em>pronto</em> y se
           incorporarán a este manual cuando estén disponibles:
@@ -1096,8 +1240,6 @@
             <strong>Libro Diario</strong> y <strong>Libro Mayor</strong>, exportables a PDF y Excel.
           </li>
           <li><strong>Plan de cuentas</strong> jerárquico.</li>
-          <li><strong>Períodos</strong>: ejercicios económicos y cierre mensual.</li>
-          <li><strong>Bitácora</strong>: consulta del registro de auditoría.</li>
         </ul>
       </section>
 

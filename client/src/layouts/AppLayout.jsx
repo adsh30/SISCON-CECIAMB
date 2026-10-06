@@ -16,12 +16,13 @@ const SECCIONES = [
       { etiqueta: 'Libro Diario', icono: 'libros', modulo: 'libros' },
       { etiqueta: 'Libro Mayor', icono: 'mayor', modulo: 'libros' },
       { etiqueta: 'Plan de cuentas', icono: 'cuentas', modulo: 'plan_cuentas' },
-      { etiqueta: 'Períodos', icono: 'periodos', modulo: 'periodos' },
+      { to: '/app/periodos', etiqueta: 'Períodos', icono: 'periodos', modulo: 'periodos' },
     ],
   },
   {
     titulo: 'Sistema',
     items: [
+      { to: '/app/empresa', etiqueta: 'Empresa', icono: 'edificio', modulo: 'empresa' },
       { to: '/app/usuarios', etiqueta: 'Usuarios y roles', icono: 'usuarios', modulo: 'usuarios' },
       { to: '/app/bitacora', etiqueta: 'Bitácora', icono: 'bitacora', modulo: 'bitacora' },
       { to: '/app/ajustes', etiqueta: 'Ajustes', icono: 'ajustes' },

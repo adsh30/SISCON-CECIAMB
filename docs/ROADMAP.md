@@ -7,7 +7,7 @@ Cada entregable incluye **backend + frontend**. Cada cambio va en ramas `feature
 | 0 | v0.0.1 | Setup | ✅ |
 | 1 | v0.1.0 | Autenticación, usuarios, roles, bitácora base | ✅ |
 | 1b | v0.1.1 | Tasas BCV/Binance y conversor Bs ⇄ $/€ | ✅ |
-| 2 | v0.2.0 | Empresa, ejercicios y períodos | ⬜ |
+| 2 | v0.2.0 | Empresa, ejercicios y períodos | ✅ |
 | 3 | v0.3.0 | Plan de cuentas | ⬜ |
 | 4 | v0.4.0 | Comprobantes (núcleo) — **MVP interno** | ⬜ |
 | 5 | v0.5.0 | Libro Diario y Libro Mayor (PDF/Excel) — **MVP usable** | ⬜ |
@@ -34,7 +34,9 @@ Cada entregable incluye **backend + frontend**. Cada cambio va en ramas `feature
 - [x] UI: consulta de bitácora (filtros, detalle antes/después, exportar CSV) y bitácora inmutable en la BD (triggers).
 
 ## Fase 2 — Empresa y períodos
-- [ ] API + UI: datos de empresa, ejercicios, generación de 12 períodos, abrir/cerrar.
+- [x] API + UI: datos de empresa (RIF normalizado, logo para reportes), ejercicios contiguos con generación de 12 períodos (mes de inicio configurable), cierre en orden y reapertura con motivo (control total).
+- [x] Regla `exigirPeriodoAbierto(fecha)` lista para los comprobantes (Fase 4).
+- [x] Aviso en Inicio del período actual y de datos de empresa incompletos.
 
 ## Fase 3 — Plan de cuentas
 - [ ] API: CRUD jerárquico, validación de códigos y niveles, búsqueda, bloqueo de borrado con movimientos.
@@ -54,7 +56,7 @@ Cada entregable incluye **backend + frontend**. Cada cambio va en ramas `feature
 - [ ] Test: Σ Diario = Σ Mayor = Σ comprobantes aprobados.
 
 ## Fase 6 — Operación
-- [ ] Cierre/reapertura de período con validaciones.
+- [x] Cierre/reapertura de período con validaciones (adelantado en Fase 2). Falta advertir borradores pendientes al cerrar (cuando existan comprobantes).
 - [x] Tablero de inicio base (estilo MGG): KPIs de tasas con variación, evolución BCV con historial oficial desde 2023, actividad de bitácora, usuarios por rol.
 - [ ] Dashboard contable (pendientes por aprobar, comprobantes por categoría).
 - [ ] Importación CSV/Excel de resúmenes (ventas, compras, honorarios, nómina) → comprobante en borrador.

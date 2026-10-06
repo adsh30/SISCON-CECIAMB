@@ -10,6 +10,7 @@ import {
   formatoPorcentaje,
 } from '../../lib/formato.js'
 import { ActividadReciente } from './ActividadReciente.jsx'
+import { AvisosInicio } from './AvisosInicio.jsx'
 import { GraficaActividad } from './GraficaActividad.jsx'
 import { GraficaTasas } from './GraficaTasas.jsx'
 import { Kpi } from './Kpi.jsx'
@@ -81,6 +82,8 @@ export default function InicioPage() {
           Resumen del sistema. Haga clic en una tasa para ver su evolución.
         </p>
       </div>
+
+      {data && <AvisosInicio periodoActual={data.periodoActual} />}
 
       <div className="mt-6">
         {isPending ? (
