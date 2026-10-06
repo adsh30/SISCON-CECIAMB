@@ -34,7 +34,7 @@ export function UsuarioFormModal({ usuario, roles, onClose, onCreado, onGuardado
     handleSubmit,
     setValue,
     setError,
-    formState: { errors },
+    formState: { errors, isDirty },
   } = useForm({
     resolver: zodResolver(esquema),
     defaultValues: {
@@ -51,10 +51,13 @@ export function UsuarioFormModal({ usuario, roles, onClose, onCreado, onGuardado
   // Filtra lo que se escribe, como en la pantalla original
   const filtrar = (campo, fn) => ({
     ...register(campo),
-    onChange: (e) => setValue(campo, fn(e.target.value), { shouldValidate: !!errors[campo] }),
+    onChange: (e) =>
+      setValue(campo, fn(e.target.value), { shouldValidate: !!errors[campo], shouldDirty: true }),
   })
 
   const onSubmit = (datos) => {
+    // Sin cambios no se llama al servidor ni se registra una edición vacía en la bitácora
+    if (editando && !isDirty) return onGuardado(null)
     const cuerpo = { ...datos, email: datos.email.toLowerCase() }
     const opciones = {
       onSuccess: (r) => (editando ? onGuardado(r) : onCreado(r)),

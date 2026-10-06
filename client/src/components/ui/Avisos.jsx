@@ -3,39 +3,69 @@ import { Icono } from './Icono.jsx'
 
 const AvisosContext = createContext(() => {})
 
-/** Avisos breves (toasts) en la esquina inferior derecha. */
+const DURACION_MS = 6000
+
+const TONOS = {
+  exito: { borde: 'border-l-exito', icono: 'bg-exito-claro text-exito', simbolo: 'check' },
+  alerta: { borde: 'border-l-alerta', icono: 'bg-alerta-claro text-alerta', simbolo: 'cerrar' },
+  info: { borde: 'border-l-marca', icono: 'bg-marca-claro text-marca', simbolo: 'ayuda' },
+}
+
+/**
+ * Avisos breves arriba al centro, donde queda la vista al cerrar un formulario.
+ * `avisar(mensaje, tono, detalle)`: el detalle es una segunda línea opcional (p. ej. el nombre).
+ */
 export function AvisosProvider({ children }) {
   const [avisos, setAvisos] = useState([])
 
-  const avisar = useCallback((mensaje, tono = 'exito') => {
-    const id = crypto.randomUUID()
-    setAvisos((a) => [...a, { id, mensaje, tono }])
-    setTimeout(() => setAvisos((a) => a.filter((x) => x.id !== id)), 4000)
-  }, [])
+  const quitar = useCallback((id) => setAvisos((a) => a.filter((x) => x.id !== id)), [])
 
-  const tonos = {
-    exito: 'border-exito/30 text-exito',
-    alerta: 'border-alerta/30 text-alerta',
-    info: 'border-marca/30 text-marca',
-  }
+  const avisar = useCallback(
+    (mensaje, tono = 'exito', detalle) => {
+      const id = crypto.randomUUID()
+      // Un aviso idéntico reemplaza al anterior en vez de apilarse
+      setAvisos((a) => [
+        ...a.filter((x) => x.mensaje !== mensaje || x.detalle !== detalle),
+        { id, mensaje, tono, detalle },
+      ])
+      setTimeout(() => quitar(id), DURACION_MS)
+    },
+    [quitar],
+  )
 
   return (
     <AvisosContext.Provider value={avisar}>
       {children}
       <div
-        className="fixed right-4 bottom-4 z-50 flex flex-col gap-2"
+        className="pointer-events-none fixed inset-x-0 top-4 z-50 flex flex-col items-center gap-2 px-4"
         role="status"
         aria-live="polite"
       >
-        {avisos.map((a) => (
-          <div
-            key={a.id}
-            className={`flex items-center gap-2 rounded-xl border bg-superficie px-4 py-3 text-sm font-medium shadow-lg motion-safe:animate-[renglon-entra_200ms_ease-out] ${tonos[a.tono]}`}
-          >
-            <Icono nombre={a.tono === 'alerta' ? 'cerrar' : 'check'} className="size-4" />
-            <span className="text-tinta">{a.mensaje}</span>
-          </div>
-        ))}
+        {avisos.map((a) => {
+          const t = TONOS[a.tono] ?? TONOS.exito
+          return (
+            <div
+              key={a.id}
+              className={`pointer-events-auto flex w-full max-w-md items-center gap-3 rounded-xl border border-l-4 border-linea bg-superficie py-3 pr-2 pl-4 shadow-xl shadow-tinta/10 motion-safe:animate-[renglon-entra_200ms_ease-out] ${t.borde}`}
+            >
+              <span className={`grid size-8 shrink-0 place-items-center rounded-full ${t.icono}`}>
+                <Icono nombre={t.simbolo} className="size-4" />
+              </span>
+              <div className="min-w-0 flex-1">
+                <p className="font-semibold text-tinta">{a.mensaje}</p>
+                {a.detalle && <p className="truncate text-sm text-pizarra">{a.detalle}</p>}
+              </div>
+              <button
+                type="button"
+                onClick={() => quitar(a.id)}
+                className="rounded-lg p-1.5 text-pizarra hover:bg-superficie-2 hover:text-tinta"
+                aria-label="Cerrar aviso"
+              >
+                <Icono nombre="cerrar" className="size-4" />
+              </button>
+            </div>
+          )
+        })}
       </div>
     </AvisosContext.Provider>
   )
