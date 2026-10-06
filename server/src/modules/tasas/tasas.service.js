@@ -1,9 +1,9 @@
 import { db } from '../../config/db.js'
 import { env } from '../../config/env.js'
 import { logger } from '../../config/logger.js'
-import { dividir, multiplicar, sumar } from '../../utils/money.js'
+import { dividir, multiplicar, restar } from '../../utils/money.js'
 import { ACCIONES, registrar } from '../bitacora/bitacora.service.js'
-import { consultarBcv, consultarBinance } from './tasas.fuentes.js'
+import { consultarBcv, consultarBinance, consultarHistorialBcv } from './tasas.fuentes.js'
 import * as repo from './tasas.repository.js'
 
 export const MINUTOS_REFRESCO = { BINANCE: 10 }
@@ -55,7 +55,7 @@ const bcvVencida = (fila) =>
 /** Brecha porcentual de Binance sobre el BCV: (bin - bcv) / bin × 100 */
 export function calcularBrecha(bcv, binance) {
   if (!bcv || !binance) return null
-  const diferencia = sumar(binance, `-${bcv}`)
+  const diferencia = restar(binance, bcv, 4)
   return multiplicar(dividir(diferencia, binance, 8), '100', 2)
 }
 
@@ -181,6 +181,75 @@ export async function obtenerActuales({ forzar = false, usuarioId = null, ctx } 
   return formatear(usd, eur, usdt, avisos)
 }
 
+/**
+ * Completa el historial con las tasas oficiales del BCV publicadas desde 2023.
+ * No pisa lo ya guardado. Devuelve cuántas filas nuevas se agregaron.
+ */
+export async function importarHistorialBcv() {
+  const filas = await consultarHistorialBcv()
+  return repo.importar(
+    filas.map((f) => ({
+      ...f,
+      fuente: 'BCV',
+      // Medianoche de Caracas en UTC: cuenta como consultada antes de cualquier hora programada
+      obtenida_en: `${f.fecha} 04:00:00`,
+    })),
+  )
+}
+
+/** Variación porcentual entre dos tasas: (actual − anterior) ÷ anterior × 100 */
+export function calcularVariacion(actual, anterior) {
+  if (!actual || !anterior) return null
+  return multiplicar(dividir(restar(actual, anterior, 4), anterior, 8), '100', 2)
+}
+
+const SERIES = { usd: ['USD', 'BCV'], eur: ['EUR', 'BCV'], usdt: ['USDT', 'BINANCE'] }
+
+/** Una tasa por día para el gráfico de evolución. */
+export async function historial({ desde, hasta }) {
+  const entradas = await Promise.all(
+    Object.entries(SERIES).map(async ([clave, [moneda, fuente]]) => [
+      clave,
+      await repo.serie(moneda, fuente, desde, hasta),
+    ]),
+  )
+  return Object.fromEntries(entradas)
+}
+
+/** Tasas actuales con su variación respecto al día anterior publicado. */
+export async function resumen() {
+  const actuales = await obtenerActuales()
+  const variacion = async (tasa, moneda, fuente) => {
+    if (!tasa) return null
+    const previa = await repo.anterior(moneda, fuente, tasa.fecha)
+    return previa
+      ? {
+          anterior: previa.tasa,
+          fecha: previa.fecha,
+          porcentaje: calcularVariacion(tasa.actual, previa.tasa),
+        }
+      : null
+  }
+  const [usd, eur, usdt] = await Promise.all([
+    variacion(
+      actuales.bcv && { actual: actuales.bcv.usd, fecha: actuales.bcv.fecha },
+      'USD',
+      'BCV',
+    ),
+    variacion(
+      actuales.bcv?.eur && { actual: actuales.bcv.eur, fecha: actuales.bcv.fecha },
+      'EUR',
+      'BCV',
+    ),
+    variacion(
+      actuales.binance && { actual: actuales.binance.usdt, fecha: actuales.binance.fecha },
+      'USDT',
+      'BINANCE',
+    ),
+  ])
+  return { ...actuales, variacion: { usd, eur, usdt } }
+}
+
 let temporizador = null
 
 /**
@@ -207,5 +276,8 @@ export function programarActualizacionBcv() {
     temporizador.unref()
   }
   ejecutar()
+  importarHistorialBcv()
+    .then((n) => n && logger.info(`tasas: ${n} tasas históricas del BCV importadas`))
+    .catch((err) => logger.warn({ err }, 'tasas: no se pudo importar el historial del BCV'))
   return () => clearTimeout(temporizador)
 }

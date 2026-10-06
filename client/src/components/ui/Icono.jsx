@@ -7,6 +7,9 @@ const trazos = {
   cuentas: 'M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01',
   periodos: 'M4 6h16v14H4zM4 10h16M8 3v4M16 3v4',
   tasas: 'M7 7h11l-3-3M17 17H6l3 3',
+  dolar: 'M12 2v20M17 6H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6',
+  euro: 'M18 6.5a7 7 0 1 0 0 11M4 10h10M4 14h10',
+  tendencia: 'M3 17l6-6 4 4 8-8M15 7h6v6',
   bitacora: 'M12 8v4l3 2M21 12a9 9 0 1 1-9-9 9 9 0 0 1 9 9z',
   usuarios:
     'M16 19v-1a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v1M9 10a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM22 19v-1a4 4 0 0 0-3-3.9M16 3.1a3.5 3.5 0 0 1 0 6.8',

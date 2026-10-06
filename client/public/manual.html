@@ -329,7 +329,10 @@
           <li><a href="#antes">Antes de empezar</a></li>
           <li><a href="#ingresar">Iniciar sesión</a></li>
           <li><a href="#primer-ingreso">Primer ingreso: crear su clave</a></li>
-          <li><a href="#pantalla">Cómo está organizada la pantalla</a></li>
+          <li>
+            <a href="#pantalla">Cómo está organizada la pantalla</a> (incluye el
+            <a href="#inicio">tablero de Inicio</a>)
+          </li>
           <li><a href="#tasas">Tasas de cambio y conversor</a></li>
           <li><a href="#usuarios">Usuarios</a></li>
           <li><a href="#roles">Roles y permisos</a></li>
@@ -497,6 +500,88 @@
           Al completar una acción (por ejemplo, guardar), aparece un aviso breve en la esquina
           inferior derecha que desaparece solo a los pocos segundos.
         </p>
+
+        <h3 id="inicio">La pantalla de Inicio (tablero)</h3>
+        <p>
+          Es lo primero que ve al entrar. Resume el estado del sistema y se actualiza sola cada 5
+          minutos. Cada bloque aparece solo si su rol puede ver ese módulo.
+        </p>
+        <div class="tabla-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>Bloque</th>
+                <th>Qué muestra</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Dólar BCV, Euro BCV, Binance USDT</strong></td>
+                <td>
+                  La tasa vigente y su variación frente al día anterior publicado, por ejemplo
+                  <code>↑0,12 % vs 05-oct.</code> En rojo cuando la tasa sube (el bolívar pierde
+                  valor) y en verde cuando baja. En Binance se agrega la brecha con el BCV. Haga
+                  clic en una de estas tarjetas para verla en la gráfica.
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Usuarios habilitados</strong></td>
+                <td>
+                  Cantidad de usuarios que pueden entrar, con los deshabilitados y archivados. Al
+                  hacer clic abre <strong>Usuarios y roles</strong>. Si su rol no ve usuarios, en su
+                  lugar aparece la hora de la <strong>Próxima tasa BCV</strong>.
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Evolución de la tasa</strong></td>
+                <td>
+                  Gráfica de la tasa elegida (<span class="boton">$ BCV</span>,
+                  <span class="boton">€ BCV</span> o <span class="boton">USDT Binance</span>). El
+                  historial oficial del BCV viene desde enero de 2023; el de Binance se arma con las
+                  consultas del propio sistema. Arriba a la derecha indica cuánto cambió en el
+                  período.
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Actividad en el sistema</strong></td>
+                <td>
+                  Barras con la cantidad de eventos de la bitácora (ingresos, cambios, etc.) por
+                  día, semana o mes.
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Usuarios por rol</strong></td>
+                <td>Cuántos usuarios tiene cada rol, con una barra proporcional.</td>
+              </tr>
+              <tr>
+                <td><strong>Actividad reciente</strong></td>
+                <td>
+                  Los últimos 8 eventos (quién, qué y hace cuánto) y los totales de hoy: eventos,
+                  ingresos e intentos fallidos. Pase el ratón sobre el tiempo para ver la fecha y
+                  hora exactas.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <h3>Cambiar el período de una gráfica</h3>
+        <ol>
+          <li>
+            Elija <span class="boton">7 días</span>, <span class="boton">30 días</span>,
+            <span class="boton">90 días</span> o <span class="boton">12 meses</span>. Con 90 días la
+            gráfica se agrupa por semana y con 12 meses por mes.
+          </li>
+          <li>
+            Para fechas exactas, elija <span class="boton">Rango</span> y escriba las fechas
+            <strong>Desde</strong> y <strong>Hasta</strong>.
+          </li>
+          <li>
+            En la lista de la derecha puede cambiar la agrupación: <strong>Por día</strong>,
+            <strong>Por semana</strong> o <strong>Por mes</strong>. En las tasas se muestra el
+            último valor de cada período; en la actividad, la suma.
+          </li>
+          <li>Pase el ratón sobre la gráfica para ver el valor exacto de cada punto o barra.</li>
+        </ol>
       </section>
 
       <section id="tasas">

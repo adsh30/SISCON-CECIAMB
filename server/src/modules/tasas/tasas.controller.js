@@ -13,3 +13,7 @@ export async function postActualizar(req, res) {
   })
   res.json({ data })
 }
+
+export async function getHistorial(req, res) {
+  res.json({ data: await service.historial(req.consulta) })
+}

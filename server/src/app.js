@@ -5,6 +5,7 @@ import helmet from 'helmet'
 import { env } from './config/env.js'
 import { errorHandler, notFound } from './middlewares/errorHandler.js'
 import { authRoutes } from './modules/auth/auth.routes.js'
+import { dashboardRoutes } from './modules/dashboard/dashboard.routes.js'
 import { healthRoutes } from './modules/health/health.routes.js'
 import { rolesRoutes } from './modules/roles/roles.routes.js'
 import { tasasRoutes } from './modules/tasas/tasas.routes.js'
@@ -23,6 +24,7 @@ export function createApp() {
   const api = express.Router()
   api.use('/health', healthRoutes)
   api.use('/auth', authRoutes)
+  api.use('/dashboard', dashboardRoutes)
   api.use('/tasas', tasasRoutes)
   api.use('/usuarios', usuariosRoutes)
   api.use('/roles', rolesRoutes)
