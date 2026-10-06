@@ -27,7 +27,7 @@ Toda petición se entrega completa. Nunca solo API ni solo UI. Si una capa no ap
 5. **Tests**: Vitest/Supertest para reglas de negocio del backend.
 5b. **Manual**: actualizar `client/public/manual.html` con la funcionalidad nueva (textos exactos de botones y mensajes).
 6. **Verificar**: `npm run lint && npm test` y probar el flujo en el navegador.
-7. **Commit** (Conventional Commits en español) → PR a `dev`. `dev` → `main` solo en releases.
+7. **Commit** (Conventional Commits en español) → merge a `dev` → merge `dev` → `main` y push de ambas en cada entrega: el bot local publica `main` en ~5 min. Tags `vX.Y.Z` solo al cerrar fases.
 
 ## Reglas contables no negociables
 - Σ Debe = Σ Haber; ≥ 2 líneas; cada línea Debe XOR Haber > 0.

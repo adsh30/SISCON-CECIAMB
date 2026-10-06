@@ -24,6 +24,8 @@ Mientras se compila y se prueban los cambios, el sistema sigue atendiendo. Solo 
 
 ## Instalación (una vez, en la PC servidor)
 
+Por ahora el sistema se usa **solo en esta PC** (http://localhost:8080). Para abrirlo a la red más adelante, se vuelve a ejecutar el instalador con `-AbrirFirewall` como administrador.
+
 Requisitos: Node 24, Git con acceso al repositorio, MariaDB con `siscon_db` y `siscon_test`.
 
 ```powershell
@@ -41,12 +43,20 @@ El instalador:
 
 > La tarea corre con el usuario de Windows que la instala, para usar sus credenciales de GitHub. Configure ese usuario para iniciar sesión automáticamente en la PC servidor.
 
-## Publicar una versión
+## Publicar cambios
+
+Cada entrega se integra en `dev` y enseguida en `main`; el bot la publica sola:
 
 ```bash
 git checkout main && git pull
-git merge --no-ff dev -m "Release vX.Y.Z"
-git tag vX.Y.Z && git push origin main --tags
+git merge --no-ff dev
+git push origin dev main
+```
+
+Al cerrar una fase, además se etiqueta la versión:
+
+```bash
+git tag -a vX.Y.Z -m "vX.Y.Z" main && git push origin vX.Y.Z
 ```
 
 En un máximo de 5 minutos el bot la toma. Siga el avance en `C:\SISCON-CECIAMB\logs\bot.log`, o en **Bitácora → módulo Sistema** dentro del propio sistema.
