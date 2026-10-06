@@ -1,6 +1,6 @@
 # ROADMAP — SISCON-CECIAMB
 
-Cada entregable incluye **backend + frontend**. Cada fase se trabaja en ramas `feature/*` → `dev`; al cerrar la fase, `dev` → `main` con tag.
+Cada entregable incluye **backend + frontend**. Cada cambio va en ramas `feature/*` → `dev` → `main` (el bot local publica `main`); al cerrar una fase se etiqueta `vX.Y.Z`.
 
 | Fase | Release | Contenido | Estado |
 |---|---|---|---|
