@@ -10,3 +10,7 @@ coverage/
 !.vscode/extensions.json
 .DS_Store
 .playwright-mcp/
+
+# Producción (bot de despliegue)
+logs/
+respaldos/

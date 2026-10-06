@@ -5,7 +5,7 @@ import * as service from './auth.service.js'
 const cookieOptions = {
   httpOnly: true,
   sameSite: 'strict',
-  secure: env.nodeEnv === 'production',
+  secure: env.auth.cookieSecure,
   path: '/',
 }
 

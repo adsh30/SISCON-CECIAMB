@@ -1,0 +1,44 @@
+# Revisión automática en GitHub: cada cambio que llega a dev o main (o un PR hacia ellas)
+# pasa por lint, pruebas contra MariaDB y compilación. Si falla, se ve en rojo en GitHub
+# antes de que el bot de despliegue lo tome de main.
+name: CI
+
+on:
+  push:
+    branches: [dev, main]
+  pull_request:
+    branches: [dev, main]
+
+jobs:
+  pruebas:
+    runs-on: ubuntu-latest
+    services:
+      mariadb:
+        image: mariadb:11.8
+        env:
+          MARIADB_ROOT_PASSWORD: raiz
+          MARIADB_DATABASE: siscon_test
+          MARIADB_USER: siscon_app
+          MARIADB_PASSWORD: clave-ci
+        ports: ['3306:3306']
+        options: >-
+          --health-cmd="healthcheck.sh --connect --innodb_initialized"
+          --health-interval=5s --health-timeout=5s --health-retries=20
+    env:
+      DB_HOST: 127.0.0.1
+      DB_PORT: 3306
+      DB_USER: siscon_app
+      DB_PASSWORD: clave-ci
+      DB_NAME: siscon_test
+      JWT_SECRET: secreto-solo-para-ci
+      TZ: America/Caracas
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run build
+      - run: npm test

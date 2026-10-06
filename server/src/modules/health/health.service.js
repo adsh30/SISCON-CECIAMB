@@ -8,6 +8,8 @@ export async function obtenerEstado() {
     )
     return {
       api: 'ok',
+      // Commit desplegado por el bot (vacío en desarrollo)
+      version: process.env.SISCON_VERSION?.slice(0, 7) ?? null,
       baseDatos: {
         estado: 'ok',
         version: rows[0].version,

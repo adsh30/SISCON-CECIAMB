@@ -49,6 +49,12 @@ export const ACCIONES = {
     tono: 'aviso',
   },
   EXPORTAR: { nombre: 'Exportación', texto: 'Exportó', icono: 'archivo', tono: 'neutro' },
+  REVERTIR: {
+    nombre: 'Actualización rechazada',
+    texto: 'Rechazó una actualización del sistema y mantuvo la versión anterior',
+    icono: 'cerrar',
+    tono: 'alerta',
+  },
 }
 
 /** Módulo afectado: nombre para filtros y frase para describir el evento */
@@ -58,13 +64,21 @@ export const MODULOS = {
   roles_permisos: { nombre: 'Permisos', frase: 'un rol' },
   tasas_cambio: { nombre: 'Tasas de cambio', frase: 'las tasas de cambio' },
   bitacora: { nombre: 'Bitácora', frase: 'la bitácora' },
+  sistema: { nombre: 'Sistema', frase: 'el sistema a una nueva versión' },
 }
 
 export const nombreAccion = (a) => ACCIONES[a]?.nombre ?? a
 export const nombreModulo = (m) => MODULOS[m]?.nombre ?? m
 
 // Acciones que se describen solas, sin decir sobre qué módulo
-const SIN_MODULO = new Set(['LOGIN', 'LOGOUT', 'LOGIN_FALLIDO', 'LOGIN_BLOQUEADO', 'CAMBIAR_CLAVE'])
+const SIN_MODULO = new Set([
+  'LOGIN',
+  'LOGOUT',
+  'LOGIN_FALLIDO',
+  'LOGIN_BLOQUEADO',
+  'CAMBIAR_CLAVE',
+  'REVERTIR',
+])
 
 export function describirEvento(e) {
   const accion = ACCIONES[e.accion] ?? { texto: e.accion, icono: 'bitacora', tono: 'neutro' }
@@ -105,6 +119,10 @@ const CAMPOS = {
   accion: 'Acción',
   entidad: 'Módulo',
   buscar: 'Búsqueda',
+  version: 'Versión',
+  resultado: 'Resultado',
+  cambios: 'Cambios incluidos',
+  motivo: 'Motivo',
 }
 
 /** Nombre legible de un campo; los anidados se unen con ' · ' (p. ej. 'Comprobantes · ver') */
