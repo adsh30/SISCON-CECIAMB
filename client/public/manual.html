@@ -337,7 +337,7 @@
           <li><a href="#usuarios">Usuarios</a></li>
           <li><a href="#roles">Roles y permisos</a></li>
           <li><a href="#ajustes">Ajustes</a></li>
-          <li><a href="#bitacora">Qué queda registrado (bitácora)</a></li>
+          <li><a href="#bitacora">Bitácora de auditoría: consultar y exportar</a></li>
           <li><a href="#problemas">Problemas frecuentes</a></li>
           <li><a href="#proximamente">Próximos módulos</a></li>
         </ol>
@@ -982,10 +982,11 @@
       </section>
 
       <section id="bitacora">
-        <h2>9. Qué queda registrado (bitácora)</h2>
+        <h2>9. Bitácora de auditoría</h2>
         <p>
-          El sistema guarda automáticamente, sin que nadie pueda borrarlo ni modificarlo, quién hizo
-          cada acción, cuándo, desde qué equipo y qué datos cambiaron (antes y después):
+          El sistema guarda automáticamente quién hizo cada acción, cuándo, desde qué equipo y qué
+          datos cambiaron (antes y después). <strong>Nadie puede modificar ni borrar</strong> estos
+          registros: ni desde el sistema ni directamente en la base de datos, que lo rechaza.
         </p>
         <ul>
           <li>Inicios de sesión, intentos fallidos, bloqueos y cierres de sesión.</li>
@@ -993,10 +994,54 @@
           <li>Habilitar, deshabilitar, archivar y restablecer claves; cambios de clave.</li>
           <li>Creación, edición y eliminación de roles, y cada cambio en sus permisos.</li>
           <li>Actualizaciones manuales de las tasas de cambio.</li>
+          <li>Cada exportación de la propia bitácora.</li>
         </ul>
+
+        <h3>Consultar la bitácora</h3>
         <p>
-          La pantalla para consultar la bitácora estará disponible en una próxima versión, para los
-          roles con permiso de Ver en «Bitácora de auditoría».
+          Entre en <strong>Bitácora</strong> desde el menú lateral (sección Sistema). La ven los
+          roles con permiso de <strong>Ver</strong> en «Bitácora de auditoría»; por defecto,
+          Administrador, Contador general y Auditor. También se llega desde
+          <strong>Ver bitácora completa</strong> en el bloque Actividad reciente del Inicio.
+        </p>
+        <ol>
+          <li>
+            Elija el período: <span class="boton">Hoy</span>, <span class="boton">7 días</span>,
+            <span class="boton">30 días</span> o <span class="boton">Todo</span>, o escriba las
+            fechas <strong>Desde</strong> y <strong>Hasta</strong>.
+          </li>
+          <li>
+            Si lo necesita, filtre por usuario, por acción (por ejemplo <em>Ingreso fallido</em> o
+            <em>Edición</em>) o por módulo (Usuarios, Roles, Tasas de cambio…).
+          </li>
+          <li>
+            En el buscador puede escribir un nombre, correo, dirección IP o cualquier dato guardado,
+            por ejemplo el correo con el que alguien intentó entrar. Pulse Enter para buscar.
+          </li>
+          <li>
+            Haga clic en una fila o en <strong>Ver detalle</strong> para abrir el evento: verá la
+            fecha y hora exactas (hora de Caracas), el usuario, el módulo, la IP, el navegador y la
+            tabla de datos. Los campos que cambiaron aparecen primero y resaltados: tachado en rojo
+            el valor anterior y en verde el nuevo.
+          </li>
+          <li>
+            Abajo puede elegir cuántos eventos ver por página (10, 25, 50 o 100) y moverse con
+            <span class="boton">← Anterior</span> y <span class="boton">Siguiente →</span>.
+          </li>
+        </ol>
+        <p>
+          <span class="boton">Limpiar filtros</span> vuelve a mostrar todo. Los filtros quedan en la
+          dirección de la página: si la copia y la envía, otra persona con permiso verá lo mismo. La
+          IP <strong>Este equipo</strong> significa que la acción se hizo desde la misma computadora
+          donde está instalado el sistema.
+        </p>
+
+        <h3>Exportar a Excel</h3>
+        <p>
+          <span class="boton">Exportar a Excel (CSV)</span> descarga los eventos que cumplen los
+          filtros actuales (hasta 5.000), con fecha y hora de Caracas y los datos de antes y
+          después. El archivo se abre con doble clic en Excel. La exportación también queda
+          registrada en la bitácora.
         </p>
       </section>
 

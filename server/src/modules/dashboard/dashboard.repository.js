@@ -1,10 +1,8 @@
 import { db } from '../../config/db.js'
+import { entreDiasCaracas } from '../../utils/fechas.js'
 
 // La bitácora se guarda en UTC; Venezuela es UTC−4 todo el año
 const FECHA_CARACAS = "DATE_FORMAT(b.fecha - INTERVAL 4 HOUR, '%Y-%m-%d')"
-
-/** Inicio (UTC) del día de Caracas 'YYYY-MM-DD' */
-const inicioDiaCaracas = (fecha) => `${fecha} 04:00:00`
 
 export async function conteoUsuarios() {
   const [estados, porRol] = await Promise.all([
@@ -54,8 +52,7 @@ export async function resumenDia(fecha) {
   const filas = await db('bitacora as b')
     .select('b.accion')
     .count({ n: '*' })
-    .where('b.fecha', '>=', inicioDiaCaracas(fecha))
-    .where('b.fecha', '<', db.raw('? + INTERVAL 1 DAY', [inicioDiaCaracas(fecha)]))
+    .modify((q) => entreDiasCaracas(q, 'b.fecha', { desde: fecha, hasta: fecha }, db))
     .groupBy('b.accion')
   const por = Object.fromEntries(filas.map((f) => [f.accion, Number(f.n)]))
   return {
@@ -71,8 +68,7 @@ export async function actividadPorDia(desde, hasta) {
   const filas = await db('bitacora as b')
     .select(db.raw(`${FECHA_CARACAS} AS dia`))
     .count({ total: '*' })
-    .where('b.fecha', '>=', inicioDiaCaracas(desde))
-    .where('b.fecha', '<', db.raw('? + INTERVAL 1 DAY', [inicioDiaCaracas(hasta)]))
+    .modify((q) => entreDiasCaracas(q, 'b.fecha', { desde, hasta }, db))
     .groupBy('dia')
     .orderBy('dia')
   return filas.map((f) => ({ fecha: f.dia, total: Number(f.total) }))

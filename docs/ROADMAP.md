@@ -4,15 +4,15 @@ Cada entregable incluye **backend + frontend**. Cada fase se trabaja en ramas `f
 
 | Fase | Release | Contenido | Estado |
 |---|---|---|---|
-| 0 | v0.0.1 | Setup | ⬜ |
-| 1 | v0.1.0 | Autenticación, usuarios, roles, bitácora base | ⬜ |
+| 0 | v0.0.1 | Setup | ✅ |
+| 1 | v0.1.0 | Autenticación, usuarios, roles, bitácora base | ✅ |
 | 1b | v0.1.1 | Tasas BCV/Binance y conversor Bs ⇄ $/€ | ✅ |
 | 2 | v0.2.0 | Empresa, ejercicios y períodos | ⬜ |
 | 3 | v0.3.0 | Plan de cuentas | ⬜ |
 | 4 | v0.4.0 | Comprobantes (núcleo) — **MVP interno** | ⬜ |
 | 5 | v0.5.0 | Libro Diario y Libro Mayor (PDF/Excel) — **MVP usable** | ⬜ |
 | 6 | v0.6.0 | Cierre de período, dashboard, importación de resúmenes | ⬜ |
-| 7 | v1.0.0 | Endurecimiento, migración de datos Sparrow, capacitación | ⬜ |
+| 7 | v1.0.0 | Endurecimiento, carga de los datos contables del Hospital CECIAMB, capacitación | ⬜ |
 | 8 | v1.x | Extras: Balance de Comprobación, Estados Financieros, multimoneda, conciliación | ⬜ |
 
 ---
@@ -31,7 +31,7 @@ Cada entregable incluye **backend + frontend**. Cada fase se trabaja en ramas `f
 - [x] UI: landing page, login, pantalla interna protegida.
 - [x] API: login/logout/me, CRUD usuarios, roles dinámicos y matriz de permisos por módulo (ver/modificar/control total) verificada en el servidor, `bitacora.registrar()`.
 - [x] UI: gestión de usuarios (crear con clave temporal, editar, habilitar/deshabilitar, archivar, restablecer clave), roles y permisos, cambio de clave obligatorio, Ajustes (perfil, tema claro/oscuro, ayudas), menú lateral estilo MGG.
-- [ ] UI: consulta de bitácora.
+- [x] UI: consulta de bitácora (filtros, detalle antes/después, exportar CSV) y bitácora inmutable en la BD (triggers).
 
 ## Fase 2 — Empresa y períodos
 - [ ] API + UI: datos de empresa, ejercicios, generación de 12 períodos, abrir/cerrar.
@@ -61,6 +61,6 @@ Cada entregable incluye **backend + frontend**. Cada fase se trabaja en ramas `f
 - [ ] Adjuntos de documentos soporte.
 
 ## Fase 7 — Release v1.0
-- [ ] Migración de plan de cuentas (y saldos/histórico) desde Sparrow.
+- [ ] Carga de los datos contables del Hospital CECIAMB (plan de cuentas, saldos e histórico). Los datos son del hospital: Sparrow es solo la herramienta que los usa hoy y de donde se exportarán.
 - [ ] Revisión de seguridad, backups automáticos con `mysqldump`, manual de usuario.
 - [ ] Pruebas de aceptación con los contadores.

@@ -136,7 +136,7 @@ bitacora(id, usuario_id, accion, entidad, entidad_id, datos_antes JSON, datos_de
 
 1. ~~¿Multimoneda Bs./USD?~~ Sí: Bs., $ y €, tasa BCV + referencia Binance (resuelto 05/10/2026).
 2. ¿Una sola empresa o varias (multiempresa como Sparrow)?
-3. ¿Se dispone del plan de cuentas actual de Sparrow para migrarlo? ¿Y del histórico de comprobantes?
+3. ¿Se dispone del plan de cuentas actual del Hospital CECIAMB (hoy registrado en Sparrow) para cargarlo? ¿Y del histórico de comprobantes?
 4. ¿Formato exacto de Libro Diario/Mayor exigido (modelo impreso actual)?
 5. ¿Uso solo en una PC o en red local (varias PCs contra un servidor)?
 6. ¿Formato de los archivos de resumen que llegarían de ventas/compras/nómina?

@@ -1,6 +1,7 @@
 import { db } from '../../config/db.js'
 import { env } from '../../config/env.js'
 import { logger } from '../../config/logger.js'
+import { fechaHoyVE } from '../../utils/fechas.js'
 import { dividir, multiplicar, restar } from '../../utils/money.js'
 import { ACCIONES, registrar } from '../bitacora/bitacora.service.js'
 import { consultarBcv, consultarBinance, consultarHistorialBcv } from './tasas.fuentes.js'
@@ -37,9 +38,7 @@ export function proximoHorarioBcv(ahora = new Date(), horas = env.tasas.horasBcv
   return new Date(horariosCercanos(ahora, horas).find((t) => t > ahora.getTime()))
 }
 
-export function fechaHoyVE(ahora = new Date()) {
-  return new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Caracas' }).format(ahora)
-}
+export { fechaHoyVE }
 
 // 'YYYY-MM-DD HH:mm:ss' (UTC) → Date
 const fechaUtc = (s) => new Date(s.replace(' ', 'T') + 'Z')
