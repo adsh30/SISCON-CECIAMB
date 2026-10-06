@@ -60,6 +60,11 @@ Cada entregable incluye **backend + frontend**. Cada fase se trabaja en ramas `f
 - [ ] Importación CSV/Excel de resúmenes (ventas, compras, honorarios, nómina) → comprobante en borrador.
 - [ ] Adjuntos de documentos soporte.
 
+## Operación continua
+- [x] Bot de despliegue: publica solo cada cambio de `main` en la PC servidor (respaldo, pruebas, migración, verificación y vuelta atrás). Ver `docs/DESPLIEGUE.md`.
+- [x] CI en GitHub Actions: lint, pruebas con MariaDB y compilación en cada cambio a `dev`/`main`.
+- [x] Modo producción: el servidor entrega la interfaz compilada en un solo puerto, apto para http en la red interna.
+
 ## Fase 7 — Release v1.0
 - [ ] Carga de los datos contables del Hospital CECIAMB (plan de cuentas, saldos e histórico). Los datos son del hospital: Sparrow es solo la herramienta que los usa hoy y de donde se exportarán.
 - [ ] Revisión de seguridad, backups automáticos con `mysqldump`, manual de usuario.

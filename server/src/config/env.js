@@ -28,6 +28,8 @@ export const env = {
     jwtSecret: required('JWT_SECRET'),
     jwtExpiresIn: process.env.JWT_EXPIRES_IN ?? '8h',
     cookieMaxAgeMs: 8 * 60 * 60 * 1000,
+    // Solo con https: en la red interna del hospital el sistema se usa por http
+    cookieSecure: process.env.COOKIE_SECURE === 'true',
   },
   tasas: {
     // Horas (Caracas, 24 h) en que el servidor actualiza solo la tasa del BCV
