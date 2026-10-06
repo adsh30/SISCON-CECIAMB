@@ -80,12 +80,12 @@ function Logo({ empresa, puedeEditar }) {
         Aparecerá en el encabezado de los libros y comprobantes impresos. PNG, JPG o WEBP de hasta
         500 KB; mejor si es horizontal y con fondo blanco o transparente.
       </p>
-      <div className="mt-4 grid h-36 place-items-center rounded-xl border border-dashed border-linea bg-papel p-4">
+      <div className="mt-4 flex h-36 items-center justify-center overflow-hidden rounded-xl border border-dashed border-linea bg-papel p-4">
         {empresa.tieneLogo ? (
           <img
             src={`/api/v1/empresa/logo?v=${encodeURIComponent(empresa.actualizadoEn)}`}
             alt={`Logo de ${empresa.razonSocial}`}
-            className="max-h-full max-w-full object-contain"
+            className="size-full object-contain"
           />
         ) : (
           <span className="text-sm text-pizarra">Sin logo cargado</span>
