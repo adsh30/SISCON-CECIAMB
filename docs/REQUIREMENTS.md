@@ -30,7 +30,7 @@ Usuarios previstos: ~3 contables + administrador(es) + auditoría.
 - RF-02.1 Datos de la empresa: razón social, RIF, dirección, moneda base (Bs.), logo para reportes.
 - RF-02.2 Ejercicio económico (año fiscal) y **períodos mensuales** con estado: Abierto / Cerrado.
 - RF-02.3 No se puede registrar ni modificar comprobantes en períodos cerrados.
-- RF-02.4 (S) Moneda secundaria (USD) con tasa de cambio por comprobante.
+- RF-02.4 (M) **Multimoneda Bs. / $ / €**: tasa oficial BCV (USD y EUR) obtenida automáticamente de ve.dolarapi.com y referencia Binance P2P (USDT/VES), con historial en `tasas_cambio`, barra de tasas visible en todo el sistema y conversor Bs ⇄ $/€. Cada comprobante guardará la tasa usada.
 
 ### RF-03 Plan de cuentas (M) — igual que Sparrow
 - RF-03.1 Catálogo jerárquico con código por niveles (ej. `1`, `1.1`, `1.1.01`, `1.1.01.001`), máscara configurable.
@@ -90,7 +90,7 @@ Usuarios previstos: ~3 contables + administrador(es) + auditoría.
 | RNF-04 | **Rendimiento**: listados < 1 s con 100 000 renglones; libros de un año < 5 s. Índices en fecha, cuenta, tipo, estado. |
 | RNF-05 | **Usabilidad**: español, formato numérico venezolano (`1.234.567,89`), fechas `dd/mm/aaaa`, captura de renglones con teclado (Tab/Enter, autocompletar cuenta). Responsive, prioridad escritorio. |
 | RNF-06 | **Respaldo**: script de backup diario `mysqldump` documentado. |
-| RNF-07 | **Mantenibilidad**: JavaScript (ESM), ESLint + Prettier, estructura por módulos, tests (Vitest/Supertest) en reglas contables críticas. |
+| RNF-07 | **Mantenibilidad**: JavaScript (ESM), oxlint + Prettier, estructura por módulos, tests (Vitest/Supertest) en reglas contables críticas. |
 | RNF-08 | **Despliegue**: local (red interna), Node 24 LTS + MariaDB 13 (compatible MySQL). |
 | RNF-09 | **Normativa**: libros conforme a práctica venezolana (VEN-NIF / requerimientos SENIAT); comprobantes numerados correlativos sin huecos. |
 
@@ -134,9 +134,9 @@ bitacora(id, usuario_id, accion, entidad, entidad_id, datos_antes JSON, datos_de
 
 ## 6. Preguntas abiertas (a confirmar con el cliente)
 
-1. ¿Multimoneda Bs./USD obligatoria desde el MVP? ¿Fuente de la tasa (BCV)?
+1. ~~¿Multimoneda Bs./USD?~~ Sí: Bs., $ y €, tasa BCV + referencia Binance (resuelto 05/10/2026).
 2. ¿Una sola empresa o varias (multiempresa como Sparrow)?
-3. ¿Se dispone del plan de cuentas actual de Sparrow para migrarlo? ¿Y del histórico de comprobantes?
+3. ¿Se dispone del plan de cuentas actual del Hospital CECIAMB (hoy registrado en Sparrow) para cargarlo? ¿Y del histórico de comprobantes?
 4. ¿Formato exacto de Libro Diario/Mayor exigido (modelo impreso actual)?
 5. ¿Uso solo en una PC o en red local (varias PCs contra un servidor)?
 6. ¿Formato de los archivos de resumen que llegarían de ventas/compras/nómina?

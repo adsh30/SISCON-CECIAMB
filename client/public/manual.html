@@ -1,0 +1,1107 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manual de usuario · Sistema contable CECIAMB</title>
+    <link rel="icon" type="image/svg+xml" href="/logo.svg" />
+    <script>
+      // Mismo tema que el sistema (Ajustes > Apariencia)
+      try {
+        var t = localStorage.getItem('siscon.tema') || 'sistema'
+        if (t === 'sistema')
+          t = matchMedia('(prefers-color-scheme: dark)').matches ? 'oscuro' : 'claro'
+        document.documentElement.dataset.tema = t
+      } catch (e) {}
+    </script>
+    <style>
+      :root {
+        --tinta: #15294a;
+        --pizarra: #5a6782;
+        --papel: #f5f7fb;
+        --superficie: #ffffff;
+        --superficie-2: #eef2f8;
+        --linea: #dfe5ef;
+        --marca: #004191;
+        --marca-claro: #eaf0f9;
+        --acento: #e2001a;
+        --exito: #1e8a5a;
+        --aviso: #a15c07;
+        --aviso-claro: #fdf3e2;
+        --alerta: #b42318;
+        color-scheme: light;
+      }
+      :root[data-tema='oscuro'] {
+        --tinta: #e6ecf5;
+        --pizarra: #9aa7bd;
+        --papel: #0d1524;
+        --superficie: #131e33;
+        --superficie-2: #1a2843;
+        --linea: #24344f;
+        --marca: #6d9be6;
+        --marca-claro: #172a4a;
+        --acento: #ff4a5c;
+        --exito: #3fc98a;
+        --aviso: #f0b54a;
+        --aviso-claro: #3a2c12;
+        --alerta: #ff7a72;
+        color-scheme: dark;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--papel);
+        color: var(--tinta);
+        font:
+          16px/1.65 'Public Sans',
+          ui-sans-serif,
+          system-ui,
+          'Segoe UI',
+          sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+      .contenedor {
+        max-width: 860px;
+        margin: 0 auto;
+        padding: 2.5rem 1rem 4rem;
+      }
+      a {
+        color: var(--marca);
+      }
+      header.portada {
+        display: flex;
+        align-items: center;
+        gap: 1.25rem;
+        padding-bottom: 1.75rem;
+        border-bottom: 1px solid var(--linea);
+      }
+      header.portada svg {
+        width: 64px;
+        height: auto;
+        flex-shrink: 0;
+      }
+      header.portada h1 {
+        margin: 0;
+        font-size: 2rem;
+        line-height: 1.15;
+        letter-spacing: -0.01em;
+      }
+      header.portada p {
+        margin: 0.25rem 0 0;
+        color: var(--pizarra);
+      }
+      .fecha {
+        font-size: 0.85rem;
+      }
+      .intro {
+        margin: 1.75rem 0;
+        font-size: 1.05rem;
+      }
+      nav.indice {
+        background: var(--superficie);
+        border: 1px solid var(--linea);
+        border-radius: 14px;
+        padding: 1.25rem 1.5rem;
+      }
+      nav.indice h2 {
+        margin: 0 0 0.5rem;
+        font-size: 1rem;
+      }
+      nav.indice ol {
+        columns: 2;
+        column-gap: 2rem;
+        margin: 0;
+        padding-left: 1.25rem;
+      }
+      nav.indice li {
+        break-inside: avoid;
+        padding: 0.1rem 0;
+      }
+      nav.indice a {
+        text-decoration: none;
+      }
+      nav.indice a:hover {
+        text-decoration: underline;
+      }
+      section {
+        background: var(--superficie);
+        border: 1px solid var(--linea);
+        border-radius: 14px;
+        padding: 1.5rem 1.75rem;
+        margin: 1.25rem 0;
+        scroll-margin-top: 1rem;
+      }
+      section h2 {
+        margin: 0 0 0.75rem;
+        font-size: 1.35rem;
+        padding-left: 0.75rem;
+        border-left: 4px solid var(--marca);
+        line-height: 1.3;
+      }
+      section h3 {
+        margin: 1.5rem 0 0.4rem;
+        font-size: 1.05rem;
+      }
+      p {
+        margin: 0.6rem 0;
+      }
+      ul,
+      ol {
+        padding-left: 1.4rem;
+      }
+      li {
+        margin: 0.3rem 0;
+      }
+      li::marker {
+        color: var(--marca);
+        font-weight: 600;
+      }
+      .boton {
+        display: inline-block;
+        padding: 0 0.45rem;
+        border: 1px solid var(--linea);
+        border-radius: 6px;
+        background: var(--superficie-2);
+        font-size: 0.9em;
+        font-weight: 600;
+        white-space: nowrap;
+      }
+      .nota,
+      .cuidado {
+        border-radius: 0 10px 10px 0;
+        padding: 0.75rem 1rem;
+        margin: 1rem 0;
+      }
+      .nota {
+        border-left: 3px solid var(--marca);
+        background: var(--marca-claro);
+      }
+      .cuidado {
+        border-left: 3px solid var(--aviso);
+        background: var(--aviso-claro);
+      }
+      .nota strong:first-child,
+      .cuidado strong:first-child {
+        display: block;
+        margin-bottom: 0.15rem;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 0.75rem 0;
+        font-size: 0.92rem;
+      }
+      th,
+      td {
+        text-align: left;
+        padding: 0.5rem 0.6rem;
+        border-bottom: 1px solid var(--linea);
+        vertical-align: top;
+      }
+      th {
+        color: var(--pizarra);
+        font-weight: 600;
+        background: var(--superficie-2);
+      }
+      .tabla-scroll {
+        overflow-x: auto;
+      }
+      code {
+        font-family: ui-monospace, 'Cascadia Mono', Consolas, monospace;
+        font-size: 0.9em;
+        background: var(--superficie-2);
+        padding: 0.05rem 0.35rem;
+        border-radius: 5px;
+      }
+      .si {
+        color: var(--exito);
+        font-weight: 600;
+      }
+      .no {
+        color: var(--pizarra);
+      }
+      .acciones {
+        display: flex;
+        gap: 0.5rem;
+        justify-content: flex-end;
+        margin-top: 1.5rem;
+      }
+      .acciones button {
+        font: inherit;
+        font-size: 0.9rem;
+        font-weight: 600;
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        border: 1px solid var(--linea);
+        background: var(--superficie);
+        color: var(--tinta);
+        cursor: pointer;
+      }
+      footer {
+        margin-top: 2rem;
+        color: var(--pizarra);
+        font-size: 0.85rem;
+        text-align: center;
+      }
+      @media (max-width: 640px) {
+        nav.indice ol {
+          columns: 1;
+        }
+        section {
+          padding: 1.25rem;
+        }
+        header.portada h1 {
+          font-size: 1.6rem;
+        }
+      }
+      @media print {
+        :root,
+        :root[data-tema='oscuro'] {
+          --tinta: #000;
+          --pizarra: #444;
+          --papel: #fff;
+          --superficie: #fff;
+          --superficie-2: #f2f2f2;
+          --linea: #ccc;
+          --marca: #004191;
+          --marca-claro: #f2f5fa;
+          --aviso-claro: #fff7e8;
+        }
+        .acciones {
+          display: none;
+        }
+        section {
+          break-inside: avoid-page;
+          border-color: #ccc;
+        }
+        nav.indice {
+          break-after: page;
+        }
+        a {
+          color: inherit;
+          text-decoration: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="contenedor">
+      <div class="acciones">
+        <button type="button" onclick="window.print()">Imprimir o guardar en PDF</button>
+      </div>
+
+      <header class="portada">
+        <svg viewBox="0 0 264 292" aria-hidden="true">
+          <g fill="#E2001A">
+            <polygon points="5,21 17,5 73,5 85,21 73,37 17,37" />
+            <polygon points="5,145.5 17,129.5 73,129.5 85,145.5 73,161.5 17,161.5" />
+            <polygon points="178,145.5 190,129.5 246,129.5 258,145.5 246,161.5 190,161.5" />
+            <polygon points="178,270 190,254 246,254 258,270 246,286 190,286" />
+          </g>
+          <g fill="#004191">
+            <polygon points="88,31 99,41 99,125 88,135 77,125 77,41" />
+            <polygon points="175,32 186,42 186,124 175,134 164,124 164,42" />
+            <polygon points="92,145.5 104,129.5 158,129.5 170,145.5 158,161.5 104,161.5" />
+            <polygon points="87.5,156 98.5,166 98.5,249 87.5,259 76.5,249 76.5,166" />
+            <polygon points="174.5,156 185.5,166 185.5,249 174.5,259 163.5,249 163.5,166" />
+          </g>
+        </svg>
+        <div>
+          <h1>Manual de usuario</h1>
+          <p>Sistema contable · Hospital de Clínicas CECIAMB</p>
+          <p class="fecha">Versión 0.2 · actualizado el 05/10/2026</p>
+        </div>
+      </header>
+
+      <p class="intro">
+        Este manual explica, paso a paso, cómo usar el sistema contable del Hospital de Clínicas
+        CECIAMB. Los nombres de botones y mensajes aparecen tal como se ven en pantalla, por ejemplo
+        <span class="boton">Agregar usuario</span>. Cada persona ve solo los módulos que su rol
+        tiene permitidos, así que es posible que algunas opciones descritas aquí no aparezcan en su
+        menú.
+      </p>
+
+      <nav class="indice" aria-label="Contenido">
+        <h2>Contenido</h2>
+        <ol>
+          <li><a href="#antes">Antes de empezar</a></li>
+          <li><a href="#ingresar">Iniciar sesión</a></li>
+          <li><a href="#primer-ingreso">Primer ingreso: crear su clave</a></li>
+          <li>
+            <a href="#pantalla">Cómo está organizada la pantalla</a> (incluye el
+            <a href="#inicio">tablero de Inicio</a>)
+          </li>
+          <li><a href="#tasas">Tasas de cambio y conversor</a></li>
+          <li><a href="#usuarios">Usuarios</a></li>
+          <li><a href="#roles">Roles y permisos</a></li>
+          <li><a href="#ajustes">Ajustes</a></li>
+          <li><a href="#bitacora">Bitácora de auditoría: consultar y exportar</a></li>
+          <li><a href="#problemas">Problemas frecuentes</a></li>
+          <li><a href="#proximamente">Próximos módulos</a></li>
+        </ol>
+      </nav>
+
+      <section id="antes">
+        <h2>1. Antes de empezar</h2>
+        <ul>
+          <li>
+            Use un navegador actualizado: Google Chrome, Microsoft Edge o Mozilla Firefox, en una
+            computadora de la red interna del hospital.
+          </li>
+          <li>
+            Necesita un <strong>correo</strong> y una <strong>clave temporal</strong>. Ambos se los
+            entrega el administrador del sistema; nadie más puede crearle una cuenta.
+          </li>
+          <li>
+            Su clave es personal. Todo lo que se haga con su usuario queda registrado a su nombre.
+          </li>
+        </ul>
+      </section>
+
+      <section id="ingresar">
+        <h2>2. Iniciar sesión</h2>
+        <ol>
+          <li>
+            Abra la dirección del sistema en el navegador. Verá la página de bienvenida; pulse
+            <span class="boton">Iniciar sesión</span>.
+          </li>
+          <li>Escriba su <strong>Correo</strong> y su <strong>Contraseña</strong>.</li>
+          <li>
+            Si quiere comprobar lo que escribió en la contraseña, pulse
+            <span class="boton">Mostrar</span>; vuelva a ocultarla con
+            <span class="boton">Ocultar</span>.
+          </li>
+          <li>Pulse <span class="boton">Entrar</span>.</li>
+        </ol>
+
+        <h3>Mensajes que puede ver</h3>
+        <div class="tabla-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>Mensaje</th>
+                <th>Qué significa y qué hacer</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Correo o contraseña incorrectos</td>
+                <td>Algún dato no coincide. Revise mayúsculas, minúsculas y el correo completo.</td>
+              </tr>
+              <tr>
+                <td>Demasiados intentos fallidos. Su usuario queda bloqueado 15 minutos</td>
+                <td>
+                  Tras <strong>5 intentos fallidos seguidos</strong> el usuario se bloquea 15
+                  minutos, aunque luego escriba la clave correcta. Espere o pida al administrador
+                  que le restablezca la clave (eso también lo desbloquea).
+                </td>
+              </tr>
+              <tr>
+                <td>Su usuario está desactivado. Contacte al administrador</td>
+                <td>
+                  Su acceso fue deshabilitado. Solo el administrador puede habilitarlo de nuevo.
+                </td>
+              </tr>
+              <tr>
+                <td>No hay conexión con el servidor…</td>
+                <td>
+                  El equipo donde funciona el sistema está apagado o sin red. Avise al área de
+                  sistemas.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="nota">
+          <strong>¿Olvidó su clave?</strong>
+          El sistema no envía correos de recuperación. Pida al administrador que use
+          <span class="boton">Restablecer clave</span>; le entregará una clave temporal nueva.
+        </div>
+        <p>
+          La sesión dura <strong>8 horas</strong>. Después de ese tiempo el sistema le pedirá
+          iniciar sesión de nuevo.
+        </p>
+      </section>
+
+      <section id="primer-ingreso">
+        <h2>3. Primer ingreso: crear su clave personal</h2>
+        <p>
+          La primera vez que entra con una clave temporal (o después de que se la restablezcan), el
+          sistema muestra la pantalla <strong>Cree su clave personal</strong> y no deja usar ningún
+          otro módulo hasta completarla.
+        </p>
+        <ol>
+          <li>En <strong>Clave actual</strong>, escriba la clave temporal que le entregaron.</li>
+          <li>
+            En <strong>Clave nueva</strong>, escriba la clave que usará de ahora en adelante. Debajo
+            del campo verá en verde (✓) cada requisito que ya cumple:
+            <ul>
+              <li>Al menos 8 caracteres.</li>
+              <li>Al menos una letra.</li>
+              <li>Al menos un número.</li>
+            </ul>
+          </li>
+          <li>En <strong>Repita la clave nueva</strong>, escríbala otra vez exactamente igual.</li>
+          <li>
+            Pulse <span class="boton">Guardar y entrar</span>. El botón solo se activa cuando se
+            cumplen todos los requisitos y ambas claves coinciden.
+          </li>
+        </ol>
+        <p>La clave nueva no puede ser igual a la actual.</p>
+        <p>
+          Si prefiere hacerlo después, pulse <span class="boton">Salir sin cambiar la clave</span>;
+          la próxima vez que entre volverá a esta pantalla.
+        </p>
+      </section>
+
+      <section id="pantalla">
+        <h2>4. Cómo está organizada la pantalla</h2>
+
+        <h3>Menú lateral (izquierda)</h3>
+        <ul>
+          <li>
+            Está dividido en <strong>Contabilidad</strong> (Inicio, Comprobantes, Libro Diario,
+            Libro Mayor, Plan de cuentas, Períodos) y <strong>Sistema</strong> (Usuarios y roles,
+            Bitácora, Ajustes, Manual del sistema).
+          </li>
+          <li>La opción en la que está aparece resaltada en azul con una barra a la izquierda.</li>
+          <li>
+            Las opciones con la palabra <em>pronto</em> aún no están disponibles; se habilitarán en
+            próximas versiones.
+          </li>
+          <li>Solo aparecen los módulos que su rol puede ver.</li>
+          <li>
+            Al pie del menú está su ficha: iniciales, nombre y rol. El ícono de la puerta (<strong
+              >Cerrar sesión</strong
+            >) termina su sesión.
+          </li>
+        </ul>
+
+        <h3>Barra superior</h3>
+        <ul>
+          <li>
+            <strong>Botón ☰</strong>: en computadora, contrae el menú para mostrar solo los íconos
+            (pase el ratón sobre un ícono para ver su nombre). En el teléfono, abre y cierra el
+            menú.
+          </li>
+          <li>
+            <strong>Tasas</strong>: la cotización del día (vea la <a href="#tasas">sección 5</a>).
+          </li>
+          <li>
+            <strong>Botón (?)</strong>: muestra u oculta los textos de ayuda gris que explican cada
+            pantalla. Cuando está en azul, las ayudas están visibles.
+          </li>
+        </ul>
+
+        <h3>Avisos</h3>
+        <p>
+          Al completar una acción aparece un aviso <strong>arriba, al centro</strong> de la
+          pantalla, que desaparece solo a los 6 segundos (o antes, con su ✕). Por ejemplo, al editar
+          un usuario dice <strong>Usuario actualizado</strong> con su nombre y correo. Si pulsa
+          <span class="boton">Guardar cambios</span> sin haber cambiado nada, el aviso dice
+          <strong>No había cambios que guardar</strong> y no se registra nada en la bitácora.
+        </p>
+
+        <h3 id="inicio">La pantalla de Inicio (tablero)</h3>
+        <p>
+          Es lo primero que ve al entrar. Resume el estado del sistema y se actualiza sola cada 5
+          minutos. Cada bloque aparece solo si su rol puede ver ese módulo.
+        </p>
+        <div class="tabla-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>Bloque</th>
+                <th>Qué muestra</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Dólar BCV, Euro BCV, Binance USDT</strong></td>
+                <td>
+                  La tasa vigente y su variación frente al día anterior publicado, por ejemplo
+                  <code>↑0,12 % vs 05-oct.</code> En rojo cuando la tasa sube (el bolívar pierde
+                  valor) y en verde cuando baja. En Binance se agrega la brecha con el BCV. Haga
+                  clic en una de estas tarjetas para verla en la gráfica.
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Usuarios habilitados</strong></td>
+                <td>
+                  Cantidad de usuarios que pueden entrar, con los deshabilitados y archivados. Al
+                  hacer clic abre <strong>Usuarios y roles</strong>. Si su rol no ve usuarios, en su
+                  lugar aparece la hora de la <strong>Próxima tasa BCV</strong>.
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Evolución de la tasa</strong></td>
+                <td>
+                  Gráfica de la tasa elegida (<span class="boton">$ BCV</span>,
+                  <span class="boton">€ BCV</span> o <span class="boton">USDT Binance</span>). El
+                  historial oficial del BCV viene desde enero de 2023; el de Binance se arma con las
+                  consultas del propio sistema. Arriba a la derecha indica cuánto cambió en el
+                  período.
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Actividad en el sistema</strong></td>
+                <td>
+                  Barras con la cantidad de eventos de la bitácora (ingresos, cambios, etc.) por
+                  día, semana o mes.
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Usuarios por rol</strong></td>
+                <td>Cuántos usuarios tiene cada rol, con una barra proporcional.</td>
+              </tr>
+              <tr>
+                <td><strong>Actividad reciente</strong></td>
+                <td>
+                  Los últimos 8 eventos (quién, qué y hace cuánto) y los totales de hoy: eventos,
+                  ingresos e intentos fallidos. Pase el ratón sobre el tiempo para ver la fecha y
+                  hora exactas.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <h3>Cambiar el período de una gráfica</h3>
+        <ol>
+          <li>
+            Elija <span class="boton">7 días</span>, <span class="boton">30 días</span>,
+            <span class="boton">90 días</span> o <span class="boton">12 meses</span>. Con 90 días la
+            gráfica se agrupa por semana y con 12 meses por mes.
+          </li>
+          <li>
+            Para fechas exactas, elija <span class="boton">Rango</span> y escriba las fechas
+            <strong>Desde</strong> y <strong>Hasta</strong>.
+          </li>
+          <li>
+            En la lista de la derecha puede cambiar la agrupación: <strong>Por día</strong>,
+            <strong>Por semana</strong> o <strong>Por mes</strong>. En las tasas se muestra el
+            último valor de cada período; en la actividad, la suma.
+          </li>
+          <li>Pase el ratón sobre la gráfica para ver el valor exacto de cada punto o barra.</li>
+        </ol>
+      </section>
+
+      <section id="tasas">
+        <h2>5. Tasas de cambio y conversor</h2>
+        <p>La barra superior muestra, por ejemplo:</p>
+        <p>
+          <code>BCV $ 871,37 € 981,18 | BIN Bs 986,85 ↓11,70 % 05-oct. 12:26 p. m. CCS</code>
+        </p>
+        <div class="tabla-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>Dato</th>
+                <th>Significado</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>BCV $</strong></td>
+                <td>Tasa oficial del Banco Central de Venezuela: bolívares por 1 dólar.</td>
+              </tr>
+              <tr>
+                <td><strong>BCV €</strong></td>
+                <td>Tasa oficial del BCV para el euro.</td>
+              </tr>
+              <tr>
+                <td><strong>BIN Bs</strong></td>
+                <td>
+                  Referencia del mercado: precio del USDT en Binance P2P (promedio de compra y
+                  venta).
+                </td>
+              </tr>
+              <tr>
+                <td><strong>↓ %</strong></td>
+                <td>
+                  Margen de ahorro pagando a tasa BCV en vez de Binance:
+                  <code>(Binance − BCV) ÷ Binance × 100</code>. En verde cuando es positivo.
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Fecha</strong></td>
+                <td>Día de vigencia de la tasa del BCV.</td>
+              </tr>
+              <tr>
+                <td><strong>Hora CCS</strong></td>
+                <td>
+                  Hora oficial de Venezuela (Caracas) en formato de 12 horas, por ejemplo
+                  <code>12:26 p. m. CCS</code>. Se actualiza sola cada minuto.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>
+          En pantallas pequeñas se ocultan algunos datos (euro, Binance o fecha) para ahorrar
+          espacio; el conversor siempre los muestra todos.
+        </p>
+        <p>
+          La tasa del BCV se actualiza <strong>automáticamente dos veces al día</strong>, a las
+          <strong>9:00 a. m.</strong> y a las <strong>5:00 p. m.</strong> (hora de Caracas), aunque
+          nadie esté usando el sistema. Si el servidor estaba apagado a esa hora, la consulta al
+          encenderlo. La de Binance se consulta cada 10 minutos. Cada valor queda en su historial.
+          Al pie del conversor verá la hora de la próxima actualización del BCV.
+        </p>
+
+        <h3>Convertir un monto</h3>
+        <ol>
+          <li>Haga clic sobre la barra de tasas. Se abre el <strong>Conversor</strong>.</li>
+          <li>
+            Escriba el monto. Puede usar el formato venezolano (<code>1.250,50</code>) o con punto
+            decimal (<code>1250.50</code>).
+          </li>
+          <li>En <strong>Tasa</strong>, elija Dólar BCV, Euro BCV o Binance (USDT).</li>
+          <li>
+            El resultado aparece en <strong>Equivale a</strong>. El botón
+            <span class="boton">⇄</span> invierte la conversión (de divisa a bolívares, o de
+            bolívares a divisa).
+          </li>
+          <li>Cierre el conversor con la tecla Esc o haciendo clic fuera de él.</li>
+        </ol>
+        <p>
+          Los cálculos son exactos al céntimo; el sistema no usa redondeos de calculadora común.
+        </p>
+
+        <h3>Actualizar las tasas</h3>
+        <p>
+          Las personas con permiso de <strong>Modificar</strong> en Tasas de cambio (por defecto,
+          Administrador y Contador general) ven al pie del conversor el enlace
+          <span class="boton">Actualizar tasas ahora</span>, que consulta las fuentes en ese
+          momento. Esta acción queda registrada en la bitácora.
+        </p>
+        <div class="cuidado">
+          <strong>Si aparece un punto naranja en la barra</strong>
+          No se pudo consultar alguna fuente (por ejemplo, sin internet). El sistema muestra la
+          última tasa guardada; pase el ratón sobre el punto para leer el detalle. En el conversor
+          verá la hora de la última consulta.
+        </div>
+      </section>
+
+      <section id="usuarios">
+        <h2>6. Usuarios</h2>
+        <p>
+          Menú <strong>Sistema → Usuarios y roles</strong>, pestaña
+          <span class="boton">Usuarios</span>. Para ver esta pantalla se necesita permiso de
+          <strong>Ver</strong> en «Usuarios y roles»; para crear o cambiar algo, permiso de
+          <strong>Modificar</strong>. Por defecto solo el Administrador puede modificar, y el
+          Auditor puede consultar.
+        </p>
+
+        <h3>Indicadores y filtros</h3>
+        <ul>
+          <li>
+            Arriba aparecen tres totales: <strong>Usuarios activos</strong>,
+            <strong>Deshabilitados</strong> y <strong>Archivados</strong>. Haga clic en uno para
+            filtrar la lista; otro clic quita el filtro.
+          </li>
+          <li>
+            El buscador encuentra por nombre, apellido, cédula, correo o rol. Si escribe varias
+            palabras, deben coincidir todas.
+          </li>
+          <li>
+            Los selectores filtran por rol y por estado. La lista normal muestra activos y
+            deshabilitados; los archivados solo aparecen al elegir <em>Archivados</em>.
+          </li>
+          <li>
+            Bajo el nombre puede aparecer «Debe cambiar la clave al ingresar»: esa persona aún no ha
+            creado su clave personal.
+          </li>
+        </ul>
+
+        <h3>Agregar un usuario</h3>
+        <ol>
+          <li>Pulse <span class="boton">Agregar usuario</span>.</li>
+          <li>
+            Complete los datos:
+            <ul>
+              <li>
+                <strong>Nombre</strong> y <strong>Apellido</strong>: solo letras; se guardan en
+                mayúsculas.
+              </li>
+              <li><strong>Cédula</strong>: solo números, de 6 a 9 dígitos. No puede repetirse.</li>
+              <li>
+                <strong>Correo</strong>: será su usuario para iniciar sesión. No puede repetirse.
+              </li>
+              <li><strong>Teléfono</strong> (opcional): solo números, de 7 a 15 dígitos.</li>
+              <li>
+                <strong>Departamento</strong> (opcional): escriba uno nuevo o elija uno ya usado de
+                la lista que aparece al escribir.
+              </li>
+              <li><strong>Rol</strong>: define qué módulos podrá ver y modificar.</li>
+            </ul>
+          </li>
+          <li>Pulse <span class="boton">Crear usuario</span>.</li>
+          <li>
+            Aparece la ventana <strong>Usuario creado</strong> con una
+            <strong>clave temporal</strong> de 10 caracteres. Use
+            <span class="boton">Copiar</span> o anótela y pulse <span class="boton">Listo</span>.
+          </li>
+        </ol>
+        <div class="cuidado">
+          <strong>La clave temporal se muestra una sola vez</strong>
+          Entréguela personalmente junto con el correo. Si se pierde, use
+          <span class="boton">Restablecer clave</span> para generar otra.
+        </div>
+
+        <h3>Ver el detalle de un usuario</h3>
+        <p>
+          Pulse <span class="boton">Ver</span> en su fila. Verá cédula, teléfono, departamento, rol,
+          estado, si tiene pendiente el cambio de clave, su último ingreso y la fecha de registro.
+          Desde aquí están las acciones:
+        </p>
+        <div class="tabla-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>Botón</th>
+                <th>Qué hace</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="boton">Editar datos</span></td>
+                <td>
+                  Cambia nombre, apellido, cédula, correo, teléfono, departamento o rol. También
+                  disponible con <span class="boton">Editar</span> en la lista. Si cambia el correo,
+                  la persona entra con el correo nuevo y la misma clave.
+                </td>
+              </tr>
+              <tr>
+                <td><span class="boton">Restablecer clave</span></td>
+                <td>
+                  Genera una clave temporal nueva. La anterior deja de funcionar, se quita cualquier
+                  bloqueo por intentos fallidos y la persona deberá crear su clave al entrar.
+                </td>
+              </tr>
+              <tr>
+                <td><span class="boton">Deshabilitar usuario</span></td>
+                <td>
+                  Quita el acceso de inmediato, incluso si la persona tiene el sistema abierto en
+                  ese momento. Sus registros se conservan.
+                </td>
+              </tr>
+              <tr>
+                <td><span class="boton">Habilitar usuario</span></td>
+                <td>Devuelve el acceso. Si estaba archivado, también lo saca del archivo.</td>
+              </tr>
+              <tr>
+                <td><span class="boton">Archivar</span></td>
+                <td>
+                  Solo aparece en usuarios deshabilitados. Los saca de la lista principal (por
+                  ejemplo, personal que ya no trabaja en el hospital) sin borrar su historial.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Todas estas acciones piden confirmación antes de ejecutarse.</p>
+
+        <h3>Protecciones del sistema</h3>
+        <ul>
+          <li>Nadie puede deshabilitar su propio usuario ni cambiar su propio rol.</li>
+          <li>
+            Siempre debe quedar al menos un <strong>Administrador</strong> activo; el sistema no
+            permite deshabilitar ni quitarle el rol al último.
+          </li>
+          <li>Los usuarios no se borran: se deshabilitan y, si se desea, se archivan.</li>
+        </ul>
+      </section>
+
+      <section id="roles">
+        <h2>7. Roles y permisos</h2>
+        <p>
+          Menú <strong>Sistema → Usuarios y roles</strong>, pestaña
+          <span class="boton">Roles y permisos</span>. Cada rol tiene una tarjeta con su matriz de
+          permisos. Los cambios se guardan <strong>al instante</strong> al marcar o desmarcar una
+          casilla (verá «Guardando…» y luego «Guardado») y se aplican de inmediato a todas las
+          personas con ese rol.
+        </p>
+
+        <h3>Niveles de permiso</h3>
+        <div class="tabla-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>Columna</th>
+                <th>Permite</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Ver</strong></td>
+                <td>Entrar al módulo y consultar la información.</td>
+              </tr>
+              <tr>
+                <td><strong>Modificar</strong></td>
+                <td>Además, registrar y editar. Al marcarla se marca también Ver.</td>
+              </tr>
+              <tr>
+                <td><strong>Control total</strong></td>
+                <td>Además, aprobar, anular y eliminar. Al marcarla se marcan Ver y Modificar.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>
+          Si desmarca <strong>Ver</strong>, se quitan también Modificar y Control total de ese
+          módulo.
+        </p>
+
+        <h3>Roles del sistema y permisos por defecto</h3>
+        <p>
+          Los roles con la etiqueta <strong>Sistema</strong> no se pueden eliminar, pero sí
+          renombrar y ajustar. El <strong>Administrador</strong> siempre tiene control total sobre
+          todo; sus casillas no se pueden cambiar.
+        </p>
+        <div class="tabla-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>Módulo</th>
+                <th>Contador general</th>
+                <th>Analista contable</th>
+                <th>Auditor</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Inicio</td>
+                <td>Ver</td>
+                <td>Ver</td>
+                <td>Ver</td>
+              </tr>
+              <tr>
+                <td>Comprobantes</td>
+                <td class="si">Control total</td>
+                <td>Ver y Modificar</td>
+                <td>Ver</td>
+              </tr>
+              <tr>
+                <td>Libro Diario y Mayor</td>
+                <td class="si">Control total</td>
+                <td>Ver</td>
+                <td>Ver</td>
+              </tr>
+              <tr>
+                <td>Plan de cuentas</td>
+                <td class="si">Control total</td>
+                <td>Ver</td>
+                <td>Ver</td>
+              </tr>
+              <tr>
+                <td>Ejercicios y períodos</td>
+                <td class="si">Control total</td>
+                <td>Ver</td>
+                <td>Ver</td>
+              </tr>
+              <tr>
+                <td>Tasas de cambio</td>
+                <td>Ver y Modificar</td>
+                <td>Ver</td>
+                <td>Ver</td>
+              </tr>
+              <tr>
+                <td>Bitácora de auditoría</td>
+                <td>Ver</td>
+                <td class="no">Sin acceso</td>
+                <td>Ver</td>
+              </tr>
+              <tr>
+                <td>Usuarios y roles</td>
+                <td class="no">Sin acceso</td>
+                <td class="no">Sin acceso</td>
+                <td>Ver</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Crear un rol</h3>
+        <ol>
+          <li>Pulse <span class="boton">Nuevo rol</span>.</li>
+          <li>
+            Escriba el <strong>Nombre del rol</strong> (por ejemplo, «Supervisor de caja»), una
+            <strong>Descripción</strong> opcional y elija un <strong>Color</strong>, que identifica
+            al rol en las listas.
+          </li>
+          <li>
+            Pulse <span class="boton">Crear rol</span>. El rol nuevo empieza solo con acceso a
+            Inicio: marque luego en su tarjeta los permisos que necesite.
+          </li>
+        </ol>
+
+        <h3>Otras acciones de la tarjeta</h3>
+        <ul>
+          <li><strong>Lápiz</strong>: cambia nombre, descripción y color.</li>
+          <li>
+            <strong>Flecha circular</strong>: devuelve la matriz a los permisos por defecto del rol.
+          </li>
+          <li>
+            <strong>Papelera</strong>: elimina el rol. Solo aparece en roles que no son de sistema y
+            no tienen usuarios asignados; antes, cambie de rol a esas personas.
+          </li>
+        </ul>
+      </section>
+
+      <section id="ajustes">
+        <h2>8. Ajustes</h2>
+        <p>Menú <strong>Sistema → Ajustes</strong>. Disponible para todos los usuarios.</p>
+        <h3>Mi perfil</h3>
+        <p>
+          Actualice su nombre, apellido, teléfono y departamento y pulse
+          <span class="boton">Guardar perfil</span>. Su correo, cédula y rol solo los cambia el
+          administrador.
+        </p>
+        <h3>Apariencia</h3>
+        <ul>
+          <li>
+            <strong>Tema</strong>: <em>Claro</em>, <em>Oscuro</em> o <em>Según el equipo</em>
+            (sigue la configuración de Windows).
+          </li>
+          <li><strong>Mostrar ayudas</strong>: lo mismo que el botón (?) de la barra superior.</li>
+          <li><strong>Menú lateral contraído</strong>: lo mismo que el botón ☰.</li>
+        </ul>
+        <p>Estas preferencias se guardan en el equipo y navegador que esté usando.</p>
+        <h3>Seguridad</h3>
+        <p>
+          <span class="boton">Cambiar mi clave</span> abre el mismo formulario del primer ingreso:
+          clave actual, clave nueva (8 caracteres, letras y números) y su repetición.
+        </p>
+        <h3>Sesión</h3>
+        <p>
+          Muestra su correo, su rol y la fecha y hora de su último ingreso.
+          <span class="boton">Cerrar sesión</span> termina la sesión en este equipo.
+        </p>
+      </section>
+
+      <section id="bitacora">
+        <h2>9. Bitácora de auditoría</h2>
+        <p>
+          El sistema guarda automáticamente quién hizo cada acción, cuándo, desde qué equipo y qué
+          datos cambiaron (antes y después). <strong>Nadie puede modificar ni borrar</strong> estos
+          registros: ni desde el sistema ni directamente en la base de datos, que lo rechaza.
+        </p>
+        <ul>
+          <li>Inicios de sesión, intentos fallidos, bloqueos y cierres de sesión.</li>
+          <li>Creación y edición de usuarios, cambios de rol y de perfil.</li>
+          <li>Habilitar, deshabilitar, archivar y restablecer claves; cambios de clave.</li>
+          <li>Creación, edición y eliminación de roles, y cada cambio en sus permisos.</li>
+          <li>Actualizaciones manuales de las tasas de cambio.</li>
+          <li>Cada exportación de la propia bitácora.</li>
+          <li>
+            Cada nueva versión del sistema que se instala sola (<em>Actualización</em>, con la lista
+            de cambios) o que se descarta por no pasar las revisiones (<em
+              >Actualización rechazada</em
+            >, con el motivo). En ambos casos el usuario es <strong>Sistema</strong> y el módulo es
+            <strong>Sistema</strong>.
+          </li>
+        </ul>
+
+        <h3>Consultar la bitácora</h3>
+        <p>
+          Entre en <strong>Bitácora</strong> desde el menú lateral (sección Sistema). La ven los
+          roles con permiso de <strong>Ver</strong> en «Bitácora de auditoría»; por defecto,
+          Administrador, Contador general y Auditor. También se llega desde
+          <strong>Ver bitácora completa</strong> en el bloque Actividad reciente del Inicio.
+        </p>
+        <ol>
+          <li>
+            Elija el período: <span class="boton">Hoy</span>, <span class="boton">7 días</span>,
+            <span class="boton">30 días</span> o <span class="boton">Todo</span>, o escriba las
+            fechas <strong>Desde</strong> y <strong>Hasta</strong>.
+          </li>
+          <li>
+            Si lo necesita, filtre por usuario, por acción (por ejemplo <em>Ingreso fallido</em> o
+            <em>Edición</em>) o por módulo (Usuarios, Roles, Tasas de cambio…).
+          </li>
+          <li>
+            En el buscador puede escribir un nombre, correo, dirección IP o cualquier dato guardado,
+            por ejemplo el correo con el que alguien intentó entrar. Pulse Enter para buscar.
+          </li>
+          <li>
+            Haga clic en una fila o en <strong>Ver detalle</strong> para abrir el evento: verá la
+            fecha y hora exactas (hora de Caracas), el usuario, el módulo, la IP, el navegador y la
+            tabla de datos. Los campos que cambiaron aparecen primero y resaltados: tachado en rojo
+            el valor anterior y en verde el nuevo.
+          </li>
+          <li>
+            Abajo puede elegir cuántos eventos ver por página (10, 25, 50 o 100) y moverse con
+            <span class="boton">← Anterior</span> y <span class="boton">Siguiente →</span>.
+          </li>
+        </ol>
+        <p>
+          <span class="boton">Limpiar filtros</span> vuelve a mostrar todo. Los filtros quedan en la
+          dirección de la página: si la copia y la envía, otra persona con permiso verá lo mismo. La
+          IP <strong>Este equipo</strong> significa que la acción se hizo desde la misma computadora
+          donde está instalado el sistema.
+        </p>
+
+        <h3>Exportar a Excel</h3>
+        <p>
+          <span class="boton">Exportar a Excel (CSV)</span> descarga los eventos que cumplen los
+          filtros actuales (hasta 5.000), con fecha y hora de Caracas y los datos de antes y
+          después. El archivo se abre con doble clic en Excel. La exportación también queda
+          registrada en la bitácora.
+        </p>
+      </section>
+
+      <section id="problemas">
+        <h2>10. Problemas frecuentes</h2>
+        <h3>No veo un módulo en el menú</h3>
+        <p>
+          Su rol no tiene permiso de Ver en ese módulo, o el módulo aún dice <em>pronto</em>. Pida
+          al administrador que revise su rol en Roles y permisos.
+        </p>
+        <h3>Aparece «Sin acceso a esta sección»</h3>
+        <p>
+          Entró por un enlace a un módulo que su rol no puede ver. Use el menú lateral para volver.
+        </p>
+        <h3>El sistema me sacó de repente</h3>
+        <p>
+          Pasaron las 8 horas de la sesión, o el administrador deshabilitó su usuario. Intente
+          iniciar sesión de nuevo; si aparece «Su usuario está desactivado», contacte al
+          administrador.
+        </p>
+        <h3>Una casilla de permisos no responde</h3>
+        <p>
+          Espere a que termine «Guardando…». Si su rol no tiene permiso de Modificar en Usuarios y
+          roles, las casillas se ven pero no se pueden cambiar.
+        </p>
+        <h3>Las tasas no cambian</h3>
+        <p>
+          Revise la conexión a internet del servidor. Mientras tanto, el sistema usa la última tasa
+          guardada y lo indica con un punto naranja en la barra.
+        </p>
+      </section>
+
+      <section id="proximamente">
+        <h2>11. Próximos módulos</h2>
+        <p>
+          Los siguientes módulos aparecen en el menú con la palabra <em>pronto</em> y se
+          incorporarán a este manual cuando estén disponibles:
+        </p>
+        <ul>
+          <li>
+            <strong>Comprobantes</strong>: asientos de ventas, compras, honorarios, nómina, diario,
+            ajustes, ingresos y egresos, consultables por categoría o todos juntos.
+          </li>
+          <li>
+            <strong>Libro Diario</strong> y <strong>Libro Mayor</strong>, exportables a PDF y Excel.
+          </li>
+          <li><strong>Plan de cuentas</strong> jerárquico.</li>
+          <li><strong>Períodos</strong>: ejercicios económicos y cierre mensual.</li>
+          <li><strong>Bitácora</strong>: consulta del registro de auditoría.</li>
+        </ul>
+      </section>
+
+      <footer>Documento de uso interno · Hospital de Clínicas CECIAMB, Ciudad Guayana.</footer>
+    </div>
+  </body>
+</html>
