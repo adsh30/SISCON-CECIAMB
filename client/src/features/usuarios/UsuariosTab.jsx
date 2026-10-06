@@ -92,7 +92,7 @@ export function UsuariosTab() {
   const confirmar = () => {
     const { usuario: u, accion } = modal
     const alTerminar = (texto) => () => {
-      avisar(texto)
+      avisar(texto, 'exito', nombreCompleto(u))
       cerrar()
     }
     if (accion === 'resetear') {
@@ -297,8 +297,9 @@ export function UsuariosTab() {
           usuario={modal.usuario}
           roles={roles}
           onClose={cerrar}
-          onGuardado={() => {
-            avisar('Cambios guardados')
+          onGuardado={(u) => {
+            if (u) avisar('Usuario actualizado', 'exito', `${nombreCompleto(u)} · ${u.email}`)
+            else avisar('No había cambios que guardar', 'info')
             cerrar()
           }}
         />
