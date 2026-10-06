@@ -23,7 +23,7 @@ const SECCIONES = [
     titulo: 'Sistema',
     items: [
       { to: '/app/usuarios', etiqueta: 'Usuarios y roles', icono: 'usuarios', modulo: 'usuarios' },
-      { etiqueta: 'Bitácora', icono: 'bitacora', modulo: 'bitacora' },
+      { to: '/app/bitacora', etiqueta: 'Bitácora', icono: 'bitacora', modulo: 'bitacora' },
       { to: '/app/ajustes', etiqueta: 'Ajustes', icono: 'ajustes' },
       { href: '/manual.html', etiqueta: 'Manual del sistema', icono: 'manual' },
     ],

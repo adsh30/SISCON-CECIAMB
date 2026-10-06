@@ -84,3 +84,20 @@ export function formatoRelativo(utc, ahora = Date.now()) {
 
 const enteroFmt = new Intl.NumberFormat('es-VE', { maximumFractionDigits: 0 })
 export const formatoEntero = (n) => enteroFmt.format(Number(n) || 0)
+
+const fechaHoraCaracasFmt = new Intl.DateTimeFormat('es-VE', {
+  timeZone: 'America/Caracas',
+  day: '2-digit',
+  month: '2-digit',
+  year: 'numeric',
+  hour: 'numeric',
+  minute: '2-digit',
+  second: '2-digit',
+  hour12: true,
+})
+
+/** 'YYYY-MM-DD HH:mm:ss' en UTC → '06/10/2026, 12:33:50 p. m.' en hora de Caracas */
+export function formatoFechaHoraCaracas(utc) {
+  if (!utc) return ''
+  return fechaHoraCaracasFmt.format(new Date(utc.replace(' ', 'T') + 'Z'))
+}

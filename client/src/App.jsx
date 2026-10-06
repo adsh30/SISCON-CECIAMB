@@ -1,6 +1,7 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router'
 import { AvisosProvider } from './components/ui/Avisos.jsx'
 import AjustesPage from './features/ajustes/AjustesPage.jsx'
+import BitacoraPage from './features/bitacora/BitacoraPage.jsx'
 import CambiarClavePage from './features/auth/CambiarClavePage.jsx'
 import LoginPage from './features/auth/LoginPage.jsx'
 import InicioPage from './features/inicio/InicioPage.jsx'
@@ -27,6 +28,14 @@ export default function App() {
                 element={
                   <RequireModulo modulo="usuarios">
                     <UsuariosPage />
+                  </RequireModulo>
+                }
+              />
+              <Route
+                path="bitacora"
+                element={
+                  <RequireModulo modulo="bitacora">
+                    <BitacoraPage />
                   </RequireModulo>
                 }
               />

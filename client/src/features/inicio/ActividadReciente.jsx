@@ -1,6 +1,7 @@
+import { Link } from 'react-router'
 import { Icono } from '../../components/ui/Icono.jsx'
 import { formatoFechaHora, formatoRelativo, nombreCompleto } from '../../lib/formato.js'
-import { describirEvento } from './bitacoraTextos.js'
+import { describirEvento } from '../../lib/bitacora.js'
 import { Tarjeta } from './Tarjeta.jsx'
 
 const TONOS = {
@@ -8,14 +9,21 @@ const TONOS = {
   exito: 'bg-exito-claro text-exito',
   alerta: 'bg-alerta-claro text-alerta',
   aviso: 'bg-aviso-claro text-aviso',
-  pizarra: 'bg-superficie-2 text-pizarra',
+  neutro: 'bg-superficie-2 text-pizarra',
 }
 
 /** Feed de movimientos recientes (como el de MGG), alimentado por la bitácora */
 export function ActividadReciente({ actividad }) {
   const { recientes, hoy } = actividad
   return (
-    <Tarjeta titulo="Actividad reciente" extra={`últimos ${recientes.length}`}>
+    <Tarjeta
+      titulo="Actividad reciente"
+      extra={
+        <Link to="/app/bitacora" className="font-semibold text-marca hover:underline">
+          Ver bitácora completa
+        </Link>
+      }
+    >
       <dl className="mb-4 grid grid-cols-3 gap-2 text-center">
         {[
           ['Eventos hoy', hoy.eventos, 'text-tinta'],
