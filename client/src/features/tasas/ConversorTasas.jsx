@@ -1,7 +1,13 @@
 import { useState } from 'react'
 import { usePermisos } from '../../api/auth.js'
 import { useActualizarTasas } from '../../api/tasas.js'
-import { formatoFecha, formatoHora, formatoMonto } from '../../lib/formato.js'
+import {
+  formatoFecha,
+  formatoHora,
+  formatoHora12,
+  formatoHoraCaracas,
+  formatoMonto,
+} from '../../lib/formato.js'
 import { dividir, multiplicar } from '../../lib/money.js'
 
 /** Acepta '1.234,56', '1234,56' o '1234.56' y devuelve '1234.56' (o null) */
@@ -102,6 +108,13 @@ export function ConversorTasas({ tasas }) {
           <p>
             BCV vigente para el {formatoFecha(tasas.bcv.fecha)}, consultada a las{' '}
             {formatoHora(tasas.bcv.obtenidaEn)}
+          </p>
+        )}
+        {tasas.actualizacionBcv && (
+          <p>
+            El BCV se actualiza solo a las{' '}
+            {tasas.actualizacionBcv.horas.map(formatoHora12).join(' y a las ')} (hora de Caracas).
+            Próxima: {formatoHoraCaracas(tasas.actualizacionBcv.proxima)}
           </p>
         )}
         {tasas.binance && (

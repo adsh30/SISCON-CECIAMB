@@ -33,6 +33,26 @@ export function formatoHora(utc) {
   })
 }
 
+const horaCaracasFmt = new Intl.DateTimeFormat('es-VE', {
+  timeZone: 'America/Caracas',
+  hour: 'numeric',
+  minute: '2-digit',
+  hour12: true,
+})
+
+/** Date o ISO → hora de Caracas en 12 h: '12:26 p. m.' */
+export function formatoHoraCaracas(fecha) {
+  if (!fecha) return ''
+  return horaCaracasFmt.format(new Date(fecha))
+}
+
+/** '17:00' → '5:00 p. m.' (hora fija de Caracas) */
+export function formatoHora12(hhmm) {
+  const [h, m = '00'] = hhmm.split(':')
+  const hora = Number(h)
+  return `${hora % 12 || 12}:${m.padStart(2, '0')} ${hora < 12 ? 'a. m.' : 'p. m.'}`
+}
+
 /** 'YYYY-MM-DD' → 'dd/mm/aaaa' */
 export function formatoFecha(iso) {
   if (!iso) return ''

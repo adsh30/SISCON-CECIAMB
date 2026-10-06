@@ -1,7 +1,30 @@
 import { useEffect, useRef, useState } from 'react'
 import { useTasas } from '../../api/tasas.js'
-import { formatoFechaCorta, formatoMonto, formatoPorcentaje } from '../../lib/formato.js'
+import {
+  formatoFechaCorta,
+  formatoHoraCaracas,
+  formatoMonto,
+  formatoPorcentaje,
+} from '../../lib/formato.js'
 import { ConversorTasas } from './ConversorTasas.jsx'
+
+// Reloj con la hora oficial de Venezuela (Caracas, UTC−4), en formato de 12 h
+function HoraCaracas() {
+  const [ahora, setAhora] = useState(() => new Date())
+  useEffect(() => {
+    const id = setInterval(() => setAhora(new Date()), 1000)
+    return () => clearInterval(id)
+  }, [])
+  return (
+    <time
+      dateTime={ahora.toISOString()}
+      title="Hora de Caracas, Venezuela"
+      className="hidden text-xs text-pizarra md:inline"
+    >
+      {formatoHoraCaracas(ahora)} <span className="font-semibold">CCS</span>
+    </time>
+  )
+}
 
 // Margen de ahorro pagando a tasa BCV en vez de Binance: (BIN − BCV) ÷ BIN × 100
 function Margen({ valor }) {
@@ -81,6 +104,7 @@ export function BarraTasas() {
         <span className="hidden text-xs text-pizarra lg:inline">
           {formatoFechaCorta(bcv?.fecha ?? binance?.fecha)}
         </span>
+        <HoraCaracas />
         {avisos?.length > 0 && (
           <span className="size-2 rounded-full bg-aviso" title={avisos.join('\n')} />
         )}

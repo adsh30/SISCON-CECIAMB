@@ -9,7 +9,8 @@
       // Mismo tema que el sistema (Ajustes > Apariencia)
       try {
         var t = localStorage.getItem('siscon.tema') || 'sistema'
-        if (t === 'sistema') t = matchMedia('(prefers-color-scheme: dark)').matches ? 'oscuro' : 'claro'
+        if (t === 'sistema')
+          t = matchMedia('(prefers-color-scheme: dark)').matches ? 'oscuro' : 'claro'
         document.documentElement.dataset.tema = t
       } catch (e) {}
     </script>
@@ -53,7 +54,12 @@
         margin: 0;
         background: var(--papel);
         color: var(--tinta);
-        font: 16px/1.65 'Public Sans', ui-sans-serif, system-ui, 'Segoe UI', sans-serif;
+        font:
+          16px/1.65 'Public Sans',
+          ui-sans-serif,
+          system-ui,
+          'Segoe UI',
+          sans-serif;
         -webkit-font-smoothing: antialiased;
       }
       .contenedor {
@@ -311,10 +317,10 @@
 
       <p class="intro">
         Este manual explica, paso a paso, cómo usar el sistema contable del Hospital de Clínicas
-        CECIAMB. Los nombres de botones y mensajes aparecen tal como se ven en pantalla, por
-        ejemplo <span class="boton">Agregar usuario</span>. Cada persona ve solo los módulos que su
-        rol tiene permitidos, así que es posible que algunas opciones descritas aquí no aparezcan
-        en su menú.
+        CECIAMB. Los nombres de botones y mensajes aparecen tal como se ven en pantalla, por ejemplo
+        <span class="boton">Agregar usuario</span>. Cada persona ve solo los módulos que su rol
+        tiene permitidos, así que es posible que algunas opciones descritas aquí no aparezcan en su
+        menú.
       </p>
 
       <nav class="indice" aria-label="Contenido">
@@ -342,8 +348,8 @@
             computadora de la red interna del hospital.
           </li>
           <li>
-            Necesita un <strong>correo</strong> y una <strong>clave temporal</strong>. Ambos se
-            los entrega el administrador del sistema; nadie más puede crearle una cuenta.
+            Necesita un <strong>correo</strong> y una <strong>clave temporal</strong>. Ambos se los
+            entrega el administrador del sistema; nadie más puede crearle una cuenta.
           </li>
           <li>
             Su clave es personal. Todo lo que se haga con su usuario queda registrado a su nombre.
@@ -391,7 +397,9 @@
               </tr>
               <tr>
                 <td>Su usuario está desactivado. Contacte al administrador</td>
-                <td>Su acceso fue deshabilitado. Solo el administrador puede habilitarlo de nuevo.</td>
+                <td>
+                  Su acceso fue deshabilitado. Solo el administrador puede habilitarlo de nuevo.
+                </td>
               </tr>
               <tr>
                 <td>No hay conexión con el servidor…</td>
@@ -417,9 +425,9 @@
       <section id="primer-ingreso">
         <h2>3. Primer ingreso: crear su clave personal</h2>
         <p>
-          La primera vez que entra con una clave temporal (o después de que se la restablezcan),
-          el sistema muestra la pantalla <strong>Cree su clave personal</strong> y no deja usar
-          ningún otro módulo hasta completarla.
+          La primera vez que entra con una clave temporal (o después de que se la restablezcan), el
+          sistema muestra la pantalla <strong>Cree su clave personal</strong> y no deja usar ningún
+          otro módulo hasta completarla.
         </p>
         <ol>
           <li>En <strong>Clave actual</strong>, escriba la clave temporal que le entregaron.</li>
@@ -462,8 +470,9 @@
           </li>
           <li>Solo aparecen los módulos que su rol puede ver.</li>
           <li>
-            Al pie del menú está su ficha: iniciales, nombre y rol. El ícono de la puerta
-            (<strong>Cerrar sesión</strong>) termina su sesión.
+            Al pie del menú está su ficha: iniciales, nombre y rol. El ícono de la puerta (<strong
+              >Cerrar sesión</strong
+            >) termina su sesión.
           </li>
         </ul>
 
@@ -475,12 +484,11 @@
             menú.
           </li>
           <li>
-            <strong>Tasas</strong>: la cotización del día (vea la
-            <a href="#tasas">sección 5</a>).
+            <strong>Tasas</strong>: la cotización del día (vea la <a href="#tasas">sección 5</a>).
           </li>
           <li>
-            <strong>Botón (?)</strong>: muestra u oculta los textos de ayuda gris que explican
-            cada pantalla. Cuando está en azul, las ayudas están visibles.
+            <strong>Botón (?)</strong>: muestra u oculta los textos de ayuda gris que explican cada
+            pantalla. Cuando está en azul, las ayudas están visibles.
           </li>
         </ul>
 
@@ -495,7 +503,7 @@
         <h2>5. Tasas de cambio y conversor</h2>
         <p>La barra superior muestra, por ejemplo:</p>
         <p>
-          <code>BCV $ 871,37 € 981,18 | BIN Bs 986,85 ↓11,70 % 05-oct.</code>
+          <code>BCV $ 871,37 € 981,18 | BIN Bs 986,85 ↓11,70 % 05-oct. 12:26 p. m. CCS</code>
         </p>
         <div class="tabla-scroll">
           <table>
@@ -532,6 +540,13 @@
                 <td><strong>Fecha</strong></td>
                 <td>Día de vigencia de la tasa del BCV.</td>
               </tr>
+              <tr>
+                <td><strong>Hora CCS</strong></td>
+                <td>
+                  Hora oficial de Venezuela (Caracas) en formato de 12 horas, por ejemplo
+                  <code>12:26 p. m. CCS</code>. Se actualiza sola cada minuto.
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -540,8 +555,11 @@
           espacio; el conversor siempre los muestra todos.
         </p>
         <p>
-          El sistema consulta la tasa del BCV como máximo una vez por hora y la de Binance cada 10
-          minutos, y guarda cada valor en su historial.
+          La tasa del BCV se actualiza <strong>automáticamente dos veces al día</strong>, a las
+          <strong>9:00 a. m.</strong> y a las <strong>5:00 p. m.</strong> (hora de Caracas), aunque
+          nadie esté usando el sistema. Si el servidor estaba apagado a esa hora, la consulta al
+          encenderlo. La de Binance se consulta cada 10 minutos. Cada valor queda en su historial.
+          Al pie del conversor verá la hora de la próxima actualización del BCV.
         </p>
 
         <h3>Convertir un monto</h3>
@@ -551,9 +569,7 @@
             Escriba el monto. Puede usar el formato venezolano (<code>1.250,50</code>) o con punto
             decimal (<code>1250.50</code>).
           </li>
-          <li>
-            En <strong>Tasa</strong>, elija Dólar BCV, Euro BCV o Binance (USDT).
-          </li>
+          <li>En <strong>Tasa</strong>, elija Dólar BCV, Euro BCV o Binance (USDT).</li>
           <li>
             El resultado aparece en <strong>Equivale a</strong>. El botón
             <span class="boton">⇄</span> invierte la conversión (de divisa a bolívares, o de
@@ -606,8 +622,8 @@
             deshabilitados; los archivados solo aparecen al elegir <em>Archivados</em>.
           </li>
           <li>
-            Bajo el nombre puede aparecer «Debe cambiar la clave al ingresar»: esa persona aún no
-            ha creado su clave personal.
+            Bajo el nombre puede aparecer «Debe cambiar la clave al ingresar»: esa persona aún no ha
+            creado su clave personal.
           </li>
         </ul>
 
@@ -617,9 +633,14 @@
           <li>
             Complete los datos:
             <ul>
-              <li><strong>Nombre</strong> y <strong>Apellido</strong>: solo letras; se guardan en mayúsculas.</li>
+              <li>
+                <strong>Nombre</strong> y <strong>Apellido</strong>: solo letras; se guardan en
+                mayúsculas.
+              </li>
               <li><strong>Cédula</strong>: solo números, de 6 a 9 dígitos. No puede repetirse.</li>
-              <li><strong>Correo</strong>: será su usuario para iniciar sesión. No puede repetirse.</li>
+              <li>
+                <strong>Correo</strong>: será su usuario para iniciar sesión. No puede repetirse.
+              </li>
               <li><strong>Teléfono</strong> (opcional): solo números, de 7 a 15 dígitos.</li>
               <li>
                 <strong>Departamento</strong> (opcional): escriba uno nuevo o elija uno ya usado de
@@ -632,8 +653,7 @@
           <li>
             Aparece la ventana <strong>Usuario creado</strong> con una
             <strong>clave temporal</strong> de 10 caracteres. Use
-            <span class="boton">Copiar</span> o anótela y pulse
-            <span class="boton">Listo</span>.
+            <span class="boton">Copiar</span> o anótela y pulse <span class="boton">Listo</span>.
           </li>
         </ol>
         <div class="cuidado">
@@ -644,9 +664,9 @@
 
         <h3>Ver el detalle de un usuario</h3>
         <p>
-          Pulse <span class="boton">Ver</span> en su fila. Verá cédula, teléfono, departamento,
-          rol, estado, si tiene pendiente el cambio de clave, su último ingreso y la fecha de
-          registro. Desde aquí están las acciones:
+          Pulse <span class="boton">Ver</span> en su fila. Verá cédula, teléfono, departamento, rol,
+          estado, si tiene pendiente el cambio de clave, su último ingreso y la fecha de registro.
+          Desde aquí están las acciones:
         </p>
         <div class="tabla-scroll">
           <table>
@@ -661,16 +681,15 @@
                 <td><span class="boton">Editar datos</span></td>
                 <td>
                   Cambia nombre, apellido, cédula, correo, teléfono, departamento o rol. También
-                  disponible con <span class="boton">Editar</span> en la lista. Si cambia el
-                  correo, la persona entra con el correo nuevo y la misma clave.
+                  disponible con <span class="boton">Editar</span> en la lista. Si cambia el correo,
+                  la persona entra con el correo nuevo y la misma clave.
                 </td>
               </tr>
               <tr>
                 <td><span class="boton">Restablecer clave</span></td>
                 <td>
-                  Genera una clave temporal nueva. La anterior deja de funcionar, se quita
-                  cualquier bloqueo por intentos fallidos y la persona deberá crear su clave al
-                  entrar.
+                  Genera una clave temporal nueva. La anterior deja de funcionar, se quita cualquier
+                  bloqueo por intentos fallidos y la persona deberá crear su clave al entrar.
                 </td>
               </tr>
               <tr>
@@ -737,9 +756,7 @@
               </tr>
               <tr>
                 <td><strong>Control total</strong></td>
-                <td>
-                  Además, aprobar, anular y eliminar. Al marcarla se marcan Ver y Modificar.
-                </td>
+                <td>Además, aprobar, anular y eliminar. Al marcarla se marcan Ver y Modificar.</td>
               </tr>
             </tbody>
           </table>
@@ -766,14 +783,54 @@
               </tr>
             </thead>
             <tbody>
-              <tr><td>Inicio</td><td>Ver</td><td>Ver</td><td>Ver</td></tr>
-              <tr><td>Comprobantes</td><td class="si">Control total</td><td>Ver y Modificar</td><td>Ver</td></tr>
-              <tr><td>Libro Diario y Mayor</td><td class="si">Control total</td><td>Ver</td><td>Ver</td></tr>
-              <tr><td>Plan de cuentas</td><td class="si">Control total</td><td>Ver</td><td>Ver</td></tr>
-              <tr><td>Ejercicios y períodos</td><td class="si">Control total</td><td>Ver</td><td>Ver</td></tr>
-              <tr><td>Tasas de cambio</td><td>Ver y Modificar</td><td>Ver</td><td>Ver</td></tr>
-              <tr><td>Bitácora de auditoría</td><td>Ver</td><td class="no">Sin acceso</td><td>Ver</td></tr>
-              <tr><td>Usuarios y roles</td><td class="no">Sin acceso</td><td class="no">Sin acceso</td><td>Ver</td></tr>
+              <tr>
+                <td>Inicio</td>
+                <td>Ver</td>
+                <td>Ver</td>
+                <td>Ver</td>
+              </tr>
+              <tr>
+                <td>Comprobantes</td>
+                <td class="si">Control total</td>
+                <td>Ver y Modificar</td>
+                <td>Ver</td>
+              </tr>
+              <tr>
+                <td>Libro Diario y Mayor</td>
+                <td class="si">Control total</td>
+                <td>Ver</td>
+                <td>Ver</td>
+              </tr>
+              <tr>
+                <td>Plan de cuentas</td>
+                <td class="si">Control total</td>
+                <td>Ver</td>
+                <td>Ver</td>
+              </tr>
+              <tr>
+                <td>Ejercicios y períodos</td>
+                <td class="si">Control total</td>
+                <td>Ver</td>
+                <td>Ver</td>
+              </tr>
+              <tr>
+                <td>Tasas de cambio</td>
+                <td>Ver y Modificar</td>
+                <td>Ver</td>
+                <td>Ver</td>
+              </tr>
+              <tr>
+                <td>Bitácora de auditoría</td>
+                <td>Ver</td>
+                <td class="no">Sin acceso</td>
+                <td>Ver</td>
+              </tr>
+              <tr>
+                <td>Usuarios y roles</td>
+                <td class="no">Sin acceso</td>
+                <td class="no">Sin acceso</td>
+                <td>Ver</td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -796,12 +853,11 @@
         <ul>
           <li><strong>Lápiz</strong>: cambia nombre, descripción y color.</li>
           <li>
-            <strong>Flecha circular</strong>: devuelve la matriz a los permisos por defecto del
-            rol.
+            <strong>Flecha circular</strong>: devuelve la matriz a los permisos por defecto del rol.
           </li>
           <li>
-            <strong>Papelera</strong>: elimina el rol. Solo aparece en roles que no son de sistema
-            y no tienen usuarios asignados; antes, cambie de rol a esas personas.
+            <strong>Papelera</strong>: elimina el rol. Solo aparece en roles que no son de sistema y
+            no tienen usuarios asignados; antes, cambie de rol a esas personas.
           </li>
         </ul>
       </section>
@@ -827,8 +883,8 @@
         <p>Estas preferencias se guardan en el equipo y navegador que esté usando.</p>
         <h3>Seguridad</h3>
         <p>
-          <span class="boton">Cambiar mi clave</span> abre el mismo formulario del primer
-          ingreso: clave actual, clave nueva (8 caracteres, letras y números) y su repetición.
+          <span class="boton">Cambiar mi clave</span> abre el mismo formulario del primer ingreso:
+          clave actual, clave nueva (8 caracteres, letras y números) y su repetición.
         </p>
         <h3>Sesión</h3>
         <p>
@@ -840,8 +896,8 @@
       <section id="bitacora">
         <h2>9. Qué queda registrado (bitácora)</h2>
         <p>
-          El sistema guarda automáticamente, sin que nadie pueda borrarlo ni modificarlo, quién
-          hizo cada acción, cuándo, desde qué equipo y qué datos cambiaron (antes y después):
+          El sistema guarda automáticamente, sin que nadie pueda borrarlo ni modificarlo, quién hizo
+          cada acción, cuándo, desde qué equipo y qué datos cambiaron (antes y después):
         </p>
         <ul>
           <li>Inicios de sesión, intentos fallidos, bloqueos y cierres de sesión.</li>
@@ -851,8 +907,8 @@
           <li>Actualizaciones manuales de las tasas de cambio.</li>
         </ul>
         <p>
-          La pantalla para consultar la bitácora estará disponible en una próxima versión, para
-          los roles con permiso de Ver en «Bitácora de auditoría».
+          La pantalla para consultar la bitácora estará disponible en una próxima versión, para los
+          roles con permiso de Ver en «Bitácora de auditoría».
         </p>
       </section>
 
@@ -860,8 +916,8 @@
         <h2>10. Problemas frecuentes</h2>
         <h3>No veo un módulo en el menú</h3>
         <p>
-          Su rol no tiene permiso de Ver en ese módulo, o el módulo aún dice <em>pronto</em>.
-          Pida al administrador que revise su rol en Roles y permisos.
+          Su rol no tiene permiso de Ver en ese módulo, o el módulo aún dice <em>pronto</em>. Pida
+          al administrador que revise su rol en Roles y permisos.
         </p>
         <h3>Aparece «Sin acceso a esta sección»</h3>
         <p>
@@ -880,8 +936,8 @@
         </p>
         <h3>Las tasas no cambian</h3>
         <p>
-          Revise la conexión a internet del servidor. Mientras tanto, el sistema usa la última
-          tasa guardada y lo indica con un punto naranja en la barra.
+          Revise la conexión a internet del servidor. Mientras tanto, el sistema usa la última tasa
+          guardada y lo indica con un punto naranja en la barra.
         </p>
       </section>
 
@@ -893,19 +949,19 @@
         </p>
         <ul>
           <li>
-            <strong>Comprobantes</strong>: asientos de ventas, compras, honorarios, nómina,
-            diario, ajustes, ingresos y egresos, consultables por categoría o todos juntos.
+            <strong>Comprobantes</strong>: asientos de ventas, compras, honorarios, nómina, diario,
+            ajustes, ingresos y egresos, consultables por categoría o todos juntos.
           </li>
-          <li><strong>Libro Diario</strong> y <strong>Libro Mayor</strong>, exportables a PDF y Excel.</li>
+          <li>
+            <strong>Libro Diario</strong> y <strong>Libro Mayor</strong>, exportables a PDF y Excel.
+          </li>
           <li><strong>Plan de cuentas</strong> jerárquico.</li>
           <li><strong>Períodos</strong>: ejercicios económicos y cierre mensual.</li>
           <li><strong>Bitácora</strong>: consulta del registro de auditoría.</li>
         </ul>
       </section>
 
-      <footer>
-        Documento de uso interno · Hospital de Clínicas CECIAMB, Ciudad Guayana.
-      </footer>
+      <footer>Documento de uso interno · Hospital de Clínicas CECIAMB, Ciudad Guayana.</footer>
     </div>
   </body>
 </html>

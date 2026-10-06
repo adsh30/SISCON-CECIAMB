@@ -4,7 +4,11 @@ import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, vi } 
 import { createApp } from '../src/app.js'
 import { db } from '../src/config/db.js'
 import { mediana } from '../src/modules/tasas/tasas.fuentes.js'
-import { calcularBrecha } from '../src/modules/tasas/tasas.service.js'
+import {
+  calcularBrecha,
+  proximoHorarioBcv,
+  ultimoHorarioBcv,
+} from '../src/modules/tasas/tasas.service.js'
 import { testEnv } from './env.js'
 
 const app = createApp()
@@ -69,6 +73,34 @@ describe('cálculos de tasas', () => {
   })
 })
 
+describe('horario de actualización del BCV (Caracas, UTC−4)', () => {
+  const horas = ['09:00', '17:00']
+
+  it('al mediodía la última fue a las 9:00 a. m. y la próxima es a las 5:00 p. m.', () => {
+    const ahora = new Date('2026-10-06T16:26:00Z') // 12:26 p. m. en Caracas
+    expect(ultimoHorarioBcv(ahora, horas).toISOString()).toBe('2026-10-06T13:00:00.000Z')
+    expect(proximoHorarioBcv(ahora, horas).toISOString()).toBe('2026-10-06T21:00:00.000Z')
+  })
+
+  it('de madrugada la última fue ayer 5:00 p. m. y la próxima hoy 9:00 a. m.', () => {
+    const ahora = new Date('2026-10-06T06:00:00Z') // 2:00 a. m. en Caracas
+    expect(ultimoHorarioBcv(ahora, horas).toISOString()).toBe('2026-10-05T21:00:00.000Z')
+    expect(proximoHorarioBcv(ahora, horas).toISOString()).toBe('2026-10-06T13:00:00.000Z')
+  })
+
+  it('después de la medianoche UTC sigue usando el día de Caracas', () => {
+    const ahora = new Date('2026-10-07T02:00:00Z') // 10:00 p. m. del 6 en Caracas
+    expect(ultimoHorarioBcv(ahora, horas).toISOString()).toBe('2026-10-06T21:00:00.000Z')
+    expect(proximoHorarioBcv(ahora, horas).toISOString()).toBe('2026-10-07T13:00:00.000Z')
+  })
+
+  it('justo en la hora programada esa cuenta como la última', () => {
+    const ahora = new Date('2026-10-06T21:00:00Z')
+    expect(ultimoHorarioBcv(ahora, horas).toISOString()).toBe('2026-10-06T21:00:00.000Z')
+    expect(proximoHorarioBcv(ahora, horas).toISOString()).toBe('2026-10-07T13:00:00.000Z')
+  })
+})
+
 describe('GET /api/v1/tasas/actual', () => {
   it('exige sesión', async () => {
     expect((await request(app).get('/api/v1/tasas/actual')).status).toBe(401)
@@ -93,6 +125,8 @@ describe('GET /api/v1/tasas/actual', () => {
     })
     expect(res.body.data.brecha).toBe('11.67')
     expect(res.body.data.avisos).toEqual([])
+    expect(res.body.data.actualizacionBcv.horas).toEqual(['09:00', '17:00'])
+    expect(new Date(res.body.data.actualizacionBcv.proxima).getTime()).toBeGreaterThan(Date.now())
     expect(await db('tasas_cambio').count({ n: '*' }).first()).toMatchObject({ n: 3 })
   })
 
