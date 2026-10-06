@@ -49,6 +49,18 @@ export const ACCIONES = {
     tono: 'aviso',
   },
   EXPORTAR: { nombre: 'Exportación', texto: 'Exportó', icono: 'archivo', tono: 'neutro' },
+  CERRAR_PERIODO: {
+    nombre: 'Cierre de período',
+    texto: 'Cerró un período contable',
+    icono: 'candado',
+    tono: 'aviso',
+  },
+  REABRIR_PERIODO: {
+    nombre: 'Reapertura de período',
+    texto: 'Reabrió un período contable',
+    icono: 'abierto',
+    tono: 'alerta',
+  },
   REVERTIR: {
     nombre: 'Actualización rechazada',
     texto: 'Rechazó una actualización del sistema y mantuvo la versión anterior',
@@ -64,6 +76,9 @@ export const MODULOS = {
   roles_permisos: { nombre: 'Permisos', frase: 'un rol' },
   tasas_cambio: { nombre: 'Tasas de cambio', frase: 'las tasas de cambio' },
   bitacora: { nombre: 'Bitácora', frase: 'la bitácora' },
+  empresa: { nombre: 'Empresa', frase: 'los datos de la empresa' },
+  ejercicios: { nombre: 'Ejercicios', frase: 'un ejercicio económico' },
+  periodos: { nombre: 'Períodos', frase: 'un período contable' },
   sistema: { nombre: 'Sistema', frase: 'el sistema a una nueva versión' },
 }
 
@@ -78,6 +93,8 @@ const SIN_MODULO = new Set([
   'LOGIN_BLOQUEADO',
   'CAMBIAR_CLAVE',
   'REVERTIR',
+  'CERRAR_PERIODO',
+  'REABRIR_PERIODO',
 ])
 
 export function describirEvento(e) {
@@ -120,6 +137,16 @@ const CAMPOS = {
   entidad: 'Módulo',
   buscar: 'Búsqueda',
   version: 'Versión',
+  razonSocial: 'Razón social',
+  nombreComercial: 'Nombre comercial',
+  rif: 'RIF',
+  direccion: 'Dirección',
+  ciudad: 'Ciudad',
+  sitioWeb: 'Sitio web',
+  logo: 'Logo',
+  periodo: 'Período',
+  periodos: 'Períodos creados',
+  anio: 'Año',
   resultado: 'Resultado',
   cambios: 'Cambios incluidos',
   motivo: 'Motivo',

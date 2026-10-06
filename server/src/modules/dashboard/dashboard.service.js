@@ -1,3 +1,4 @@
+import { actual as periodoActual } from '../periodos/periodos.service.js'
 import { puede } from '../roles/permisos.catalogo.js'
 import { permisosDeRol } from '../roles/permisos.repository.js'
 import { fechaHoyVE, resumen as resumenTasas } from '../tasas/tasas.service.js'
@@ -11,11 +12,12 @@ export async function obtener(usuario) {
   const permisos = await permisosDeRol(usuario.rolId)
   const ve = (modulo) => puede(usuario.rol, permisos, modulo, 'lectura')
 
-  const [tasas, usuarios, recientes, hoy] = await Promise.all([
+  const [tasas, usuarios, recientes, hoy, periodo] = await Promise.all([
     resumenTasas(),
     ve('usuarios') ? repo.conteoUsuarios() : null,
     ve('bitacora') ? repo.actividadReciente() : null,
     ve('bitacora') ? repo.resumenDia(fechaHoyVE()) : null,
+    ve('periodos') ? periodoActual() : undefined,
   ])
 
   return {
@@ -23,6 +25,8 @@ export async function obtener(usuario) {
     tasas,
     usuarios,
     actividad: recientes ? { recientes, hoy } : null,
+    // undefined: sin permiso; null: no hay período creado para hoy
+    periodoActual: periodo,
   }
 }
 
