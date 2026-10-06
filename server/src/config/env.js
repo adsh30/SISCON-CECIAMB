@@ -30,6 +30,8 @@ export const env = {
     cookieMaxAgeMs: 8 * 60 * 60 * 1000,
   },
   tasas: {
+    // Horas (Caracas, 24 h) en que el servidor actualiza solo la tasa del BCV
+    horasBcv: (process.env.BCV_HORAS ?? '09:00,17:00').split(',').map((h) => h.trim()),
     bcvUsdUrl: process.env.BCV_USD_URL ?? 'https://ve.dolarapi.com/v1/dolares/oficial',
     bcvEurUrl: process.env.BCV_EUR_URL ?? 'https://ve.dolarapi.com/v1/euros/oficial',
     binanceP2pUrl:
