@@ -11,7 +11,12 @@ export default {
     dateStrings: true,
     timezone: 'Z',
   },
-  pool: { min: 0, max: 10 },
+  pool: {
+    min: 0,
+    max: 10,
+    // Toda fecha se guarda en UTC: NOW() y CURRENT_TIMESTAMP no dependen de la hora del equipo
+    afterCreate: (conn, done) => conn.query("SET time_zone = '+00:00'", (err) => done(err, conn)),
+  },
   migrations: {
     directory: './migrations',
     tableName: 'knex_migraciones',

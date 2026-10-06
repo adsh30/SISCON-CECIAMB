@@ -48,3 +48,8 @@ export function sumar(...valores) {
     2,
   )
 }
+
+/** a − b sin redondeo intermedio a 2 decimales (útil antes de dividir) */
+export function restar(a, b, decimales = 2) {
+  return deEscalado(aEscalado(a) - aEscalado(b), decimales)
+}

@@ -55,7 +55,8 @@ Cada entregable incluye **backend + frontend**. Cada fase se trabaja en ramas `f
 
 ## Fase 6 — Operación
 - [ ] Cierre/reapertura de período con validaciones.
-- [ ] Dashboard (pendientes por aprobar, comprobantes por categoría).
+- [x] Tablero de inicio base (estilo MGG): KPIs de tasas con variación, evolución BCV con historial oficial desde 2023, actividad de bitácora, usuarios por rol.
+- [ ] Dashboard contable (pendientes por aprobar, comprobantes por categoría).
 - [ ] Importación CSV/Excel de resúmenes (ventas, compras, honorarios, nómina) → comprobante en borrador.
 - [ ] Adjuntos de documentos soporte.
 

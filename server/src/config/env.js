@@ -34,6 +34,10 @@ export const env = {
     horasBcv: (process.env.BCV_HORAS ?? '09:00,17:00').split(',').map((h) => h.trim()),
     bcvUsdUrl: process.env.BCV_USD_URL ?? 'https://ve.dolarapi.com/v1/dolares/oficial',
     bcvEurUrl: process.env.BCV_EUR_URL ?? 'https://ve.dolarapi.com/v1/euros/oficial',
+    bcvUsdHistorialUrl:
+      process.env.BCV_USD_HISTORIAL_URL ?? 'https://ve.dolarapi.com/v1/historicos/dolares/oficial',
+    bcvEurHistorialUrl:
+      process.env.BCV_EUR_HISTORIAL_URL ?? 'https://ve.dolarapi.com/v1/historicos/euros/oficial',
     binanceP2pUrl:
       process.env.BINANCE_P2P_URL ?? 'https://p2p.binance.com/bapi/c2c/v2/friendly/c2c/adv/search',
   },

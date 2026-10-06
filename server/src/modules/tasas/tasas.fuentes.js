@@ -87,3 +87,18 @@ export async function consultarBinance() {
     venta: venta != null ? aTasa(venta) : null,
   }
 }
+
+/** Historial oficial del BCV desde 2023: [{ fecha, moneda: 'USD'|'EUR', tasa }] */
+export async function consultarHistorialBcv() {
+  const [usd, eur] = await Promise.all([
+    fetchJson(env.tasas.bcvUsdHistorialUrl),
+    fetchJson(env.tasas.bcvEurHistorialUrl).catch(() => []),
+  ])
+  const filas = (lista, moneda) =>
+    (Array.isArray(lista) ? lista : []).flatMap((d) => {
+      const valor = positivo(d?.promedio)
+      const fecha = fechaDe(d?.fecha)
+      return valor && fecha ? [{ fecha, moneda, tasa: aTasa(valor) }] : []
+    })
+  return [...filas(usd, 'USD'), ...filas(eur, 'EUR')]
+}

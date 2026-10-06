@@ -68,3 +68,19 @@ export function formatoFechaHora(utc) {
 }
 
 export const nombreCompleto = (u) => [u?.nombre, u?.apellido].filter(Boolean).join(' ')
+
+const relativoFmt = new Intl.RelativeTimeFormat('es', { numeric: 'auto' })
+
+/** 'YYYY-MM-DD HH:mm:ss' en UTC → 'hace 5 minutos', 'ayer'… */
+export function formatoRelativo(utc, ahora = Date.now()) {
+  if (!utc) return ''
+  const seg = Math.round((new Date(utc.replace(' ', 'T') + 'Z').getTime() - ahora) / 1000)
+  const abs = Math.abs(seg)
+  if (abs < 45) return 'hace un momento'
+  if (abs < 3600) return relativoFmt.format(Math.round(seg / 60), 'minute')
+  if (abs < 86_400) return relativoFmt.format(Math.round(seg / 3600), 'hour')
+  return relativoFmt.format(Math.round(seg / 86_400), 'day')
+}
+
+const enteroFmt = new Intl.NumberFormat('es-VE', { maximumFractionDigits: 0 })
+export const formatoEntero = (n) => enteroFmt.format(Number(n) || 0)

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { dividir, multiplicar, redondear, sumar } from '../src/utils/money.js'
+import { dividir, multiplicar, redondear, restar, sumar } from '../src/utils/money.js'
 
 describe('money (aritmética decimal exacta)', () => {
   it('evita los errores de float', () => {
@@ -25,5 +25,12 @@ describe('money (aritmética decimal exacta)', () => {
 
   it('rechaza valores no numéricos', () => {
     expect(() => sumar('abc')).toThrow('Número inválido')
+  })
+})
+
+describe('restar', () => {
+  it('no redondea a 2 decimales antes de tiempo', () => {
+    expect(restar('871.3689', '866.5612', 4)).toBe('4.8077')
+    expect(restar('10', '10.5')).toBe('-0.50')
   })
 })
