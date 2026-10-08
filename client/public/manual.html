@@ -339,6 +339,7 @@
           <li><a href="#ajustes">Ajustes</a></li>
           <li><a href="#empresa">Datos de la empresa</a></li>
           <li><a href="#periodos">Ejercicios y períodos</a></li>
+          <li><a href="#cuentas">Plan de cuentas y centros de costo</a></li>
           <li><a href="#bitacora">Bitácora de auditoría: consultar y exportar</a></li>
           <li><a href="#problemas">Problemas frecuentes</a></li>
           <li><a href="#proximamente">Próximos módulos</a></li>
@@ -1114,8 +1115,70 @@
         </p>
       </section>
 
+      <section id="cuentas">
+        <h2>11. Plan de cuentas y centros de costo</h2>
+        <p>
+          En este módulo se gestiona el catálogo de cuentas contables del Hospital CECIAMB bajo
+          norma VEN-NIF y los centros de costo departamentales (Quirófano, Emergencia,
+          Hospitalización, Farmacia, etc.).
+        </p>
+
+        <h3>Plan de cuentas (Árbol jerárquico)</h3>
+        <p>
+          Las cuentas están organizadas en un árbol expandible por niveles (Grupo, Subgrupo, Rubro,
+          Cuenta y Subcuenta auxiliar). Cada cuenta muestra su código, nombre, tipo (Activo, Pasivo,
+          Patrimonio, Ingreso, Costo, Gasto), naturaleza (Deudora o Acreedora) y si es cuenta de
+          <em>Grupo</em> (totalizadora) o <em>Auxiliar</em> (de movimiento).
+        </p>
+        <ul>
+          <li>
+            <strong>Cuentas de movimiento (Auxiliares):</strong> Son las únicas que aceptan asientos
+            en los comprobantes contables.
+          </li>
+          <li>
+            <strong>Cuentas de grupo:</strong> Agrupan y totalizan los saldos de sus subcuentas; no
+            reciben asientos directos ni pueden tener comprobantes.
+          </li>
+        </ul>
+
+        <h3>Crear una nueva cuenta o subcuenta</h3>
+        <ol>
+          <li>
+            Para crear una subcuenta bajo una cuenta existente, ubique la cuenta en el árbol y pulse
+            el botón <span class="boton">+</span>. El sistema precarga la cuenta superior y sugiere
+            el código correlativo.
+          </li>
+          <li>
+            Para crear una cuenta raíz (nivel 1), pulse el botón
+            <span class="boton">Nueva Cuenta</span> en la parte superior.
+          </li>
+          <li>
+            Indique el código, nombre de la cuenta, naturaleza y active la casilla si es cuenta de
+            movimiento.
+          </li>
+          <li>
+            Pulse <span class="boton">Crear Cuenta</span>. La creación queda registrada en la
+            bitácora de auditoría.
+          </li>
+        </ol>
+
+        <h3>Centros de costo</h3>
+        <p>
+          En la pestaña <strong>Centros de Costo</strong> se configuran las áreas operativas del
+          hospital para asignar ingresos y costos en los comprobantes.
+        </p>
+        <ol>
+          <li>Pulse <span class="boton">Nuevo Centro de Costo</span>.</li>
+          <li>
+            Indique el código (ej. <code>EME</code>, <code>QUI</code>, <code>FAR</code>) y el nombre
+            del área.
+          </li>
+          <li>Pulse <span class="boton">Crear Centro de Costo</span>.</li>
+        </ol>
+      </section>
+
       <section id="bitacora">
-        <h2>11. Bitácora de auditoría</h2>
+        <h2>12. Bitácora de auditoría</h2>
         <p>
           El sistema guarda automáticamente quién hizo cada acción, cuándo, desde qué equipo y qué
           datos cambiaron (antes y después). <strong>Nadie puede modificar ni borrar</strong> estos
@@ -1186,7 +1249,7 @@
       </section>
 
       <section id="problemas">
-        <h2>12. Problemas frecuentes</h2>
+        <h2>13. Problemas frecuentes</h2>
         <h3>No veo un módulo en el menú</h3>
         <p>
           Su rol no tiene permiso de Ver en ese módulo, o el módulo aún dice <em>pronto</em>. Pida
@@ -1226,7 +1289,7 @@
       </section>
 
       <section id="proximamente">
-        <h2>13. Próximos módulos</h2>
+        <h2>14. Próximos módulos</h2>
         <p>
           Los siguientes módulos aparecen en el menú con la palabra <em>pronto</em> y se
           incorporarán a este manual cuando estén disponibles:
@@ -1239,7 +1302,6 @@
           <li>
             <strong>Libro Diario</strong> y <strong>Libro Mayor</strong>, exportables a PDF y Excel.
           </li>
-          <li><strong>Plan de cuentas</strong> jerárquico.</li>
         </ul>
       </section>
 
