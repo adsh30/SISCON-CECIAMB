@@ -15,7 +15,7 @@ const SECCIONES = [
       { etiqueta: 'Comprobantes', icono: 'comprobantes', modulo: 'comprobantes' },
       { etiqueta: 'Libro Diario', icono: 'libros', modulo: 'libros' },
       { etiqueta: 'Libro Mayor', icono: 'mayor', modulo: 'libros' },
-      { etiqueta: 'Plan de cuentas', icono: 'cuentas', modulo: 'plan_cuentas' },
+      { to: '/app/cuentas', etiqueta: 'Plan de cuentas', icono: 'cuentas', modulo: 'plan_cuentas' },
       { to: '/app/periodos', etiqueta: 'Períodos', icono: 'periodos', modulo: 'periodos' },
     ],
   },
