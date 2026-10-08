@@ -4,6 +4,7 @@ import AjustesPage from './features/ajustes/AjustesPage.jsx'
 import BitacoraPage from './features/bitacora/BitacoraPage.jsx'
 import EmpresaPage from './features/empresa/EmpresaPage.jsx'
 import PeriodosPage from './features/periodos/PeriodosPage.jsx'
+import PlanCuentasPage from './features/cuentas/PlanCuentasPage.jsx'
 import CambiarClavePage from './features/auth/CambiarClavePage.jsx'
 import LoginPage from './features/auth/LoginPage.jsx'
 import InicioPage from './features/inicio/InicioPage.jsx'
@@ -38,6 +39,14 @@ export default function App() {
                 element={
                   <RequireModulo modulo="periodos">
                     <PeriodosPage />
+                  </RequireModulo>
+                }
+              />
+              <Route
+                path="cuentas"
+                element={
+                  <RequireModulo modulo="plan_cuentas">
+                    <PlanCuentasPage />
                   </RequireModulo>
                 }
               />
