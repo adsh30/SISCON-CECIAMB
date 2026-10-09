@@ -234,3 +234,145 @@ describe('centros de costo', () => {
     expect(resEliminar.status).toBe(204)
   })
 })
+
+describe('reglas reforzadas del plan de cuentas', () => {
+  const buscar = async (codigo) =>
+    (await admin.get('/api/v1/cuentas')).body.data.find((c) => c.codigo === codigo)
+
+  it('los filtros booleanos respetan "false"', async () => {
+    const grupos = await admin.get('/api/v1/cuentas?soloMovimiento=false')
+    expect(grupos.status).toBe(200)
+    expect(grupos.body.data.length).toBeGreaterThan(0)
+    expect(grupos.body.data.every((c) => !c.esMovimiento)).toBe(true)
+
+    const movimiento = await admin.get('/api/v1/cuentas?soloMovimiento=true')
+    expect(movimiento.body.data.every((c) => c.esMovimiento)).toBe(true)
+
+    expect((await admin.get('/api/v1/cuentas?soloActivas=quizas')).status).toBe(400)
+  })
+
+  it('la búsqueda trata % y _ como texto', async () => {
+    const res = await admin.get('/api/v1/cuentas').query({ q: '%' })
+    expect(res.status).toBe(200)
+    expect(res.body.data).toHaveLength(0)
+  })
+
+  it('una subcuenta va exactamente un nivel debajo de su cuenta superior', async () => {
+    const padre = await buscar('6.1')
+    const res = await contador.post('/api/v1/cuentas').send({
+      codigo: '6.1.50.01',
+      nombre: 'Salta un nivel',
+      padreId: padre.id,
+    })
+    expect(res.status).toBe(400)
+    expect(res.body.error.code).toBe('CODIGO_NO_COINCIDE_CON_PADRE')
+  })
+
+  it('una cuenta raíz lleva un código de un solo número', async () => {
+    const res = await contador
+      .post('/api/v1/cuentas')
+      .send({ codigo: '8.1', nombre: 'Raíz con punto', tipo: 'ORDEN' })
+    expect(res.status).toBe(400)
+    expect(res.body.error.code).toBe('CODIGO_RAIZ')
+  })
+
+  it('no se desactiva un grupo con subcuentas activas ni se crean subcuentas bajo uno inactivo', async () => {
+    const padre = await buscar('6.1')
+    const grupo = (
+      await contador
+        .post('/api/v1/cuentas')
+        .send({ codigo: '6.1.80', nombre: 'Grupo temporal', padreId: padre.id })
+    ).body.data
+    const hija = (
+      await contador.post('/api/v1/cuentas').send({
+        codigo: '6.1.80.01',
+        nombre: 'Hija temporal',
+        padreId: grupo.id,
+        esMovimiento: true,
+      })
+    ).body.data
+
+    const desactivarGrupo = await contador
+      .put(`/api/v1/cuentas/${grupo.id}`)
+      .send({ activa: false })
+    expect(desactivarGrupo.status).toBe(400)
+    expect(desactivarGrupo.body.error.code).toBe('SUBCUENTAS_ACTIVAS')
+
+    expect((await contador.put(`/api/v1/cuentas/${hija.id}`).send({ activa: false })).status).toBe(
+      200,
+    )
+    expect((await contador.put(`/api/v1/cuentas/${grupo.id}`).send({ activa: false })).status).toBe(
+      200,
+    )
+
+    const bajoInactivo = await contador.post('/api/v1/cuentas').send({
+      codigo: '6.1.80.02',
+      nombre: 'Bajo inactivo',
+      padreId: grupo.id,
+    })
+    expect(bajoInactivo.status).toBe(400)
+    expect(bajoInactivo.body.error.code).toBe('PADRE_INACTIVO')
+
+    const activarHija = await contador.put(`/api/v1/cuentas/${hija.id}`).send({ activa: true })
+    expect(activarHija.status).toBe(400)
+    expect(activarHija.body.error.code).toBe('PADRE_INACTIVO')
+
+    await admin.delete(`/api/v1/cuentas/${hija.id}`)
+    await admin.delete(`/api/v1/cuentas/${grupo.id}`)
+  })
+
+  it('guardar sin cambios no escribe en la bitácora ni borra la descripción', async () => {
+    const padre = await buscar('6.1')
+    const cuenta = (
+      await contador.post('/api/v1/cuentas').send({
+        codigo: '6.1.81',
+        nombre: 'Con descripción',
+        descripcion: 'No se debe perder',
+        padreId: padre.id,
+        esMovimiento: true,
+      })
+    ).body.data
+
+    const antes = await db('bitacora').where({ entidad: 'cuentas', entidad_id: String(cuenta.id) })
+    const res = await contador
+      .put(`/api/v1/cuentas/${cuenta.id}`)
+      .send({ nombre: 'Con descripción' })
+    expect(res.status).toBe(200)
+    expect(res.body.data.descripcion).toBe('No se debe perder')
+    const despues = await db('bitacora').where({
+      entidad: 'cuentas',
+      entidad_id: String(cuenta.id),
+    })
+    expect(despues).toHaveLength(antes.length)
+
+    await admin.delete(`/api/v1/cuentas/${cuenta.id}`)
+  })
+
+  it('eliminar exige control total del plan de cuentas', async () => {
+    const rol = await db('roles').where({ codigo: 'ANALISTA' }).first()
+    await db('roles_permisos')
+      .where({ rol_id: rol.id, modulo: 'plan_cuentas' })
+      .update({ escritura: true, full: false })
+    try {
+      const padre = await buscar('6.1')
+      const cuenta = (
+        await admin
+          .post('/api/v1/cuentas')
+          .send({ codigo: '6.1.82', nombre: 'Para borrar', padreId: padre.id, esMovimiento: true })
+      ).body.data
+      expect((await analista.delete(`/api/v1/cuentas/${cuenta.id}`)).status).toBe(403)
+      expect((await admin.delete(`/api/v1/cuentas/${cuenta.id}`)).status).toBe(204)
+    } finally {
+      await db('roles_permisos')
+        .where({ rol_id: rol.id, modulo: 'plan_cuentas' })
+        .update({ escritura: false, full: false })
+    }
+  })
+
+  it('el código del centro de costo solo acepta letras, números y guiones', async () => {
+    const res = await contador
+      .post('/api/v1/centros-costo')
+      .send({ codigo: 'EME 2', nombre: 'Con espacio' })
+    expect(res.status).toBe(400)
+  })
+})

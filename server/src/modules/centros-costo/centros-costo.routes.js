@@ -41,4 +41,4 @@ centrosCostoRoutes.put(
   putCentroCosto,
 )
 
-centrosCostoRoutes.delete('/:id', requirePermiso('plan_cuentas', 'escritura'), deleteCentroCosto)
+centrosCostoRoutes.delete('/:id', requirePermiso('plan_cuentas', 'full'), deleteCentroCosto)
