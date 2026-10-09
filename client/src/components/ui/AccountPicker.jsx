@@ -9,6 +9,7 @@ import { Icono } from './Icono.jsx'
  */
 export function AccountPicker({
   value, // id de la cuenta seleccionada o null
+  seleccion, // { codigo, nombre } para mostrar si la cuenta no está en la lista
   onChange, // fn(cuenta) llamada al seleccionar
   soloMovimiento = true,
   soloActivas = true,
@@ -16,8 +17,11 @@ export function AccountPicker({
   error,
   disabled = false,
   className = '',
+  id,
+  'aria-label': ariaLabel,
 }) {
-  const idInput = useId()
+  const idGenerado = useId()
+  const idInput = id ?? idGenerado
   const contenedorRef = useRef(null)
   const inputRef = useRef(null)
 
@@ -39,16 +43,22 @@ export function AccountPicker({
       ? textoBusqueda
       : cuentaSeleccionada
         ? `${cuentaSeleccionada.codigo} — ${cuentaSeleccionada.nombre}`
-        : ''
+        : value && seleccion
+          ? `${seleccion.codigo} — ${seleccion.nombre}`
+          : ''
 
   // Filtrado de cuentas por el texto tipeado
+  // Sin escribir nada, la cuenta elegida va primero: Enter la confirma y sigue adelante
   const filtradas = useMemo(() => {
-    if (!texto.trim()) return cuentas.slice(0, 50)
-    const t = texto.toLowerCase().trim()
+    const t = (textoBusqueda ?? '').toLowerCase().trim()
+    if (!t) {
+      const resto = cuentas.filter((c) => c !== cuentaSeleccionada)
+      return (cuentaSeleccionada ? [cuentaSeleccionada, ...resto] : resto).slice(0, 50)
+    }
     return cuentas
       .filter((c) => c.codigo.toLowerCase().includes(t) || c.nombre.toLowerCase().includes(t))
       .slice(0, 50)
-  }, [cuentas, texto])
+  }, [cuentas, textoBusqueda, cuentaSeleccionada])
 
   // Cerrar al hacer clic afuera
   useEffect(() => {
@@ -105,6 +115,8 @@ export function AccountPicker({
           disabled={disabled}
           placeholder={placeholder}
           autoComplete="off"
+          aria-label={ariaLabel}
+          aria-invalid={error ? true : undefined}
           onChange={(e) => {
             setTextoBusqueda(e.target.value)
             setAbierto(true)
@@ -112,6 +124,7 @@ export function AccountPicker({
             if (!e.target.value) onChange?.(null)
           }}
           onFocus={() => {
+            setIndiceResaltado(0)
             setAbierto(true)
             inputRef.current?.select()
           }}

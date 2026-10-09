@@ -12,7 +12,12 @@ const SECCIONES = [
     titulo: 'Contabilidad',
     items: [
       { to: '/app', etiqueta: 'Inicio', icono: 'inicio', modulo: 'inicio', fin: true },
-      { etiqueta: 'Comprobantes', icono: 'comprobantes', modulo: 'comprobantes' },
+      {
+        to: '/app/comprobantes',
+        etiqueta: 'Comprobantes',
+        icono: 'comprobantes',
+        modulo: 'comprobantes',
+      },
       { etiqueta: 'Libro Diario', icono: 'libros', modulo: 'libros' },
       { etiqueta: 'Libro Mayor', icono: 'mayor', modulo: 'libros' },
       { to: '/app/cuentas', etiqueta: 'Plan de cuentas', icono: 'cuentas', modulo: 'plan_cuentas' },

@@ -284,6 +284,14 @@
           text-decoration: none;
         }
       }
+      kbd {
+        border: 1px solid var(--linea, #d1d5db);
+        border-bottom-width: 2px;
+        border-radius: 4px;
+        padding: 0 0.35em;
+        font-family: inherit;
+        font-size: 0.9em;
+      }
     </style>
   </head>
   <body>
@@ -340,6 +348,7 @@
           <li><a href="#empresa">Datos de la empresa</a></li>
           <li><a href="#periodos">Ejercicios y períodos</a></li>
           <li><a href="#cuentas">Plan de cuentas y centros de costo</a></li>
+          <li><a href="#comprobantes">Comprobantes contables</a></li>
           <li><a href="#bitacora">Bitácora de auditoría: consultar y exportar</a></li>
           <li><a href="#problemas">Problemas frecuentes</a></li>
           <li><a href="#proximamente">Próximos módulos</a></li>
@@ -515,8 +524,10 @@
         <p>
           Arriba se indica el <strong>Período contable actual</strong> y si está abierto o cerrado
           (enlace <strong>Ver períodos</strong>). Si no existe un período para hoy, el aviso es
-          naranja: no se podrán registrar comprobantes con esa fecha hasta crear el ejercicio. Al
-          administrador también se le avisa si falta el RIF de la empresa.
+          naranja: no se podrán registrar comprobantes con esa fecha hasta crear el ejercicio. Si
+          hay <strong>comprobantes en borrador</strong> pendientes de aprobar, también se avisa
+          (enlace <strong>Ver borradores</strong>). Al administrador también se le avisa si falta el
+          RIF de la empresa.
         </p>
         <div class="tabla-scroll">
           <table>
@@ -1214,8 +1225,162 @@
         </ol>
       </section>
 
+      <section id="comprobantes">
+        <h2>12. Comprobantes contables</h2>
+        <p>
+          Entre en <strong>Comprobantes</strong> (menú lateral, sección Contabilidad). Un
+          comprobante es un asiento por <strong>partida doble</strong>: la suma del Debe es igual a
+          la suma del Haber. Todo comprobante pasa por tres estados:
+        </p>
+        <ul>
+          <li>
+            <strong>Borrador</strong>: se puede modificar o eliminar las veces que haga falta. No
+            tiene número y <strong>no cuenta en los libros</strong>.
+          </li>
+          <li>
+            <strong>Aprobado</strong>: recibe su número correlativo y ya
+            <strong>no se puede cambiar ni borrar</strong>, ni siquiera desde la base de datos.
+          </li>
+          <li>
+            <strong>Anulado</strong>: deja de contar en los libros, pero conserva su número y queda
+            a la vista con el motivo. No se puede deshacer.
+          </li>
+        </ul>
+
+        <h3>Tipos y numeración</h3>
+        <p>
+          Hay ocho tipos:
+          <strong
+            >Ventas (VEN), Compras (COM), Honorarios (HON), Nómina (NOM), Diario (DIA), Ajuste
+            (AJU), Ingreso (ING) y Egreso (EGR)</strong
+          >. Cada tipo lleva su propia numeración por mes, sin saltos:
+          <code>VEN-2026-10-0001</code> es el primer comprobante de Ventas aprobado en octubre de
+          2026. El número se asigna al aprobar, así que los borradores eliminados no dejan huecos.
+        </p>
+        <p>
+          Quien tiene Control total en Comprobantes puede administrar los tipos con el botón
+          <span class="boton">Tipos de comprobante</span>: crear uno nuevo (código de 2 a 6 letras,
+          que será el prefijo del número), cambiarle el nombre, o
+          <span class="boton">Deshabilitar</span> uno. Un tipo deshabilitado no admite comprobantes
+          nuevos, pero los anteriores se siguen consultando. El código no cambia después de creado.
+        </p>
+
+        <h3>Consultar</h3>
+        <p>
+          Las pestañas de arriba muestran <strong>Todos</strong> o un tipo en particular, con la
+          cantidad de cada uno. Puede filtrar por estado (Borradores, Aprobados, Anulados), por
+          fechas y por cuenta, o buscar por número, concepto, referencia o beneficiario. Pulse
+          cualquier fila para abrir el comprobante. Los filtros quedan en la dirección de la página:
+          al volver de un comprobante siguen puestos.
+        </p>
+
+        <h3>Registrar un comprobante</h3>
+        <ol>
+          <li>
+            Pulse <span class="boton">Nuevo comprobante</span> (desde la pestaña de un tipo, se
+            propone ese tipo).
+          </li>
+          <li>
+            Complete la cabecera: <strong>Tipo de comprobante</strong>, <strong>Fecha</strong>
+            (debajo se indica el período y si está abierto),
+            <strong>Referencia o documento</strong>,
+            <strong>Beneficiario o tercero</strong> (opcional) y <strong>Concepto</strong>.
+          </li>
+          <li>
+            En <strong>Renglones</strong>, escriba el código o el nombre de la
+            <strong>Cuenta</strong> y elíjala con las flechas y <kbd>Enter</kbd>. Solo aparecen
+            cuentas de movimiento activas.
+          </li>
+          <li>
+            Elija el <strong>Centro de costo</strong> si corresponde, escriba una
+            <strong>Descripción</strong> (opcional) y el monto en <strong>Debe</strong> o en
+            <strong>Haber</strong>, nunca en los dos: al escribir en uno, el otro se borra. Los
+            montos se escriben como <code>1.500,50</code>, <code>1500,50</code> o
+            <code>1500.50</code>.
+          </li>
+          <li>
+            <kbd>Enter</kbd> pasa al campo siguiente. Con un monto en Debe salta directo al renglón
+            siguiente; en el último renglón agrega uno nuevo que ya trae
+            <strong>lo que falta para cuadrar</strong>, en la columna contraria. El botón
+            <span class="boton">Agregar renglón</span> hace lo mismo y el ícono de papelera quita un
+            renglón.
+          </li>
+          <li>
+            Abajo se ven el <strong>Total Debe</strong>, el <strong>Total Haber</strong> y la
+            <strong>Diferencia</strong>, que se pone verde con la marca <strong>Cuadrado</strong>
+            cuando es 0,00.
+          </li>
+          <li>
+            Pulse <span class="boton">Guardar borrador</span> (o <kbd>Ctrl</kbd>+<kbd>S</kbd>). Un
+            borrador puede guardarse sin cuadrar para terminarlo después. Los renglones vacíos se
+            descartan solos.
+          </li>
+          <li>
+            Si su rol tiene Control total en Comprobantes, pulse
+            <span class="boton">Guardar y aprobar</span>: solo se activa cuando el comprobante
+            cuadra y tiene al menos 2 renglones. Aparece el aviso
+            <strong>Comprobante aprobado</strong> con su número.
+          </li>
+        </ol>
+        <div class="nota">
+          El Analista contable registra y corrige borradores; el <strong>Contador general</strong>
+          y el Administrador los aprueban y anulan. Si cierra la pestaña con cambios sin guardar, el
+          navegador le pedirá confirmación.
+        </div>
+
+        <h3>Acciones sobre un comprobante</h3>
+        <ul>
+          <li>
+            <span class="boton">Imprimir</span>: abre el comprobante en tamaño carta con el logo y
+            los datos de la empresa y las firmas de Elaborado, Revisado y Aprobado. En la ventana de
+            impresión elija la impresora o <strong>Guardar como PDF</strong>. Los borradores y los
+            anulados salen con una marca de agua.
+          </li>
+          <li>
+            <span class="boton">Duplicar</span>: crea un borrador nuevo igual, con la fecha que
+            elija (por defecto, hoy). Útil para asientos que se repiten cada mes.
+          </li>
+          <li>
+            <span class="boton">Generar reverso</span> (solo aprobados): crea un borrador con Debe y
+            Haber invertidos y el concepto «Reverso de VEN-…». Sirve para corregir un comprobante de
+            un mes que ya está cerrado.
+          </li>
+          <li>
+            <span class="boton">Anular</span> (solo aprobados y con Control total): pide un
+            <strong>motivo</strong> de al menos 10 caracteres. El período del comprobante debe estar
+            abierto.
+          </li>
+          <li>
+            <span class="boton">Eliminar borrador</span>: solo para borradores; queda registrado en
+            la bitácora.
+          </li>
+        </ul>
+        <p>
+          Cada comprobante muestra abajo quién lo <strong>creó</strong>, lo
+          <strong>modificó</strong>, lo <strong>aprobó</strong> o lo <strong>anuló</strong>, y su
+          <strong>Historial</strong> completo tomado de la bitácora.
+        </p>
+
+        <h3>Reglas que el sistema hace cumplir</h3>
+        <ul>
+          <li>Debe y Haber iguales y al menos 2 renglones para aprobar.</li>
+          <li>
+            Cada renglón lleva monto en Debe o en Haber, mayor que cero, con hasta 2 decimales.
+          </li>
+          <li>Solo cuentas de movimiento activas y centros de costo activos.</li>
+          <li>
+            La fecha debe caer en un período <strong>abierto</strong>, tanto para registrar como
+            para modificar, aprobar o anular.
+          </li>
+          <li>
+            No se puede cerrar un período que tenga comprobantes en borrador, ni eliminar un
+            ejercicio que tenga comprobantes.
+          </li>
+        </ul>
+      </section>
+
       <section id="bitacora">
-        <h2>12. Bitácora de auditoría</h2>
+        <h2>13. Bitácora de auditoría</h2>
         <p>
           El sistema guarda automáticamente quién hizo cada acción, cuándo, desde qué equipo y qué
           datos cambiaron (antes y después). <strong>Nadie puede modificar ni borrar</strong> estos
@@ -1286,7 +1451,7 @@
       </section>
 
       <section id="problemas">
-        <h2>13. Problemas frecuentes</h2>
+        <h2>14. Problemas frecuentes</h2>
         <h3>No veo un módulo en el menú</h3>
         <p>
           Su rol no tiene permiso de Ver en ese módulo, o el módulo aún dice <em>pronto</em>. Pida
@@ -1318,6 +1483,25 @@
           Hace falta Control total (por defecto, el Administrador) y se reabre primero el último mes
           cerrado. Escriba un motivo de al menos 10 caracteres.
         </p>
+        <h3>No puedo aprobar un comprobante</h3>
+        <p>
+          El botón <span class="boton">Guardar y aprobar</span> se activa cuando el comprobante
+          tiene al menos 2 renglones y la <strong>Diferencia</strong> es 0,00. Si no lo ve, su rol
+          no tiene Control total en Comprobantes: guarde el borrador y pida al Contador general que
+          lo apruebe. Si al aprobar aparece «está inactiva» o «es una cuenta de grupo», cambie la
+          cuenta del renglón indicado.
+        </p>
+        <h3>«No hay un período contable para…» o «está cerrado»</h3>
+        <p>
+          La fecha del comprobante cae en un mes sin ejercicio creado o ya cerrado. Cambie la fecha
+          o pida que se cree el ejercicio (o se reabra el período) en Períodos. Mientras escribe la
+          fecha, debajo del campo se indica el período y si está abierto.
+        </p>
+        <h3>No puedo cerrar un período: «tiene comprobantes en borrador»</h3>
+        <p>
+          Antes de cerrar un mes, apruebe o elimine sus borradores. En Comprobantes, use el filtro
+          <strong>Borradores</strong> y las fechas del mes para encontrarlos.
+        </p>
         <h3>Las tasas no cambian</h3>
         <p>
           Revise la conexión a internet del servidor. Mientras tanto, el sistema usa la última tasa
@@ -1326,16 +1510,12 @@
       </section>
 
       <section id="proximamente">
-        <h2>14. Próximos módulos</h2>
+        <h2>15. Próximos módulos</h2>
         <p>
           Los siguientes módulos aparecen en el menú con la palabra <em>pronto</em> y se
           incorporarán a este manual cuando estén disponibles:
         </p>
         <ul>
-          <li>
-            <strong>Comprobantes</strong>: asientos de ventas, compras, honorarios, nómina, diario,
-            ajustes, ingresos y egresos, consultables por categoría o todos juntos.
-          </li>
           <li>
             <strong>Libro Diario</strong> y <strong>Libro Mayor</strong>, exportables a PDF y Excel.
           </li>

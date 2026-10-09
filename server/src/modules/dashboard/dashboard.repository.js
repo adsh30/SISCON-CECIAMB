@@ -73,3 +73,22 @@ export async function actividadPorDia(desde, hasta) {
     .orderBy('dia')
   return filas.map((f) => ({ fecha: f.dia, total: Number(f.total) }))
 }
+
+/** Borradores pendientes y comprobantes del mes de la fecha dada ('YYYY-MM-DD') */
+export async function resumenComprobantes(fecha) {
+  const mes = fecha.slice(0, 7)
+  const fila = await db('comprobantes')
+    .select(
+      db.raw("SUM(estado = 'BORRADOR') AS borradores"),
+      db.raw("SUM(estado = 'APROBADO' AND DATE_FORMAT(fecha, '%Y-%m') = ?) AS aprobados_mes", [
+        mes,
+      ]),
+      db.raw("SUM(estado = 'ANULADO' AND DATE_FORMAT(fecha, '%Y-%m') = ?) AS anulados_mes", [mes]),
+    )
+    .first()
+  return {
+    borradores: Number(fila?.borradores ?? 0),
+    aprobadosMes: Number(fila?.aprobados_mes ?? 0),
+    anuladosMes: Number(fila?.anulados_mes ?? 0),
+  }
+}

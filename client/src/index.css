@@ -107,3 +107,24 @@
 dialog::backdrop {
   background: color-mix(in srgb, #0b1426 45%, transparent);
 }
+
+/* Hojas para imprimir (comprobantes, libros): papel blanco sin importar el tema */
+@utility hoja {
+  background: #fff;
+  color: #111827;
+  color-scheme: light;
+}
+
+@media print {
+  @page {
+    size: letter;
+    margin: 12mm;
+  }
+  html,
+  body {
+    background: #fff !important;
+  }
+  .no-imprimir {
+    display: none !important;
+  }
+}

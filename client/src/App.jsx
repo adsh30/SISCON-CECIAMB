@@ -2,6 +2,9 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router'
 import { AvisosProvider } from './components/ui/Avisos.jsx'
 import AjustesPage from './features/ajustes/AjustesPage.jsx'
 import BitacoraPage from './features/bitacora/BitacoraPage.jsx'
+import ComprobantePage from './features/comprobantes/ComprobantePage.jsx'
+import ComprobantesPage from './features/comprobantes/ComprobantesPage.jsx'
+import ImprimirComprobante from './features/comprobantes/ImprimirComprobante.jsx'
 import EmpresaPage from './features/empresa/EmpresaPage.jsx'
 import PeriodosPage from './features/periodos/PeriodosPage.jsx'
 import PlanCuentasPage from './features/cuentas/PlanCuentasPage.jsx'
@@ -24,8 +27,32 @@ export default function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/cambiar-clave" element={<CambiarClavePage />} />
           <Route element={<RutaProtegida />}>
+            <Route
+              path="/imprimir/comprobantes/:id"
+              element={
+                <RequireModulo modulo="comprobantes">
+                  <ImprimirComprobante />
+                </RequireModulo>
+              }
+            />
             <Route path="/app" element={<AppLayout />}>
               <Route index element={<InicioPage />} />
+              <Route
+                path="comprobantes"
+                element={
+                  <RequireModulo modulo="comprobantes">
+                    <ComprobantesPage />
+                  </RequireModulo>
+                }
+              />
+              <Route
+                path="comprobantes/:id"
+                element={
+                  <RequireModulo modulo="comprobantes">
+                    <ComprobantePage />
+                  </RequireModulo>
+                }
+              />
               <Route
                 path="usuarios"
                 element={
