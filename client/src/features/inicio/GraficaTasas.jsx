@@ -73,7 +73,7 @@ export function GraficaTasas({ serie, setSerie }) {
       </div>
       <FiltroRango {...filtro} />
       <div className="mt-3">
-        {isError ? (
+        {isError && !data ? (
           <p className="py-10 text-center text-sm text-alerta">No se pudo cargar el historial.</p>
         ) : (
           <GraficaLineas

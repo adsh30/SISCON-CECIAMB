@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router'
 import { useLogout, usePermisos } from '../api/auth.js'
 import { Icono } from '../components/ui/Icono.jsx'
+import { EstadoConexion } from '../components/ui/EstadoConexion.jsx'
 import { LogoMark } from '../components/ui/Logo.jsx'
 import { BarraTasas } from '../features/tasas/BarraTasas.jsx'
 import { usePreferencia } from '../lib/preferencias.js'
@@ -239,6 +240,7 @@ export default function AppLayout() {
           </div>
         </header>
 
+        <EstadoConexion />
         <main className="flex-1 px-4 py-6 sm:px-8 sm:py-8">
           <Outlet />
         </main>

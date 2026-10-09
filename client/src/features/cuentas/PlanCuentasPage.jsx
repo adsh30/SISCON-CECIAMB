@@ -197,9 +197,13 @@ export default function PlanCuentasPage() {
   const [centroAEliminar, setCentroAEliminar] = useState(null)
 
   // Consultas
-  const { data: arbol = [], isLoading: cargandoArbol } = useArbolCuentas()
+  const { data: arbol = [], isLoading: cargandoArbol, error: errorArbol } = useArbolCuentas()
   const { data: todasCuentas = [] } = useCuentas()
-  const { data: centrosCosto = [], isLoading: cargandoCentros } = useCentrosCosto()
+  const {
+    data: centrosCosto = [],
+    isLoading: cargandoCentros,
+    error: errorCentros,
+  } = useCentrosCosto()
 
   const eliminarCuentaMut = useEliminarCuenta()
   const eliminarCentroMut = useEliminarCentroCosto()
@@ -420,6 +424,8 @@ export default function PlanCuentasPage() {
               <div className="py-12 text-center text-sm text-pizarra">
                 Cargando estructura contable…
               </div>
+            ) : errorArbol && arbol.length === 0 ? (
+              <div className="py-12 text-center text-sm text-alerta">{errorArbol.message}</div>
             ) : arbolFiltrado.length === 0 ? (
               <div className="py-12 text-center text-sm text-pizarra">
                 No se encontraron cuentas con los filtros seleccionados
@@ -451,6 +457,8 @@ export default function PlanCuentasPage() {
         <div className="rounded-2xl border border-linea bg-superficie shadow-xs overflow-hidden">
           {cargandoCentros ? (
             <div className="py-12 text-center text-sm text-pizarra">Cargando centros de costo…</div>
+          ) : errorCentros && centrosCosto.length === 0 ? (
+            <div className="py-12 text-center text-sm text-alerta">{errorCentros.message}</div>
           ) : centrosCosto.length === 0 ? (
             <div className="py-12 text-center text-sm text-pizarra">
               No hay centros de costo registrados
