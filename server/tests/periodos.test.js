@@ -6,6 +6,7 @@ import { db } from '../src/config/db.js'
 import { generarPeriodos } from '../src/modules/periodos/periodos.fechas.js'
 import { exigirPeriodoAbierto } from '../src/modules/periodos/periodos.service.js'
 import { testEnv } from './env.js'
+import { limpiarComprobantes } from './limpiar.js'
 
 const app = createApp()
 const ADMIN = { email: testEnv.ADMIN_EMAIL, password: testEnv.ADMIN_PASSWORD }
@@ -37,7 +38,10 @@ beforeAll(async () => {
     sesion(ANALISTA),
   ])
 })
-beforeEach(() => db('ejercicios').del())
+beforeEach(async () => {
+  await limpiarComprobantes()
+  await db('ejercicios').del()
+})
 afterAll(() => db.destroy())
 
 const crear = (agent, anio, mesInicio) =>

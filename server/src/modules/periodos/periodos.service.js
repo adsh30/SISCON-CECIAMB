@@ -126,6 +126,17 @@ export async function eliminarEjercicio(id, actor, ctx) {
       )
     }
 
+    const conComprobantes = await trx('comprobantes as c')
+      .join('periodos as p', 'p.id', 'c.periodo_id')
+      .where('p.ejercicio_id', id)
+      .first('c.id')
+    if (conComprobantes) {
+      throw conflicto(
+        'EJERCICIO_CON_COMPROBANTES',
+        'No se puede eliminar: el ejercicio tiene comprobantes registrados',
+      )
+    }
+
     await trx('ejercicios').where({ id }).del() // los períodos se borran en cascada
     await registrar(trx, {
       usuarioId: actor.id,
@@ -162,7 +173,17 @@ export async function cerrar(id, actor, ctx) {
         `Cierre primero ${nombrePeriodo(abierto)}: los períodos se cierran en orden`,
       )
     }
-    // RF-08.1: cuando existan comprobantes, aquí se verificarán los borradores pendientes
+    // RF-08.1: no se cierra con borradores pendientes
+    const borradores = await trx('comprobantes')
+      .where({ periodo_id: id, estado: 'BORRADOR' })
+      .count({ n: '*' })
+      .first()
+    if (Number(borradores.n) > 0) {
+      throw conflicto(
+        'PERIODO_CON_BORRADORES',
+        `${nombrePeriodo(p)} tiene ${borradores.n} comprobante(s) en borrador: apruébelos o elimínelos antes de cerrar`,
+      )
+    }
 
     await repo.cambiarEstado(
       id,

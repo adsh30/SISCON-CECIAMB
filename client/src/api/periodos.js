@@ -3,8 +3,8 @@ import { api } from './client.js'
 
 const KEY = ['periodos']
 
-export function usePeriodos() {
-  return useQuery({ queryKey: KEY, queryFn: async () => (await api('/periodos')).data })
+export function usePeriodos({ enabled = true } = {}) {
+  return useQuery({ queryKey: KEY, queryFn: async () => (await api('/periodos')).data, enabled })
 }
 
 function useMutacionPeriodos(mutationFn) {

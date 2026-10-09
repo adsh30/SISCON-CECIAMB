@@ -80,6 +80,8 @@ export const MODULOS = {
   ejercicios: { nombre: 'Ejercicios', frase: 'un ejercicio económico' },
   periodos: { nombre: 'Períodos', frase: 'un período contable' },
   cuentas: { nombre: 'Plan de cuentas', frase: 'una cuenta contable' },
+  comprobantes: { nombre: 'Comprobantes', frase: 'un comprobante' },
+  tipos_comprobante: { nombre: 'Tipos de comprobante', frase: 'un tipo de comprobante' },
   centros_costo: { nombre: 'Centros de costo', frase: 'un centro de costo' },
   sistema: { nombre: 'Sistema', frase: 'el sistema a una nueva versión' },
 }
@@ -155,6 +157,20 @@ const CAMPOS = {
   nivel: 'Nivel',
   padreId: 'Cuenta superior',
   esMovimiento: 'Cuenta de movimiento',
+  numero: 'Número',
+  fecha: 'Fecha',
+  concepto: 'Concepto',
+  referencia: 'Referencia',
+  beneficiario: 'Beneficiario',
+  estado: 'Estado',
+  totalDebe: 'Total Debe',
+  totalHaber: 'Total Haber',
+  renglones: 'Renglón',
+  cuenta: 'Cuenta',
+  centro: 'Centro de costo',
+  debe: 'Debe',
+  haber: 'Haber',
+  orden: 'Orden',
   activa: 'Activa',
   cambios: 'Cambios incluidos',
   motivo: 'Motivo',
@@ -169,6 +185,11 @@ export const nombreCampo = (ruta) =>
 
 /** { a: { b: 1 } } → { 'a.b': 1 }. Las listas se dejan como valor. */
 function aplanar(obj, prefijo = '', salida = {}) {
+  // Listas de objetos (p. ej. los renglones de un comprobante): un campo por renglón, desde 1
+  if (Array.isArray(obj) && obj.some((v) => v !== null && typeof v === 'object')) {
+    obj.forEach((v, i) => aplanar(v, prefijo ? `${prefijo}.${i + 1}` : String(i + 1), salida))
+    return salida
+  }
   if (obj === null || typeof obj !== 'object' || Array.isArray(obj)) {
     if (prefijo) salida[prefijo] = obj
     return salida

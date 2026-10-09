@@ -23,8 +23,8 @@ function Aviso({ tono, icono, children, a, accion }) {
   )
 }
 
-/** Período contable de hoy y datos de la empresa pendientes, según lo que el rol puede ver */
-export function AvisosInicio({ periodoActual }) {
+/** Período contable de hoy, borradores pendientes y datos de la empresa, según el rol */
+export function AvisosInicio({ periodoActual, comprobantes }) {
   const { can } = usePermisos()
   const { data: empresa } = useEmpresa({ enabled: can('empresa', 'escritura') })
 
@@ -44,6 +44,20 @@ export function AvisosInicio({ periodoActual }) {
         >
           Período contable actual: <strong>{periodoActual.nombre}</strong> ·{' '}
           {periodoActual.estado === 'CERRADO' ? 'cerrado' : 'abierto'}
+        </Aviso>
+      )}
+      {comprobantes?.borradores > 0 && (
+        <Aviso
+          tono="aviso"
+          icono="comprobantes"
+          a="/app/comprobantes?estado=BORRADOR"
+          accion="Ver borradores"
+        >
+          {comprobantes.borradores === 1
+            ? 'Hay 1 comprobante en borrador'
+            : `Hay ${comprobantes.borradores} comprobantes en borrador`}{' '}
+          pendiente{comprobantes.borradores === 1 ? '' : 's'} de aprobar: no cuentan en los libros
+          todavía.
         </Aviso>
       )}
       {empresa && !empresa.completa && (

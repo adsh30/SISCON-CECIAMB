@@ -12,12 +12,13 @@ export async function obtener(usuario) {
   const permisos = await permisosDeRol(usuario.rolId)
   const ve = (modulo) => puede(usuario.rol, permisos, modulo, 'lectura')
 
-  const [tasas, usuarios, recientes, hoy, periodo] = await Promise.all([
+  const [tasas, usuarios, recientes, hoy, periodo, comprobantes] = await Promise.all([
     resumenTasas(),
     ve('usuarios') ? repo.conteoUsuarios() : null,
     ve('bitacora') ? repo.actividadReciente() : null,
     ve('bitacora') ? repo.resumenDia(fechaHoyVE()) : null,
     ve('periodos') ? periodoActual() : undefined,
+    ve('comprobantes') ? repo.resumenComprobantes(fechaHoyVE()) : null,
   ])
 
   return {
@@ -27,6 +28,7 @@ export async function obtener(usuario) {
     actividad: recientes ? { recientes, hoy } : null,
     // undefined: sin permiso; null: no hay período creado para hoy
     periodoActual: periodo,
+    comprobantes,
   }
 }
 
