@@ -17,7 +17,7 @@ export default function ComprobantePage() {
     return <ComprobanteEditor tipoInicial={params.get('tipo')} />
   }
   if (isPending) return <p className="py-16 text-center text-pizarra">Cargando comprobante…</p>
-  if (isError) return <p className="py-16 text-center text-alerta">{error.message}</p>
+  if (isError && !data) return <p className="py-16 text-center text-alerta">{error.message}</p>
   if (data.estado === 'BORRADOR' && can('comprobantes', 'escritura')) {
     // key: al guardar o cambiar de comprobante el editor arranca con los datos nuevos
     return <ComprobanteEditor key={`${data.id}-${data.actualizadoEn}`} comprobante={data} />

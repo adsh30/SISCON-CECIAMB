@@ -144,7 +144,7 @@ export default function PeriodosPage() {
   }
 
   if (isPending) return <p className="py-10 text-center text-pizarra">Cargando…</p>
-  if (isError) return <p className="py-10 text-center text-alerta">{error.message}</p>
+  if (isError && !data) return <p className="py-10 text-center text-alerta">{error.message}</p>
 
   const { ejercicios, hoy, periodoActualId } = data
   const todos = ejercicios

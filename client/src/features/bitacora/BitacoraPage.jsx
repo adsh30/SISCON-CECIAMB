@@ -266,7 +266,7 @@ export default function BitacoraPage() {
                 </td>
               </tr>
             )}
-            {isError && (
+            {isError && !data && (
               <tr>
                 <td colSpan={6} className="px-4 py-10 text-center text-alerta">
                   {error.message}

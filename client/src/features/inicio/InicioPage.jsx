@@ -88,7 +88,7 @@ export default function InicioPage() {
       <div className="mt-6">
         {isPending ? (
           <Esqueleto />
-        ) : isError ? (
+        ) : isError && !data ? (
           <p className="rounded-2xl border border-alerta/40 bg-alerta-claro px-4 py-3 text-sm text-alerta">
             No se pudo cargar el resumen. Verifique que el sistema esté encendido y recargue la
             página.

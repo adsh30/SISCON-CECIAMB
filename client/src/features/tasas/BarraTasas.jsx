@@ -64,7 +64,7 @@ export function BarraTasas() {
       <span className="h-9 w-80 animate-pulse rounded-full bg-papel" aria-label="Cargando tasas" />
     )
   }
-  if (isError || (!data?.bcv && !data?.binance)) {
+  if ((isError && !data) || (!data?.bcv && !data?.binance)) {
     return (
       <span className="rounded-full border border-linea px-4 py-2 text-sm text-pizarra">
         Tasas no disponibles
