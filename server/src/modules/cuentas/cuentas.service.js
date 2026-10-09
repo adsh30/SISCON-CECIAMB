@@ -33,6 +33,7 @@ const instantanea = (c) => {
   return {
     codigo: p.codigo,
     nombre: p.nombre,
+    descripcion: p.descripcion,
     tipo: p.tipo,
     naturaleza: p.naturaleza,
     nivel: p.nivel,
@@ -77,65 +78,81 @@ export async function obtener(id) {
   return aPublico(cuenta)
 }
 
+const duplicado = (codigo) =>
+  new AppError(409, 'CODIGO_DUPLICADO', `Ya existe una cuenta con el código ${codigo}`)
+
 export async function crear(datos, actor, ctx) {
   return db.transaction(async (trx) => {
-    // 1. Verificar código único
-    const existente = await repo.buscarPorCodigo(datos.codigo, trx)
-    if (existente) {
-      throw new AppError(
-        409,
-        'CODIGO_DUPLICADO',
-        `Ya existe una cuenta con el código ${datos.codigo}`,
-      )
-    }
+    if (await repo.buscarPorCodigo(datos.codigo, trx)) throw duplicado(datos.codigo)
 
     let nivel = 1
-    let naturaleza = datos.naturaleza || NATURALEZA_POR_DEFECTO[datos.tipo] || 'DEUDORA'
     let tipo = datos.tipo
+    let naturaleza = datos.naturaleza || NATURALEZA_POR_DEFECTO[tipo]
 
-    // 2. Si tiene padre, validar jerarquía y herencia
     if (datos.padreId) {
+      // El padre queda bloqueado para que nadie lo convierta en cuenta de movimiento a la vez
+      await repo.bloquear(datos.padreId, trx)
       const padre = await repo.buscarPorId(datos.padreId, trx)
       if (!padre) {
-        throw new AppError(404, 'PADRE_NO_ENCONTRADO', 'La cuenta superior (padre) no existe')
+        throw new AppError(404, 'PADRE_NO_ENCONTRADO', 'La cuenta superior no existe')
       }
       if (padre.es_movimiento) {
         throw new AppError(
           400,
           'PADRE_ES_MOVIMIENTO',
-          'Una cuenta de movimiento no puede tener subcuentas. Debe ser una cuenta de grupo o totalizadora',
+          `${padre.codigo} es una cuenta de movimiento y no puede tener subcuentas`,
         )
       }
-      // El código debe ser prefijo del padre
-      if (!datos.codigo.startsWith(`${padre.codigo}.`)) {
+      if (!padre.activa) {
+        throw new AppError(
+          400,
+          'PADRE_INACTIVO',
+          `La cuenta superior ${padre.codigo} está inactiva; actívela antes de crearle subcuentas`,
+        )
+      }
+      // Un solo nivel más que el padre: 1.1 → 1.1.01, nunca 1.1.01.05
+      const resto = datos.codigo.slice(padre.codigo.length + 1)
+      if (!datos.codigo.startsWith(`${padre.codigo}.`) || resto.includes('.')) {
         throw new AppError(
           400,
           'CODIGO_NO_COINCIDE_CON_PADRE',
-          `El código ${datos.codigo} debe comenzar con el prefijo de la cuenta superior (${padre.codigo}.)`,
+          `El código debe ser ${padre.codigo}. seguido de un número, por ejemplo ${padre.codigo}.01`,
         )
       }
       nivel = padre.nivel + 1
-      tipo = padre.tipo // Hereda tipo del padre
+      tipo = padre.tipo
       naturaleza = datos.naturaleza || padre.naturaleza
+    } else if (datos.codigo.includes('.')) {
+      throw new AppError(
+        400,
+        'CODIGO_RAIZ',
+        'Una cuenta sin cuenta superior lleva un código de un solo número, por ejemplo 7',
+      )
     }
 
-    const fila = {
-      codigo: datos.codigo,
-      nombre: datos.nombre,
-      descripcion: datos.descripcion || null,
-      tipo,
-      naturaleza,
-      nivel,
-      padre_id: datos.padreId || null,
-      es_movimiento: !!datos.esMovimiento,
-      activa: datos.activa !== undefined ? !!datos.activa : true,
-      creado_por: actor?.id ?? null,
-      creado_en: trx.fn.now(),
-      actualizado_por: actor?.id ?? null,
-      actualizado_en: trx.fn.now(),
+    let creada
+    try {
+      creada = await repo.crear(
+        {
+          codigo: datos.codigo,
+          nombre: datos.nombre,
+          descripcion: datos.descripcion ?? null,
+          tipo,
+          naturaleza,
+          nivel,
+          padre_id: datos.padreId || null,
+          es_movimiento: datos.esMovimiento,
+          activa: datos.activa,
+          creado_por: actor?.id ?? null,
+          actualizado_por: actor?.id ?? null,
+        },
+        trx,
+      )
+    } catch (err) {
+      // Dos usuarios creando el mismo código al mismo tiempo
+      if (err.code === 'ER_DUP_ENTRY') throw duplicado(datos.codigo)
+      throw err
     }
-
-    const creada = await repo.crear(fila, trx)
 
     await registrar(trx, {
       usuarioId: actor?.id,
@@ -152,37 +169,73 @@ export async function crear(datos, actor, ctx) {
 
 export async function actualizar(id, datos, actor, ctx) {
   return db.transaction(async (trx) => {
+    await repo.bloquear(id, trx)
     const antes = await repo.buscarPorId(id, trx)
     if (!antes) throw new AppError(404, 'NO_ENCONTRADO', 'Cuenta contable no encontrada')
 
-    // Si se desea convertir a cuenta de movimiento, verificar que no tenga hijos
-    if (datos.esMovimiento === true && !antes.es_movimiento) {
-      const hijos = await repo.contarHijos(id, trx)
-      if (hijos > 0) {
+    const cambios = {}
+    if (datos.nombre !== undefined && datos.nombre !== antes.nombre) cambios.nombre = datos.nombre
+    if (datos.descripcion !== undefined && datos.descripcion !== (antes.descripcion ?? null)) {
+      cambios.descripcion = datos.descripcion
+    }
+    if (datos.naturaleza !== undefined && datos.naturaleza !== antes.naturaleza) {
+      cambios.naturaleza = datos.naturaleza
+    }
+    if (datos.esMovimiento !== undefined && datos.esMovimiento !== Boolean(antes.es_movimiento)) {
+      cambios.es_movimiento = datos.esMovimiento
+    }
+    if (datos.activa !== undefined && datos.activa !== Boolean(antes.activa)) {
+      cambios.activa = datos.activa
+    }
+
+    // Nada que guardar: no se toca la fila ni se ensucia la bitácora
+    if (Object.keys(cambios).length === 0) return aPublico(antes)
+
+    if (cambios.es_movimiento === true && (await repo.contarHijos(id, trx)) > 0) {
+      throw new AppError(
+        400,
+        'TIENE_HIJOS',
+        'No puede ser cuenta de movimiento porque ya tiene subcuentas',
+      )
+    }
+    // Lo ya registrado en comprobantes no puede cambiar de sentido ni dejar de ser movimiento
+    if (
+      (cambios.es_movimiento === false || cambios.naturaleza) &&
+      (await repo.contarMovimientos(id, trx)) > 0
+    ) {
+      throw new AppError(
+        400,
+        'TIENE_MOVIMIENTOS',
+        'La cuenta ya tiene movimientos en comprobantes: no se puede cambiar su naturaleza ni convertirla en cuenta de grupo',
+      )
+    }
+    if (cambios.activa === false && (await repo.contarHijosActivos(id, trx)) > 0) {
+      throw new AppError(
+        400,
+        'SUBCUENTAS_ACTIVAS',
+        'Desactive primero las subcuentas de esta cuenta',
+      )
+    }
+    if (cambios.activa === true && antes.padre_id) {
+      const padre = await repo.buscarPorId(antes.padre_id, trx)
+      if (!padre.activa) {
         throw new AppError(
           400,
-          'TIENE_HIJOS',
-          'No se puede convertir en cuenta de movimiento porque ya tiene subcuentas asociadas',
+          'PADRE_INACTIVO',
+          `Active primero la cuenta superior ${padre.codigo}`,
         )
       }
     }
 
-    const cambios = {
-      actualizado_por: actor?.id ?? null,
-      actualizado_en: trx.fn.now(),
-    }
-
-    if (datos.nombre !== undefined) cambios.nombre = datos.nombre
-    if (datos.descripcion !== undefined) cambios.descripcion = datos.descripcion || null
-    if (datos.naturaleza !== undefined) cambios.naturaleza = datos.naturaleza
-    if (datos.esMovimiento !== undefined) cambios.es_movimiento = !!datos.esMovimiento
-    if (datos.activa !== undefined) cambios.activa = !!datos.activa
-
-    const actualizada = await repo.actualizar(id, cambios, trx)
+    const actualizada = await repo.actualizar(
+      id,
+      { ...cambios, actualizado_por: actor?.id ?? null, actualizado_en: trx.fn.now() },
+      trx,
+    )
 
     let accion = ACCIONES.EDITAR
-    if (datos.activa !== undefined && datos.activa !== Boolean(antes.activa)) {
-      accion = datos.activa ? ACCIONES.ACTIVAR : ACCIONES.DESACTIVAR
+    if (cambios.activa !== undefined && Object.keys(cambios).length === 1) {
+      accion = cambios.activa ? ACCIONES.ACTIVAR : ACCIONES.DESACTIVAR
     }
 
     await registrar(trx, {
@@ -201,24 +254,22 @@ export async function actualizar(id, datos, actor, ctx) {
 
 export async function eliminar(id, actor, ctx) {
   return db.transaction(async (trx) => {
+    await repo.bloquear(id, trx)
     const cuenta = await repo.buscarPorId(id, trx)
     if (!cuenta) throw new AppError(404, 'NO_ENCONTRADO', 'Cuenta contable no encontrada')
 
-    const hijos = await repo.contarHijos(id, trx)
-    if (hijos > 0) {
+    if ((await repo.contarHijos(id, trx)) > 0) {
       throw new AppError(
         400,
         'TIENE_HIJOS',
-        'No se puede eliminar la cuenta porque posee subcuentas. Elimine primero las subcuentas',
+        'No se puede eliminar una cuenta con subcuentas. Elimine primero las subcuentas',
       )
     }
-
-    const movimientos = await repo.contarMovimientos(id, trx)
-    if (movimientos > 0) {
+    if ((await repo.contarMovimientos(id, trx)) > 0) {
       throw new AppError(
         400,
         'TIENE_MOVIMIENTOS',
-        'No se puede eliminar una cuenta que posee movimientos en comprobantes. Puede desactivarla en su lugar',
+        'No se puede eliminar una cuenta con movimientos en comprobantes. Puede desactivarla',
       )
     }
 
@@ -232,7 +283,5 @@ export async function eliminar(id, actor, ctx) {
       antes: instantanea(cuenta),
       ctx,
     })
-
-    return true
   })
 }

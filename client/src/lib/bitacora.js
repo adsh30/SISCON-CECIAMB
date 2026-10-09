@@ -79,6 +79,8 @@ export const MODULOS = {
   empresa: { nombre: 'Empresa', frase: 'los datos de la empresa' },
   ejercicios: { nombre: 'Ejercicios', frase: 'un ejercicio económico' },
   periodos: { nombre: 'Períodos', frase: 'un período contable' },
+  cuentas: { nombre: 'Plan de cuentas', frase: 'una cuenta contable' },
+  centros_costo: { nombre: 'Centros de costo', frase: 'un centro de costo' },
   sistema: { nombre: 'Sistema', frase: 'el sistema a una nueva versión' },
 }
 
@@ -148,6 +150,12 @@ const CAMPOS = {
   periodos: 'Períodos creados',
   anio: 'Año',
   resultado: 'Resultado',
+  tipo: 'Tipo',
+  naturaleza: 'Naturaleza',
+  nivel: 'Nivel',
+  padreId: 'Cuenta superior',
+  esMovimiento: 'Cuenta de movimiento',
+  activa: 'Activa',
   cambios: 'Cambios incluidos',
   motivo: 'Motivo',
 }

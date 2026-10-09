@@ -13,27 +13,41 @@ import { Icono } from '../../components/ui/Icono.jsx'
 import { ModalCentroCosto } from './ModalCentroCosto.jsx'
 import { ModalCuenta } from './ModalCuenta.jsx'
 
+// Solo tokens del tema para que se lea bien en claro y oscuro
 const COLORES_TIPO = {
-  ACTIVO: 'bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/20',
-  PASIVO: 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20',
-  PATRIMONIO: 'bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-500/20',
-  INGRESO: 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20',
-  COSTO: 'bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-500/20',
-  GASTO: 'bg-orange-500/10 text-orange-600 dark:text-orange-400 border-orange-500/20',
-  ORDEN: 'bg-slate-500/10 text-slate-600 dark:text-slate-400 border-slate-500/20',
+  ACTIVO: 'border-marca/25 bg-marca-claro text-marca',
+  PASIVO: 'border-aviso/25 bg-aviso-claro text-aviso',
+  PATRIMONIO: 'border-acento/25 bg-acento-claro text-acento',
+  INGRESO: 'border-exito/25 bg-exito-claro text-exito',
+  COSTO: 'border-alerta/25 bg-alerta-claro text-alerta',
+  GASTO: 'border-alerta/25 bg-alerta-claro text-alerta',
+  ORDEN: 'border-linea bg-superficie-2 text-pizarra',
+}
+
+/** Siguiente código libre bajo un padre: 1.1.01, 1.1.02… respetando el ancho de los hermanos */
+function siguienteCodigo(padre, cuentas) {
+  const hermanos = cuentas
+    .filter((c) => c.padreId === padre.id)
+    .map((c) => c.codigo.slice(padre.codigo.length + 1))
+    .filter((seg) => /^d+$/.test(seg))
+  const ancho = hermanos.length ? Math.max(...hermanos.map((h) => h.length)) : 2
+  const mayor = hermanos.length ? Math.max(...hermanos.map(Number)) : 0
+  return `${padre.codigo}.${String(mayor + 1).padStart(ancho, '0')}`
 }
 
 function NodoCuenta({
   cuenta,
   expandidos,
+  forzarAbierto,
   onToggle,
   onEditar,
   onNuevaSubcuenta,
   onEliminar,
   canEscritura,
+  canEliminar,
 }) {
   const tieneHijos = cuenta.hijos && cuenta.hijos.length > 0
-  const abierto = expandidos.has(cuenta.id)
+  const abierto = forzarAbierto || expandidos.has(cuenta.id)
 
   const claseTipo = COLORES_TIPO[cuenta.tipo] || 'bg-superficie-2 text-pizarra'
 
@@ -90,9 +104,12 @@ function NodoCuenta({
             <span
               className={`rounded-md px-1.5 py-0.5 font-medium uppercase ${
                 cuenta.naturaleza === 'DEUDORA'
-                  ? 'bg-blue-500/10 text-blue-600 dark:text-blue-400'
-                  : 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400'
+                  ? 'bg-marca-claro text-marca'
+                  : 'bg-exito-claro text-exito'
               }`}
+              title={
+                cuenta.naturaleza === 'DEUDORA' ? 'Naturaleza deudora' : 'Naturaleza acreedora'
+              }
             >
               {cuenta.naturaleza === 'DEUDORA' ? 'Deu' : 'Acr'}
             </span>
@@ -104,7 +121,7 @@ function NodoCuenta({
         </div>
 
         {canEscritura && (
-          <div className="flex shrink-0 items-center gap-1 opacity-0 transition-opacity group-hover:opacity-100">
+          <div className="flex shrink-0 items-center gap-1 transition-opacity group-focus-within:opacity-100 group-hover:opacity-100 pointer-fine:opacity-0">
             {!cuenta.esMovimiento && (
               <button
                 type="button"
@@ -125,7 +142,7 @@ function NodoCuenta({
               <Icono nombre="editar" className="size-4" />
             </button>
 
-            {!tieneHijos && (
+            {canEliminar && !tieneHijos && (
               <button
                 type="button"
                 onClick={() => onEliminar(cuenta)}
@@ -146,11 +163,13 @@ function NodoCuenta({
               key={hijo.id}
               cuenta={hijo}
               expandidos={expandidos}
+              forzarAbierto={forzarAbierto}
               onToggle={onToggle}
               onEditar={onEditar}
               onNuevaSubcuenta={onNuevaSubcuenta}
               onEliminar={onEliminar}
               canEscritura={canEscritura}
+              canEliminar={canEliminar}
             />
           ))}
         </div>
@@ -163,6 +182,7 @@ export default function PlanCuentasPage() {
   const avisar = useAvisos()
   const { can } = usePermisos()
   const canEscritura = can('plan_cuentas', 'escritura')
+  const canEliminar = can('plan_cuentas', 'full')
 
   const [pestana, setPestana] = useState('cuentas') // 'cuentas' | 'centros'
   const [busqueda, setBusqueda] = useState('')
@@ -185,12 +205,16 @@ export default function PlanCuentasPage() {
   const eliminarCentroMut = useEliminarCentroCosto()
   const actualizarCentroMut = useActualizarCentroCosto()
 
-  // Gestión de nodos expandidos
-  const [expandidos, setExpandidos] = useState(new Set([1, 2, 3, 4, 5, 6]))
+  // Nodos expandidos; null = aún no se ha tocado, se muestran abiertas las cuentas raíz
+  const [expandidosManual, setExpandidos] = useState(null)
+  const expandidos = useMemo(
+    () => expandidosManual ?? new Set(arbol.map((raiz) => raiz.id)),
+    [expandidosManual, arbol],
+  )
 
   const alternarNodo = (id) => {
-    setExpandidos((prev) => {
-      const nuevo = new Set(prev)
+    setExpandidos(() => {
+      const nuevo = new Set(expandidos)
       if (nuevo.has(id)) nuevo.delete(id)
       else nuevo.add(id)
       return nuevo
@@ -205,6 +229,9 @@ export default function PlanCuentasPage() {
   const colapsarTodo = () => {
     setExpandidos(new Set())
   }
+
+  // Al buscar se abre todo el camino hasta cada coincidencia
+  const filtrando = Boolean(busqueda.trim() || filtroTipo)
 
   // Filtrado reactivo en el árbol
   const arbolFiltrado = useMemo(() => {
@@ -404,11 +431,13 @@ export default function PlanCuentasPage() {
                     key={raiz.id}
                     cuenta={raiz}
                     expandidos={expandidos}
+                    forzarAbierto={filtrando}
                     onToggle={alternarNodo}
                     onEditar={(cuenta) => setModalCuenta({ cuenta, padre: null })}
                     onNuevaSubcuenta={(padre) => setModalCuenta({ cuenta: null, padre })}
                     onEliminar={(cuenta) => setCuentaAEliminar(cuenta)}
                     canEscritura={canEscritura}
+                    canEliminar={canEliminar}
                   />
                 ))}
               </div>
@@ -479,14 +508,16 @@ export default function PlanCuentasPage() {
                             >
                               <Icono nombre="editar" className="size-4" />
                             </button>
-                            <button
-                              type="button"
-                              onClick={() => setCentroAEliminar(cc)}
-                              className="rounded-lg p-1.5 text-pizarra hover:bg-alerta-claro hover:text-alerta"
-                              title="Eliminar"
-                            >
-                              <Icono nombre="papelera" className="size-4" />
-                            </button>
+                            {canEliminar && (
+                              <button
+                                type="button"
+                                onClick={() => setCentroAEliminar(cc)}
+                                className="rounded-lg p-1.5 text-pizarra hover:bg-alerta-claro hover:text-alerta"
+                                title="Eliminar"
+                              >
+                                <Icono nombre="papelera" className="size-4" />
+                              </button>
+                            )}
                           </div>
                         </td>
                       )}
@@ -504,6 +535,9 @@ export default function PlanCuentasPage() {
         <ModalCuenta
           cuenta={modalCuenta.cuenta}
           padre={modalCuenta.padre}
+          codigoSugerido={
+            modalCuenta.padre ? siguienteCodigo(modalCuenta.padre, todasCuentas) : undefined
+          }
           onClose={() => setModalCuenta(null)}
         />
       )}

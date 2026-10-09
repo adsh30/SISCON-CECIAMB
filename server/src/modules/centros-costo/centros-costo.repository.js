@@ -1,4 +1,5 @@
 import { db } from '../../config/db.js'
+import { comoLike } from '../cuentas/cuentas.repository.js'
 
 const COLUMNAS = [
   'cc.id',
@@ -21,9 +22,9 @@ export function listar({ q, soloActivos } = {}, trx = db) {
   const query = conUsuario(trx).orderBy('cc.codigo', 'asc')
 
   if (q) {
-    const termino = `%${q.trim()}%`
+    const termino = comoLike(q)
     query.where((b) => {
-      b.whereILike('cc.codigo', termino).orWhereILike('cc.nombre', termino)
+      b.where('cc.codigo', 'like', termino).orWhere('cc.nombre', 'like', termino)
     })
   }
   if (soloActivos != null) {

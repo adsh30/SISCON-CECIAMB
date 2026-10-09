@@ -1,10 +1,9 @@
-/**
- * Seed inicial: Plan de cuentas base VEN-NIF adaptado a Centro de Salud / Hospital
- * y centros de costo operativos de CECIAMB (RF-03).
- *
- * @param {import('knex').Knex} knex
- */
-export async function seed(knex) {
+// Datos iniciales del plan de cuentas (VEN-NIF adaptado a un centro de salud) y de los
+// centros de costo de CECIAMB. Va como migración para que el bot de despliegue lo cargue
+// también en producción; si ya hay cuentas no toca nada.
+
+/** @param {import('knex').Knex} knex */
+export async function up(knex) {
   // Centros de costo base
   const centrosCosto = [
     { codigo: 'ADM', nombre: 'Administración y Finanzas' },
@@ -588,3 +587,6 @@ export async function seed(knex) {
     mapaIds.set(c.codigo, id)
   }
 }
+
+/** Los datos se van con las tablas al revertir la migración anterior */
+export async function down() {}

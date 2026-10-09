@@ -27,13 +27,16 @@ const conPadreYUsuario = (trx = db) =>
     .leftJoin('usuarios as u', 'u.id', 'c.creado_por')
     .select(COLUMNAS)
 
-export function listar({ q, tipo, soloMovimiento, soloActivas, padreId } = {}, trx = db) {
+/** Escapa % y _ para usarlos en LIKE */
+export const comoLike = (texto) => `%${texto.replace(/[\\%_]/g, (c) => `\\${c}`)}%`
+
+export function listar({ q, tipo, soloMovimiento, soloActivas } = {}, trx = db) {
   const query = conPadreYUsuario(trx).orderBy('c.codigo', 'asc')
 
   if (q) {
-    const termino = `%${q.trim()}%`
+    const termino = comoLike(q)
     query.where((b) => {
-      b.whereILike('c.codigo', termino).orWhereILike('c.nombre', termino)
+      b.where('c.codigo', 'like', termino).orWhere('c.nombre', 'like', termino)
     })
   }
   if (tipo) {
@@ -45,19 +48,16 @@ export function listar({ q, tipo, soloMovimiento, soloActivas, padreId } = {}, t
   if (soloActivas != null) {
     query.where('c.activa', !!soloActivas)
   }
-  if (padreId !== undefined) {
-    if (padreId === null) {
-      query.whereNull('c.padre_id')
-    } else {
-      query.where('c.padre_id', padreId)
-    }
-  }
-
   return query
 }
 
 export function buscarPorId(id, trx = db) {
   return conPadreYUsuario(trx).where('c.id', id).first()
+}
+
+/** Bloquea la fila mientras se valida y modifica */
+export function bloquear(id, trx) {
+  return trx('cuentas').select('id').where({ id }).forUpdate().first()
 }
 
 export function buscarPorCodigo(codigo, trx = db) {
@@ -66,6 +66,14 @@ export function buscarPorCodigo(codigo, trx = db) {
 
 export async function contarHijos(id, trx = db) {
   const res = await trx('cuentas').where({ padre_id: id }).count({ total: '*' }).first()
+  return Number(res?.total ?? 0)
+}
+
+export async function contarHijosActivos(id, trx = db) {
+  const res = await trx('cuentas')
+    .where({ padre_id: id, activa: true })
+    .count({ total: '*' })
+    .first()
   return Number(res?.total ?? 0)
 }
 
