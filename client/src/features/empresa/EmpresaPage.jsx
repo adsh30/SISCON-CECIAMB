@@ -268,7 +268,7 @@ export default function EmpresaPage() {
               error={errors.sitioWeb?.message}
               className="sm:col-span-2"
             >
-              <input {...campo('sitioWeb')} placeholder="https://ceciamb.com" />
+              <input {...campo('sitioWeb')} type="url" placeholder="https://ceciamb.com" />
             </Campo>
             <Campo etiqueta="Moneda base" id="empresa-moneda">
               <input
