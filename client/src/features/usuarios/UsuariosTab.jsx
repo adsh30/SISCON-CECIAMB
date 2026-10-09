@@ -241,7 +241,7 @@ export function UsuariosTab() {
                   )}
                 </td>
                 <td className="cifras px-4 py-3">{u.ci ?? '—'}</td>
-                <td className="px-4 py-3 text-pizarra">{u.email}</td>
+                <td className="sin-mayusculas px-4 py-3 text-pizarra">{u.email}</td>
                 <td className="px-4 py-3">
                   <span className="inline-flex items-center gap-2 whitespace-nowrap">
                     <PuntoColor color={u.rol.color} />
@@ -298,7 +298,14 @@ export function UsuariosTab() {
           roles={roles}
           onClose={cerrar}
           onGuardado={(u) => {
-            if (u) avisar('Usuario actualizado', 'exito', `${nombreCompleto(u)} · ${u.email}`)
+            if (u)
+              avisar(
+                'Usuario actualizado',
+                'exito',
+                <>
+                  {nombreCompleto(u)} · <span className="sin-mayusculas">{u.email}</span>
+                </>,
+              )
             else avisar('No había cambios que guardar', 'info')
             cerrar()
           }}

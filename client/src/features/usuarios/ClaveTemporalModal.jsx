@@ -24,10 +24,10 @@ export function ClaveTemporalModal({ email, clave, motivo, onClose }) {
       pie={<Button onClick={onClose}>Listo</Button>}
     >
       <p>
-        Clave temporal de <strong>{email}</strong>:
+        Clave temporal de <strong className="sin-mayusculas">{email}</strong>:
       </p>
       <div className="mt-3 flex items-center gap-2">
-        <code className="flex-1 rounded-lg border border-linea bg-papel px-4 py-3 text-center font-mono text-xl tracking-wider select-all">
+        <code className="sin-mayusculas flex-1 rounded-lg border border-linea bg-papel px-4 py-3 text-center font-mono text-xl tracking-wider select-all">
           {clave}
         </code>
         <Button variante="secundario" onClick={copiar} title="Copiar clave">

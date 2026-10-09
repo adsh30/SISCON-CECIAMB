@@ -14,6 +14,7 @@ const TONOS = {
 /**
  * Avisos breves arriba al centro, donde queda la vista al cerrar un formulario.
  * `avisar(mensaje, tono, detalle)`: el detalle es una segunda línea opcional (p. ej. el nombre).
+ * Un clic en cualquier parte del aviso lo cierra.
  */
 export function AvisosProvider({ children }) {
   const [avisos, setAvisos] = useState([])
@@ -46,7 +47,9 @@ export function AvisosProvider({ children }) {
           return (
             <div
               key={a.id}
-              className={`pointer-events-auto flex w-full max-w-md items-center gap-3 rounded-xl border border-l-4 border-linea bg-superficie py-3 pr-2 pl-4 shadow-xl shadow-tinta/10 motion-safe:animate-[renglon-entra_200ms_ease-out] ${t.borde}`}
+              onClick={() => quitar(a.id)}
+              title="Clic para cerrar"
+              className={`pointer-events-auto flex w-full cursor-pointer max-w-md items-center gap-3 rounded-xl border border-l-4 border-linea bg-superficie py-3 pr-2 pl-4 shadow-xl shadow-tinta/10 motion-safe:animate-[renglon-entra_200ms_ease-out] ${t.borde}`}
             >
               <span className={`grid size-8 shrink-0 place-items-center rounded-full ${t.icono}`}>
                 <Icono nombre={t.simbolo} className="size-4" />
@@ -57,7 +60,10 @@ export function AvisosProvider({ children }) {
               </div>
               <button
                 type="button"
-                onClick={() => quitar(a.id)}
+                onClick={(e) => {
+                  e.stopPropagation()
+                  quitar(a.id)
+                }}
                 className="rounded-lg p-1.5 text-pizarra hover:bg-superficie-2 hover:text-tinta"
                 aria-label="Cerrar aviso"
               >
