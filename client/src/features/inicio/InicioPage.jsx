@@ -83,7 +83,7 @@ export default function InicioPage() {
         </p>
       </div>
 
-      {data && <AvisosInicio periodoActual={data.periodoActual} />}
+      {data && <AvisosInicio periodoActual={data.periodoActual} comprobantes={data.comprobantes} />}
 
       <div className="mt-6">
         {isPending ? (

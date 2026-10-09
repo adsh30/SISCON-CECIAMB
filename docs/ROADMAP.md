@@ -9,7 +9,7 @@ Cada entregable incluye **backend + frontend**. Cada cambio va en ramas `feature
 | 1b   | v0.1.1  | Tasas BCV/Binance y conversor Bs ⇄ $/€                                          | ✅     |
 | 2    | v0.2.0  | Empresa, ejercicios y períodos                                                  | ✅     |
 | 3    | v0.3.0  | Plan de cuentas                                                                 | ✅     |
-| 4    | v0.4.0  | Comprobantes (núcleo) — **MVP interno**                                         | ⬜     |
+| 4    | v0.4.0  | Comprobantes (núcleo) — **MVP interno**                                         | ✅     |
 | 5    | v0.5.0  | Libro Diario y Libro Mayor (PDF/Excel) — **MVP usable**                         | ⬜     |
 | 6    | v0.6.0  | Cierre de período, dashboard, importación de resúmenes                          | ⬜     |
 | 7    | v1.0.0  | Endurecimiento, carga de los datos contables del Hospital CECIAMB, capacitación | ⬜     |
@@ -50,10 +50,10 @@ Cada entregable incluye **backend + frontend**. Cada cambio va en ramas `feature
 
 ## Fase 4 — Comprobantes
 
-- [ ] Migraciones: `tipos_comprobante`, `correlativos`, `comprobantes`, `comprobante_detalle`.
-- [ ] API: crear/editar borrador, aprobar, anular, duplicar, listar con filtros (**por categoría o todos**), detalle, PDF.
-- [ ] Tests de reglas: cuadre, período abierto, cuentas de movimiento, correlativo, inmutabilidad, bitácora.
-- [ ] UI: listado con pestañas por categoría (Todos · Ventas · Compras · Honorarios · Nómina · Diario · Ajustes…), grilla de captura de renglones con teclado, totales y diferencia en vivo, historial de auditoría.
+- [x] Migraciones: `tipos_comprobante`, `correlativos`, `comprobantes`, `comprobante_detalle`; inmutabilidad de aprobados y anulados con triggers y CHECK de Debe/Haber en la BD.
+- [x] API: crear/editar/eliminar borrador, aprobar (correlativo por tipo y período, sin huecos), anular con motivo, duplicar, reversar, listar con filtros (**por categoría o todos**, estado, fechas, cuenta, texto), detalle con historial.
+- [x] Tests de reglas: cuadre, período abierto, cuentas de movimiento, correlativo (también con aprobaciones simultáneas), inmutabilidad, bitácora.
+- [x] UI: listado con pestañas por categoría, grilla de captura con teclado (Enter avanza y propone lo que falta por cuadrar), totales y diferencia en vivo, vista con auditoría e historial, hoja carta para imprimir o guardar como PDF, administración de tipos.
 
 ## Fase 5 — Libros
 
@@ -63,9 +63,9 @@ Cada entregable incluye **backend + frontend**. Cada cambio va en ramas `feature
 
 ## Fase 6 — Operación
 
-- [x] Cierre/reapertura de período con validaciones (adelantado en Fase 2). Falta advertir borradores pendientes al cerrar (cuando existan comprobantes).
+- [x] Cierre/reapertura de período con validaciones (adelantado en Fase 2); no se cierra un período con borradores (Fase 4).
 - [x] Tablero de inicio base (estilo MGG): KPIs de tasas con variación, evolución BCV con historial oficial desde 2023, actividad de bitácora, usuarios por rol.
-- [ ] Dashboard contable (pendientes por aprobar, comprobantes por categoría).
+- [ ] Dashboard contable (comprobantes por categoría). El aviso de borradores pendientes en Inicio ya está (Fase 4).
 - [ ] Importación CSV/Excel de resúmenes (ventas, compras, honorarios, nómina) → comprobante en borrador.
 - [ ] Adjuntos de documentos soporte.
 
