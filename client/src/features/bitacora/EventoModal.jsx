@@ -92,7 +92,13 @@ export function EventoModal({ id, onClose }) {
               <span className="text-pizarra">({formatoRelativo(e.fecha)})</span>
             </Dato>
             <Dato etiqueta="Usuario">
-              {e.usuarioId ? `${nombreCompleto(e)} · ${e.email}` : 'Sistema (automático)'}
+              {e.usuarioId ? (
+                <>
+                  {nombreCompleto(e)} · <span className="sin-mayusculas">{e.email}</span>
+                </>
+              ) : (
+                'Sistema (automático)'
+              )}
             </Dato>
             <Dato etiqueta="Módulo">{nombreModulo(e.entidad)}</Dato>
             <Dato etiqueta="ID afectado">{e.entidadId}</Dato>

@@ -296,7 +296,7 @@ export default function BitacoraPage() {
                   {e.usuarioId ? (
                     <>
                       <span className="block font-medium">{nombreCompleto(e)}</span>
-                      <span className="text-xs text-pizarra">{e.email}</span>
+                      <span className="sin-mayusculas text-xs text-pizarra">{e.email}</span>
                     </>
                   ) : (
                     <span className="text-pizarra">Sistema</span>

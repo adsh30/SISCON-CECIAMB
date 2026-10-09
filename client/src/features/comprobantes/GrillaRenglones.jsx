@@ -27,9 +27,29 @@ function enfocar(clave, campo) {
  * Grilla de captura de renglones. Teclado: Enter pasa al campo siguiente; en Debe o Haber
  * salta al renglón siguiente y, en el último, agrega uno nuevo con la diferencia por cuadrar.
  */
+/**
+ * Renglones que se anulan con uno anterior: misma cuenta y centro de costo en el lado
+ * contrario. Es válido (p. ej. una reclasificación), pero casi siempre es un descuido:
+ * la contrapartida va en otra cuenta. Devuelve { índice: número del renglón anterior }.
+ */
+function contrapartidasIguales(renglones) {
+  const vistos = new Map()
+  const avisos = {}
+  renglones.forEach((r, i) => {
+    if (!r.cuentaId || esCero(r.debe) === esCero(r.haber)) return
+    const lado = esCero(r.debe) ? 'haber' : 'debe'
+    const clave = `${r.cuentaId}|${r.centroCostoId || ''}`
+    const otro = vistos.get(`${clave}|${lado === 'debe' ? 'haber' : 'debe'}`)
+    if (otro !== undefined) avisos[i] = otro + 1
+    if (!vistos.has(`${clave}|${lado}`)) vistos.set(`${clave}|${lado}`, i)
+  })
+  return avisos
+}
+
 export function GrillaRenglones({ renglones, onChange, centros, errores = {} }) {
   const actualizar = (clave, cambios) =>
     onChange(renglones.map((r) => (r.clave === clave ? { ...r, ...cambios } : r)))
+  const iguales = contrapartidasIguales(renglones)
 
   const agregar = () => {
     const anterior = renglones.at(-1)
@@ -195,6 +215,13 @@ export function GrillaRenglones({ renglones, onChange, centros, errores = {} }) 
               {error && (
                 <p className="text-sm text-alerta lg:col-span-full lg:col-start-2">
                   {error.mensaje}
+                </p>
+              )}
+              {!error && iguales[i] && (
+                <p className="text-sm text-aviso lg:col-span-full lg:col-start-2">
+                  Misma cuenta y centro de costo que el renglón {iguales[i]}, en el lado contrario:
+                  se anulan entre sí. La contrapartida normalmente va en otra cuenta (por ejemplo,
+                  Caja al Debe y la cuenta de ingreso al Haber).
                 </p>
               )}
             </li>

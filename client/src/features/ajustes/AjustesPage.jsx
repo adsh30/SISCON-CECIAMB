@@ -59,7 +59,7 @@ function Perfil({ usuario }) {
           <p className="truncate font-semibold">
             {[usuario.nombre, usuario.apellido].filter(Boolean).join(' ')}
           </p>
-          <p className="truncate text-sm text-pizarra">{usuario.email}</p>
+          <p className="sin-mayusculas truncate text-sm text-pizarra">{usuario.email}</p>
           <p className="mt-1 inline-flex items-center gap-1.5 text-sm">
             <PuntoColor color={usuario.rolColor} /> {usuario.rolNombre}
           </p>
@@ -198,7 +198,7 @@ function Sesion({ usuario }) {
             className="flex justify-between gap-4 border-b border-dashed border-linea py-2.5"
           >
             <dt className="text-pizarra">{k}</dt>
-            <dd className="truncate text-right">{v}</dd>
+            <dd className={`truncate text-right ${k === 'Correo' ? 'sin-mayusculas' : ''}`}>{v}</dd>
           </div>
         ))}
       </dl>

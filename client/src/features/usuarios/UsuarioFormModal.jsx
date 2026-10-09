@@ -77,7 +77,11 @@ export function UsuarioFormModal({ usuario, roles, onClose, onCreado, onGuardado
     <Modal
       titulo={editando ? 'Editar usuario' : 'Agregar usuario'}
       descripcion={
-        editando ? usuario.email : 'Complete los datos de la persona que usará el sistema.'
+        editando ? (
+          <span className="sin-mayusculas">{usuario.email}</span>
+        ) : (
+          'Complete los datos de la persona que usará el sistema.'
+        )
       }
       tamano="lg"
       onClose={onClose}

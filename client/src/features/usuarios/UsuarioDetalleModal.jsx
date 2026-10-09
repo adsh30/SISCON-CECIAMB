@@ -27,7 +27,7 @@ export function UsuarioDetalleModal({ usuario, puedeEscribir, esUnoMismo, onClos
   return (
     <Modal
       titulo={nombreCompleto(u)}
-      descripcion={u.email}
+      descripcion={<span className="sin-mayusculas">{u.email}</span>}
       tamano="md"
       onClose={onClose}
       pie={

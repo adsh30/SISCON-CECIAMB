@@ -52,6 +52,24 @@
   html {
     color-scheme: light;
   }
+  /* Todo el sistema se ve en MAYÚSCULAS, también lo que se escribe en los campos.
+     Excepto usuarios (correos) y claves, que distinguen mayúsculas de minúsculas. */
+  body {
+    text-transform: uppercase;
+  }
+  input,
+  textarea,
+  select,
+  button {
+    text-transform: inherit;
+  }
+  input[type='email'],
+  input[type='password'],
+  input[type='url'],
+  .sin-mayusculas,
+  .sin-mayusculas * {
+    text-transform: none;
+  }
   html[data-tema='oscuro'] {
     color-scheme: dark;
   }
