@@ -49,4 +49,4 @@ cuentasRoutes.put(
   putCuenta,
 )
 
-cuentasRoutes.delete('/:id', requirePermiso('plan_cuentas', 'escritura'), deleteCuenta)
+cuentasRoutes.delete('/:id', requirePermiso('plan_cuentas', 'full'), deleteCuenta)

@@ -161,8 +161,8 @@ export function AccountPicker({
                   <span
                     className={`rounded px-1.5 py-0.5 text-[10px] font-medium uppercase ${
                       c.naturaleza === 'DEUDORA'
-                        ? 'bg-blue-500/10 text-blue-600 dark:text-blue-400'
-                        : 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400'
+                        ? 'bg-marca-claro text-marca'
+                        : 'bg-exito-claro text-exito'
                     }`}
                   >
                     {c.naturaleza === 'DEUDORA' ? 'Deu' : 'Acr'}

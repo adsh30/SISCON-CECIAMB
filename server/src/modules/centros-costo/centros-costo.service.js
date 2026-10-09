@@ -25,6 +25,7 @@ const instantanea = (cc) => {
   return {
     codigo: p.codigo,
     nombre: p.nombre,
+    descripcion: p.descripcion,
     activo: p.activo,
   }
 }
@@ -40,29 +41,30 @@ export async function obtener(id) {
   return aPublico(cc)
 }
 
+const duplicado = (codigo) =>
+  new AppError(409, 'CODIGO_DUPLICADO', `Ya existe un centro de costo con el código ${codigo}`)
+
 export async function crear(datos, actor, ctx) {
   return db.transaction(async (trx) => {
-    const existente = await repo.buscarPorCodigo(datos.codigo, trx)
-    if (existente) {
-      throw new AppError(
-        409,
-        'CODIGO_DUPLICADO',
-        `Ya existe un centro de costo con el código ${datos.codigo}`,
+    if (await repo.buscarPorCodigo(datos.codigo, trx)) throw duplicado(datos.codigo)
+
+    let creado
+    try {
+      creado = await repo.crear(
+        {
+          codigo: datos.codigo,
+          nombre: datos.nombre,
+          descripcion: datos.descripcion ?? null,
+          activo: datos.activo,
+          creado_por: actor?.id ?? null,
+          actualizado_por: actor?.id ?? null,
+        },
+        trx,
       )
+    } catch (err) {
+      if (err.code === 'ER_DUP_ENTRY') throw duplicado(datos.codigo)
+      throw err
     }
-
-    const fila = {
-      codigo: datos.codigo,
-      nombre: datos.nombre,
-      descripcion: datos.descripcion || null,
-      activo: datos.activo !== undefined ? !!datos.activo : true,
-      creado_por: actor?.id ?? null,
-      creado_en: trx.fn.now(),
-      actualizado_por: actor?.id ?? null,
-      actualizado_en: trx.fn.now(),
-    }
-
-    const creado = await repo.crear(fila, trx)
 
     await registrar(trx, {
       usuarioId: actor?.id,
@@ -82,20 +84,27 @@ export async function actualizar(id, datos, actor, ctx) {
     const antes = await repo.buscarPorId(id, trx)
     if (!antes) throw new AppError(404, 'NO_ENCONTRADO', 'Centro de costo no encontrado')
 
-    const cambios = {
-      actualizado_por: actor?.id ?? null,
-      actualizado_en: trx.fn.now(),
+    const cambios = {}
+    if (datos.nombre !== undefined && datos.nombre !== antes.nombre) cambios.nombre = datos.nombre
+    if (datos.descripcion !== undefined && datos.descripcion !== (antes.descripcion ?? null)) {
+      cambios.descripcion = datos.descripcion
+    }
+    if (datos.activo !== undefined && datos.activo !== Boolean(antes.activo)) {
+      cambios.activo = datos.activo
     }
 
-    if (datos.nombre !== undefined) cambios.nombre = datos.nombre
-    if (datos.descripcion !== undefined) cambios.descripcion = datos.descripcion || null
-    if (datos.activo !== undefined) cambios.activo = !!datos.activo
+    // Nada que guardar: no se toca la fila ni se ensucia la bitácora
+    if (Object.keys(cambios).length === 0) return aPublico(antes)
 
-    const actualizado = await repo.actualizar(id, cambios, trx)
+    const actualizado = await repo.actualizar(
+      id,
+      { ...cambios, actualizado_por: actor?.id ?? null, actualizado_en: trx.fn.now() },
+      trx,
+    )
 
     let accion = ACCIONES.EDITAR
-    if (datos.activo !== undefined && datos.activo !== Boolean(antes.activo)) {
-      accion = datos.activo ? ACCIONES.ACTIVAR : ACCIONES.DESACTIVAR
+    if (cambios.activo !== undefined && Object.keys(cambios).length === 1) {
+      accion = cambios.activo ? ACCIONES.ACTIVAR : ACCIONES.DESACTIVAR
     }
 
     await registrar(trx, {
@@ -136,7 +145,5 @@ export async function eliminar(id, actor, ctx) {
       antes: instantanea(cc),
       ctx,
     })
-
-    return true
   })
 }

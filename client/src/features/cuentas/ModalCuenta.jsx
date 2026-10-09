@@ -16,13 +16,32 @@ const TIPOS = [
   { clave: 'ORDEN', nombre: '7. Cuentas de Orden', naturaleza: 'DEUDORA' },
 ]
 
-export function ModalCuenta({ cuenta, padre, onClose }) {
+/** Mismas reglas de código que el servidor, para avisar antes de enviar */
+function errorCodigo(codigo, padre) {
+  if (!codigo) return 'Escriba el código de la cuenta'
+  if (!/^[0-9]+(.[0-9]+)*$/.test(codigo)) {
+    return 'El código va en números separados por puntos, por ejemplo 1.1.01'
+  }
+  if (padre) {
+    const resto = codigo.slice(padre.codigo.length + 1)
+    if (!codigo.startsWith(`${padre.codigo}.`) || resto.includes('.')) {
+      return `El código debe ser ${padre.codigo}. seguido de un número, por ejemplo ${padre.codigo}.01`
+    }
+  } else if (codigo.includes('.')) {
+    return 'Una cuenta sin cuenta superior lleva un código de un solo número, por ejemplo 7'
+  }
+  return null
+}
+
+export function ModalCuenta({ cuenta, padre, codigoSugerido, onClose }) {
   const avisar = useAvisos()
   const esEdicion = !!cuenta
   const crear = useCrearCuenta()
   const actualizar = useActualizarCuenta()
 
-  const [codigo, setCodigo] = useState(cuenta?.codigo || (padre ? `${padre.codigo}.` : ''))
+  const [codigo, setCodigo] = useState(
+    cuenta?.codigo || codigoSugerido || (padre ? `${padre.codigo}.` : ''),
+  )
   const [nombre, setNombre] = useState(cuenta?.nombre || '')
   const [descripcion, setDescripcion] = useState(cuenta?.descripcion || '')
   const [tipo, setTipo] = useState(cuenta?.tipo || padre?.tipo || 'ACTIVO')
@@ -62,8 +81,9 @@ export function ModalCuenta({ cuenta, padre, onClose }) {
         })
         avisar('Cuenta actualizada correctamente', 'exito', `${cuenta.codigo} — ${nombre}`)
       } else {
-        if (!codigo.trim()) {
-          setError('El código de la cuenta es obligatorio')
+        const problema = errorCodigo(codigo.trim(), padre)
+        if (problema) {
+          setError(problema)
           return
         }
         await crear.mutateAsync({
@@ -136,7 +156,11 @@ export function ModalCuenta({ cuenta, padre, onClose }) {
             etiqueta="Código de la cuenta"
             id="codigo"
             ayuda={
-              esEdicion ? 'El código contable no puede modificarse' : 'Formato numérico jerárquico'
+              esEdicion
+                ? 'El código contable no puede modificarse'
+                : padre
+                  ? `${padre.codigo}. seguido de un número`
+                  : 'Un solo número, por ejemplo 7'
             }
           >
             <input
@@ -186,6 +210,14 @@ export function ModalCuenta({ cuenta, padre, onClose }) {
             className={claseCampo}
           />
         </Campo>
+
+        {esEdicion && cuenta.esMovimiento !== esMovimiento && (
+          <p className="rounded-lg bg-aviso-claro px-4 py-2.5 text-sm text-aviso">
+            {esMovimiento
+              ? 'Solo se puede convertir en cuenta de movimiento si no tiene subcuentas.'
+              : 'Solo se puede convertir en cuenta de grupo si no tiene movimientos en comprobantes.'}
+          </p>
+        )}
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <Campo etiqueta="Naturaleza del saldo" id="naturaleza">

@@ -1144,13 +1144,15 @@
         <h3>Crear una nueva cuenta o subcuenta</h3>
         <ol>
           <li>
-            Para crear una subcuenta bajo una cuenta existente, ubique la cuenta en el árbol y pulse
-            el botón <span class="boton">+</span>. El sistema precarga la cuenta superior y sugiere
-            el código correlativo.
+            Para crear una subcuenta bajo una cuenta existente, ubique la cuenta en el árbol, pase
+            el ratón sobre ella y pulse el botón <span class="boton">+</span>. El sistema precarga
+            la cuenta superior y sugiere el siguiente código libre (por ejemplo, si existen
+            <code>1.1.01</code> y <code>1.1.02</code>, sugiere <code>1.1.03</code>).
           </li>
           <li>
             Para crear una cuenta raíz (nivel 1), pulse el botón
-            <span class="boton">Nueva Cuenta</span> en la parte superior.
+            <span class="boton">Nueva Cuenta</span> en la parte superior. Su código es un solo
+            número, por ejemplo <code>7</code>.
           </li>
           <li>
             Indique el código, nombre de la cuenta, naturaleza y active la casilla si es cuenta de
@@ -1162,6 +1164,41 @@
           </li>
         </ol>
 
+        <h3>Reglas del catálogo</h3>
+        <ul>
+          <li>
+            <strong>Código:</strong> una subcuenta lleva el código de su cuenta superior más un
+            número: debajo de <code>1.1</code> va <code>1.1.04</code>, no <code>1.1.04.01</code>. El
+            código no se puede cambiar después de creada la cuenta.
+          </li>
+          <li>
+            <strong>Tipo:</strong> la subcuenta hereda el tipo (Activo, Pasivo…) de su cuenta
+            superior.
+          </li>
+          <li>
+            Una <strong>cuenta de movimiento</strong> no puede tener subcuentas. Para convertir una
+            cuenta de grupo en cuenta de movimiento, primero no debe tener subcuentas.
+          </li>
+          <li>
+            Si una cuenta ya tiene <strong>movimientos en comprobantes</strong>, no se puede
+            eliminar, ni cambiar su naturaleza, ni convertirla en cuenta de grupo. Puede
+            desactivarla.
+          </li>
+          <li>
+            <strong>Desactivar:</strong> desactive primero las subcuentas y luego la cuenta de
+            grupo. Bajo una cuenta inactiva no se crean ni se activan subcuentas.
+          </li>
+          <li>
+            <strong>Eliminar</strong> (botón de papelera) solo está disponible para quien tiene
+            <em>Control total</em> del plan de cuentas (Administrador y Contador general) y solo en
+            cuentas sin subcuentas.
+          </li>
+          <li>
+            Al buscar por código o nombre, el árbol se abre solo hasta mostrar cada coincidencia.
+          </li>
+          <li>Todo cambio queda en la bitácora con los datos de antes y después.</li>
+        </ul>
+
         <h3>Centros de costo</h3>
         <p>
           En la pestaña <strong>Centros de Costo</strong> se configuran las áreas operativas del
@@ -1170,8 +1207,8 @@
         <ol>
           <li>Pulse <span class="boton">Nuevo Centro de Costo</span>.</li>
           <li>
-            Indique el código (ej. <code>EME</code>, <code>QUI</code>, <code>FAR</code>) y el nombre
-            del área.
+            Indique el código (ej. <code>EME</code>, <code>QUI</code>, <code>FAR</code>; solo
+            letras, números y guiones, se guarda en mayúsculas) y el nombre del área.
           </li>
           <li>Pulse <span class="boton">Crear Centro de Costo</span>.</li>
         </ol>
