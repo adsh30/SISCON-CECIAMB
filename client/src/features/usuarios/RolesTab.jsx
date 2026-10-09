@@ -155,7 +155,7 @@ export function RolesTab() {
   const cerrar = () => setModal({ tipo: null })
 
   if (isPending) return <p className="text-pizarra">Cargando roles…</p>
-  if (isError) return <p className="text-alerta">{error.message}</p>
+  if (isError && !data) return <p className="text-alerta">{error.message}</p>
 
   return (
     <>

@@ -33,7 +33,7 @@ export default function ImprimirComprobante() {
     return () => clearTimeout(t)
   }, [listo])
 
-  if (isError) return <p className="p-10 text-center">{error.message}</p>
+  if (isError && !c) return <p className="p-10 text-center">{error.message}</p>
   if (!listo) return <p className="p-10 text-center">Preparando comprobante…</p>
 
   const marca = c.estado !== 'APROBADO' ? ESTADOS[c.estado].nombre.toUpperCase() : null

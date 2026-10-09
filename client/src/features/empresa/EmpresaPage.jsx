@@ -153,7 +153,7 @@ export default function EmpresaPage() {
   } = useForm({ resolver: zodResolver(esquema), values: valoresDe(empresa) }) // se sincroniza con el servidor
 
   if (isPending) return <p className="py-10 text-center text-pizarra">Cargando…</p>
-  if (isError) return <p className="py-10 text-center text-alerta">{error.message}</p>
+  if (isError && !empresa) return <p className="py-10 text-center text-alerta">{error.message}</p>
 
   const onSubmit = (datos) => {
     if (!isDirty) return avisar('No había cambios que guardar', 'info')
