@@ -155,6 +155,7 @@ async function respaldarBaseDatos(version) {
       '--single-transaction',
       '--routines',
       '--triggers',
+      '--hex-blob', // el logo es binario: sin esto puede dañarse al restaurar
       `--result-file=${archivo}`,
       CFG.db.nombre,
     ],

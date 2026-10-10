@@ -57,22 +57,7 @@ git checkout dev
 npm install
 ```
 
-### 4. Crear las bases de datos
-
-Abra la consola de MariaDB con `mariadb -u root -p` y ejecute (cambie `ClaveSegura123` por una clave propia):
-
-```sql
-CREATE DATABASE siscon_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-CREATE DATABASE siscon_test CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-CREATE USER 'siscon_app'@'localhost' IDENTIFIED BY 'ClaveSegura123';
-GRANT ALL PRIVILEGES ON siscon_db.* TO 'siscon_app'@'localhost';
-GRANT ALL PRIVILEGES ON siscon_test.* TO 'siscon_app'@'localhost';
-EXIT;
-```
-
-`siscon_test` la usan las pruebas automáticas: se borra y se rearma en cada corrida.
-
-### 5. Configurar
+### 4. Configurar
 
 ```powershell
 copy .env.example .env
@@ -80,31 +65,45 @@ copy .env.example .env
 
 Abra `.env` y complete:
 
-| Variable         | Valor                                                                                                  |
-| ---------------- | ------------------------------------------------------------------------------------------------------ |
-| `DB_PASSWORD`    | La clave de `siscon_app` del paso 4                                                                    |
-| `JWT_SECRET`     | Una cadena larga y secreta: `node -e "console.log(require('crypto').randomBytes(48).toString('hex'))"` |
-| `ADMIN_EMAIL`    | El correo con el que entrará como administrador                                                        |
-| `ADMIN_PASSWORD` | Su clave inicial: al menos 8 caracteres, con letras y números                                          |
+| Variable           | Valor                                                                                                  |
+| ------------------ | ------------------------------------------------------------------------------------------------------ |
+| `DB_PASSWORD`      | La clave que tendrá el usuario `siscon_app` (la elige usted)                                           |
+| `DB_ROOT_PASSWORD` | La clave de `root` que puso al instalar MariaDB                                                        |
+| `JWT_SECRET`       | Una cadena larga y secreta: `node -e "console.log(require('crypto').randomBytes(48).toString('hex'))"` |
+| `ADMIN_EMAIL`      | Solo para base nueva: el correo con el que entrará como administrador                                  |
+| `ADMIN_PASSWORD`   | Solo para base nueva: su clave inicial (al menos 8 caracteres, con letras y números)                   |
 
-### 6. Tablas y datos iniciales
+### 5. Base de datos en un solo paso
+
+**Con los mismos datos de otro equipo** (recomendado): pídale a quien ya usa el sistema que ejecute `npm run bd:exportar` y le pase el archivo `.sql` que queda en `respaldos/` por un medio privado. Cópielo en la carpeta `respaldos\` del proyecto y ejecute:
 
 ```powershell
-npm run db:migrate
-npm run db:seed
+npm run bd:preparar -- respaldos\siscon_db-2026-10-10-1707.sql
 ```
 
-Quedan creados los roles, el administrador, el plan de cuentas base, los centros de costo y los tipos de comprobante.
+Crea las bases `siscon_db` y `siscon_test` y el usuario `siscon_app`, carga la copia y aplica las migraciones que falten. Se entra con los **mismos usuarios y claves** que en el equipo de origen.
 
-### 7. Arrancar
+**Base nueva y vacía:**
+
+```powershell
+npm run bd:preparar
+```
+
+Quedan creados los roles, el administrador del `.env`, el plan de cuentas base, los centros de costo y los tipos de comprobante.
+
+`siscon_test` la usan las pruebas automáticas: se borra y se rearma en cada corrida. El archivo `.sql` **no se sube a GitHub** (`respaldos/` está excluida): lleva usuarios con sus claves cifradas y datos del hospital.
+
+### 6. Arrancar
 
 ```powershell
 npm run dev
 ```
 
-Abra <http://localhost:5173> y entre con `ADMIN_EMAIL` y `ADMIN_PASSWORD`.
+Abra <http://localhost:5173> y entre con su usuario (el de la copia, o `ADMIN_EMAIL` / `ADMIN_PASSWORD` si la base es nueva).
 
-### 8. Forma de trabajo
+El contexto completo del proyecto (reglas, estructura, plugins, lecciones aprendidas) está en [CONTEXTO.md](CONTEXTO.md).
+
+### 7. Forma de trabajo
 
 ```powershell
 git checkout dev
@@ -118,10 +117,12 @@ git checkout -b feature/descripcion-corta
 
 ### Problemas comunes
 
-| Síntoma                                      | Solución                                                                                  |
-| -------------------------------------------- | ----------------------------------------------------------------------------------------- |
-| `Access denied for user 'siscon_app'`        | La clave de `.env` no coincide con la del paso 4.                                         |
-| `Unknown database 'siscon_db'`               | Falta el paso 4.                                                                          |
-| La página dice «Sin conexión con el sistema» | La parte del servidor de `npm run dev` se detuvo: revise la terminal (líneas `[server]`). |
-| La página no carga en `localhost:5173`       | La parte `[client]` (Vite) se detuvo: Ctrl+C y `npm run dev` de nuevo.                    |
-| `npm test` falla al empezar                  | Falta la base `siscon_test` o sus permisos (paso 4).                                      |
+| Síntoma                                      | Solución                                                                                        |
+| -------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| `Access denied for user 'siscon_app'`        | La clave del `.env` cambió: ejecute `npm run bd:crear` para igualarla.                          |
+| `Unknown database 'siscon_db'`               | Falta el paso 5: `npm run bd:preparar`.                                                         |
+| La página dice «Sin conexión con el sistema» | La parte del servidor de `npm run dev` se detuvo: revise la terminal (líneas `[server]`).       |
+| La página no carga en `localhost:5173`       | La parte `[client]` (Vite) se detuvo: Ctrl+C y `npm run dev` de nuevo.                          |
+| `npm test` falla al empezar                  | Falta la base `siscon_test` o sus permisos: `npm run bd:crear`.                                 |
+| `No se encontró mariadb.exe`                 | Indique la carpeta `bin` de MariaDB en `.env`: `MARIADB_BIN=C:/Program Files/MariaDB 13.0/bin`. |
+| `Falta DB_ROOT_PASSWORD`                     | Ponga en `.env` la clave de root de MariaDB (solo se usa para crear bases y usuarios).          |
