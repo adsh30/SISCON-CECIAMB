@@ -11,6 +11,7 @@ Sistema contable moderno inspirado en CIACLI Contabilidad Sparrow. Lee `docs/REQ
 Toda petición se entrega completa. Nunca solo API ni solo UI. Si una capa no aplica, dilo explícitamente.
 
 ## Checklist por petición
+0. **Cotejar con el compañero** (son dos colaboradores): `npm run cotejar`. Leer los commits nuevos del otro (`git show <hash>`), resumirlos al usuario y señalar choques con el trabajo propio (mismos archivos, migraciones, reglas). Repetirlo antes del merge a `dev`; si `dev` avanzó, `git merge origin/dev` en la rama propia + `npm install`, `npm run db:migrate`, `npm test`.
 1. **Rama**: `git checkout dev && git pull` → `git checkout -b feature/<modulo>-<desc>` (o `fix/*`). Nunca commitear en `main`.
 2. **BD** (si aplica): migración Knex en `server/migrations/` — montos `DECIMAL(18,2)`, InnoDB, utf8mb4, FKs e índices.
 3. **Backend** en `server/src/modules/<modulo>/`:
