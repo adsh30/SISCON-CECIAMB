@@ -24,6 +24,7 @@
     "bd:exportar": "node scripts/bd/bd.mjs exportar",
     "bd:importar": "node scripts/bd/bd.mjs importar",
     "bd:preparar": "node scripts/bd/bd.mjs preparar",
+    "cotejar": "node scripts/git/cotejar.mjs",
     "produccion": "node scripts/despliegue/bot.mjs",
     "start": "npm start -w server"
   },

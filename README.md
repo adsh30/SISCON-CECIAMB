@@ -23,6 +23,7 @@ npm run db:migrate   # tablas
 npm run db:seed      # roles, administrador y datos iniciales
 npm run bd:preparar  # base local de una vez (con -- respaldos\archivo.sql trae una copia)
 npm run bd:exportar  # copia de la base para compartir
+npm run cotejar      # qué subió el compañero y qué archivos tocaron los dos
 npm run dev          # servidor :4000 y página :5173
 npm run lint         # revisión de código
 npm test             # pruebas (base siscon_test)

@@ -108,6 +108,12 @@ En el servidor: `requirePermiso('modulo', 'lectura'|'escritura'|'full')`. En la 
 
 - **Cada pedido se entrega completo: servidor + pantalla + manual** (`client/public/manual.html`, con los textos exactos de botones y mensajes). Si una capa no aplica, se dice.
 - **Ramas:** `feature/*` o `fix/*` desde `dev` → se une a `dev` → `dev` se une a `main` y se suben **ambas** en cada entrega. El bot publica `main` en producción. Etiqueta `vX.Y.Z` solo al cerrar una fase.
+- **Dos colaboradores en paralelo** (cada uno con su copia local y su rama). Para no pisarse:
+  - Al empezar el día y **antes de unir a `dev`**: `npm run cotejar`. Muestra los commits que el otro subió a `dev`/`main` (autor y archivos) y, frente a la rama actual, los archivos que tocaron los dos, las migraciones nuevas de ambos lados y las copias que deben cambiar juntas (`money.js`, `permisos`).
+  - Si `dev` avanzó: `git merge origin/dev` en la rama propia, luego `npm install`, `npm run db:migrate` y `npm test`. Los conflictos se resuelven en la rama propia, nunca en `dev` ni en `main`.
+  - Leer lo del compañero en los archivos compartidos (`git log -p`) y comprobar que el cambio propio respeta lo suyo (reglas contables, permisos, manual) antes de unir.
+  - Migraciones: la fecha del nombre de la propia debe ser posterior a la última que hay en `dev`; si no, se renombra mientras no esté publicada.
+  - Una rama por pedido y corta; se une y se sube en cuanto pasa lint y pruebas, para que el otro la reciba pronto.
 - **Commits** en español, estilo Conventional Commits (`feat(comprobantes): …`, `fix(ui): …`).
 - Antes de unir: `npm run lint` y `npm test` sin errores, y probar el flujo en el navegador (claro, oscuro y ancho de teléfono).
 - **Interfaz:**
@@ -222,6 +228,7 @@ Si los navegadores de los plugins no conectan, el recorrido se puede probar con 
 ## 11. Comandos de uso diario
 
 ```powershell
+npm run cotejar        # qué subió el compañero y qué archivos tocaron los dos
 npm run dev            # servidor :4000 + página :5173
 npm run lint           # revisión de código
 npm test               # pruebas (unas 130, ~90 s)
