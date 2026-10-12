@@ -349,6 +349,7 @@
           <li><a href="#periodos">Ejercicios y períodos</a></li>
           <li><a href="#cuentas">Plan de cuentas y centros de costo</a></li>
           <li><a href="#comprobantes">Comprobantes contables</a></li>
+          <li><a href="#libros">Libro Diario y Libro Mayor</a></li>
           <li><a href="#bitacora">Bitácora de auditoría: consultar y exportar</a></li>
           <li><a href="#problemas">Problemas frecuentes</a></li>
           <li><a href="#proximamente">Próximos módulos</a></li>
@@ -496,10 +497,6 @@
             roles, Bitácora, Ajustes, Manual del sistema).
           </li>
           <li>La opción en la que está aparece resaltada en azul con una barra a la izquierda.</li>
-          <li>
-            Las opciones con la palabra <em>pronto</em> aún no están disponibles; se habilitarán en
-            próximas versiones.
-          </li>
           <li>Solo aparecen los módulos que su rol puede ver.</li>
           <li>
             Al pie del menú está su ficha: iniciales, nombre y rol. El ícono de la puerta (<strong
@@ -1405,8 +1402,113 @@
         </ul>
       </section>
 
+      <section id="libros">
+        <h2>13. Libro Diario y Libro Mayor</h2>
+        <p>
+          Los libros se arman solos con los comprobantes <strong>aprobados</strong>: no hay que
+          pasar nada a mano. Los borradores todavía no son contabilidad y los anulados no cuentan,
+          así que no aparecen. Todos los roles pueden consultarlos y exportarlos (el Auditor
+          incluido); se abren desde el menú en <strong>Libro Diario</strong> y
+          <strong>Libro Mayor</strong>.
+        </p>
+
+        <h3>Elegir qué ver</h3>
+        <p>Los dos libros comparten estos filtros. Al entrar muestran el mes en curso.</p>
+        <ul>
+          <li>
+            <strong>Período</strong>: elija un mes o <em>Ejercicio … completo</em> y las fechas se
+            llenan solas. Con <em>Rango libre</em> escriba usted <strong>Desde</strong> y
+            <strong>Hasta</strong>.
+          </li>
+          <li>
+            <strong>Tipo de comprobante</strong>: solo Ventas, solo Compras, etc. Por defecto,
+            <em>Todos los tipos</em>.
+          </li>
+          <li>
+            <strong>Centro de costo</strong>: solo los renglones de ese centro (por ejemplo, un
+            servicio del hospital).
+          </li>
+        </ul>
+        <p>
+          Los filtros quedan en la dirección de la página: si recarga, entra a un comprobante y
+          vuelve, o comparte el enlace, el libro se ve igual.
+        </p>
+        <p>
+          Arriba aparecen los totales de <strong>todo el rango</strong>, no solo de la página que se
+          ve: comprobantes (o cuentas), renglones (o movimientos), Total Debe y Total Haber. Cuando
+          el libro está completo se indica <strong>✓ Debe y Haber cuadran</strong>. Si filtra por un
+          centro de costo o por cuentas, esa marca no aparece, porque una parte del libro no tiene
+          por qué cuadrar.
+        </p>
+
+        <h3>Libro Diario</h3>
+        <p>
+          Los comprobantes en orden de fecha y, dentro de cada día, por tipo y número. Cada
+          comprobante muestra su fecha, número, concepto y referencia, y debajo sus renglones con
+          cuenta, descripción, centro de costo, Debe y Haber. Las cuentas que van al Haber aparecen
+          con sangría, como en el libro impreso. Pulse el número para abrir el comprobante.
+        </p>
+
+        <h3>Libro Mayor</h3>
+        <p>Por cada cuenta con movimientos o con saldo:</p>
+        <ul>
+          <li>
+            <strong>Saldo anterior</strong>: todo lo aprobado en esa cuenta antes de la fecha
+            <strong>Desde</strong>, aunque sea de ejercicios anteriores.
+          </li>
+          <li>
+            Cada movimiento con su fecha, comprobante, concepto, centro de costo, Debe, Haber y el
+            <strong>Saldo</strong> acumulado hasta ese renglón.
+          </li>
+          <li><strong>Totales y saldo final</strong> de la cuenta.</li>
+        </ul>
+        <p>
+          El saldo sigue la naturaleza de la cuenta: en las <strong>deudoras</strong> (activos,
+          costos y gastos) suma el Debe y resta el Haber; en las
+          <strong>acreedoras</strong> (pasivos, patrimonio e ingresos), al revés. Un saldo en
+          <strong>rojo</strong> es contrario a la naturaleza de la cuenta, por ejemplo una caja en
+          negativo: conviene revisarlo.
+        </p>
+        <p>Para ver solo algunas cuentas:</p>
+        <ol>
+          <li>
+            En <strong>Desde la cuenta</strong> escriba el código o el nombre y elija la cuenta. Si
+            elige solo esa, el mayor muestra esa cuenta.
+          </li>
+          <li>
+            Para un rango, elija también <strong>Hasta la cuenta</strong>. Una cuenta de grupo
+            incluye todas sus subcuentas; por ejemplo, desde 4 hasta 4 muestra todos los ingresos.
+          </li>
+          <li>Pulse <span class="boton">Todas</span> para volver a ver todas las cuentas.</li>
+        </ol>
+
+        <h3>Exportar e imprimir</h3>
+        <p>
+          Las exportaciones llevan el libro <strong>completo</strong> del rango, sin importar la
+          página que esté viendo, con el nombre y el RIF de la empresa, el rango y los filtros
+          usados, y la fecha, la hora y el usuario que lo emitió.
+        </p>
+        <ul>
+          <li>
+            <span class="boton">Excel</span>: descarga un archivo <code>.xlsx</code> (por ejemplo
+            <code>libro-diario_2026-01-01_2026-01-31.xlsx</code>) y aparece el aviso
+            <strong>Libro descargado en Excel</strong>. Los montos quedan como números, listos para
+            sumar o filtrar, y los títulos quedan fijos al desplazarse.
+          </li>
+          <li>
+            <span class="boton">Imprimir o PDF</span>: abre el libro en una pestaña nueva, en tamaño
+            carta y con el logo de la empresa, y muestra la ventana de impresión. Elija la impresora
+            o <strong>Guardar como PDF</strong>. El Libro Mayor sale en hoja horizontal. Si cerró la
+            ventana de impresión, pulse <span class="boton">Imprimir o guardar como PDF</span>.
+          </li>
+        </ul>
+        <div class="nota">
+          Los dos botones se activan cuando el libro tiene datos en el rango elegido.
+        </div>
+      </section>
+
       <section id="bitacora">
-        <h2>13. Bitácora de auditoría</h2>
+        <h2>14. Bitácora de auditoría</h2>
         <p>
           El sistema guarda automáticamente quién hizo cada acción, cuándo, desde qué equipo y qué
           datos cambiaron (antes y después). <strong>Nadie puede modificar ni borrar</strong> estos
@@ -1477,11 +1579,11 @@
       </section>
 
       <section id="problemas">
-        <h2>14. Problemas frecuentes</h2>
+        <h2>15. Problemas frecuentes</h2>
         <h3>No veo un módulo en el menú</h3>
         <p>
-          Su rol no tiene permiso de Ver en ese módulo, o el módulo aún dice <em>pronto</em>. Pida
-          al administrador que revise su rol en Roles y permisos.
+          Su rol no tiene permiso de Ver en ese módulo. Pida al administrador que revise su rol en
+          Roles y permisos.
         </p>
         <h3>Aparece «Sin acceso a esta sección»</h3>
         <p>
@@ -1538,6 +1640,18 @@
           Antes de cerrar un mes, apruebe o elimine sus borradores. En Comprobantes, use el filtro
           <strong>Borradores</strong> y las fechas del mes para encontrarlos.
         </p>
+        <h3>El libro sale vacío</h3>
+        <p>
+          Aparece «No hay comprobantes aprobados en este rango» o «Ninguna cuenta tiene movimientos
+          ni saldo en este rango». Revise las fechas, el tipo, el centro de costo y las cuentas
+          elegidas. Recuerde que los borradores no aparecen hasta que se aprueban.
+        </p>
+        <h3>El Excel no se descarga o la impresión no abre</h3>
+        <p>
+          Si el navegador bloquea la pestaña nueva, permita las ventanas emergentes para el sistema.
+          Si aparece un aviso rojo al pulsar <span class="boton">Excel</span>, revise la conexión e
+          intente de nuevo; con «Su sesión expiró», vuelva a iniciar sesión.
+        </p>
         <h3>Las tasas no cambian</h3>
         <p>
           Revise la conexión a internet del servidor. Mientras tanto, el sistema usa la última tasa
@@ -1546,15 +1660,15 @@
       </section>
 
       <section id="proximamente">
-        <h2>15. Próximos módulos</h2>
-        <p>
-          Los siguientes módulos aparecen en el menú con la palabra <em>pronto</em> y se
-          incorporarán a este manual cuando estén disponibles:
-        </p>
+        <h2>16. Próximos módulos</h2>
+        <p>Están planificados y se incorporarán a este manual cuando estén disponibles:</p>
         <ul>
+          <li><strong>Tablero contable</strong> en Inicio, con los comprobantes de cada tipo.</li>
           <li>
-            <strong>Libro Diario</strong> y <strong>Libro Mayor</strong>, exportables a PDF y Excel.
+            <strong>Importar resúmenes</strong> de ventas, compras, honorarios y nómina desde Excel
+            o CSV para crear el comprobante en borrador.
           </li>
+          <li><strong>Adjuntar documentos soporte</strong> (PDF o imagen) a los comprobantes.</li>
         </ul>
       </section>
 

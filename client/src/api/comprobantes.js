@@ -38,6 +38,7 @@ function useMutacion(mutationFn) {
     onSuccess: (data) => {
       qc.invalidateQueries({ queryKey: KEY })
       qc.invalidateQueries({ queryKey: ['dashboard'] })
+      qc.invalidateQueries({ queryKey: ['libros'] })
       // Solo los comprobantes traen renglones; los tipos no van a esta caché
       if (data?.renglones) qc.setQueryData([...KEY, 'detalle', data.id], data)
     },

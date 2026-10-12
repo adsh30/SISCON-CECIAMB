@@ -6,6 +6,9 @@ import ComprobantePage from './features/comprobantes/ComprobantePage.jsx'
 import ComprobantesPage from './features/comprobantes/ComprobantesPage.jsx'
 import ImprimirComprobante from './features/comprobantes/ImprimirComprobante.jsx'
 import EmpresaPage from './features/empresa/EmpresaPage.jsx'
+import ImprimirLibro from './features/libros/ImprimirLibro.jsx'
+import LibroDiarioPage from './features/libros/LibroDiarioPage.jsx'
+import LibroMayorPage from './features/libros/LibroMayorPage.jsx'
 import PeriodosPage from './features/periodos/PeriodosPage.jsx'
 import PlanCuentasPage from './features/cuentas/PlanCuentasPage.jsx'
 import CambiarClavePage from './features/auth/CambiarClavePage.jsx'
@@ -35,6 +38,14 @@ export default function App() {
                 </RequireModulo>
               }
             />
+            <Route
+              path="/imprimir/libros/:libro"
+              element={
+                <RequireModulo modulo="libros">
+                  <ImprimirLibro />
+                </RequireModulo>
+              }
+            />
             <Route path="/app" element={<AppLayout />}>
               <Route index element={<InicioPage />} />
               <Route
@@ -50,6 +61,22 @@ export default function App() {
                 element={
                   <RequireModulo modulo="comprobantes">
                     <ComprobantePage />
+                  </RequireModulo>
+                }
+              />
+              <Route
+                path="libros/diario"
+                element={
+                  <RequireModulo modulo="libros">
+                    <LibroDiarioPage />
+                  </RequireModulo>
+                }
+              />
+              <Route
+                path="libros/mayor"
+                element={
+                  <RequireModulo modulo="libros">
+                    <LibroMayorPage />
                   </RequireModulo>
                 }
               />
