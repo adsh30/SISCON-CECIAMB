@@ -57,9 +57,10 @@ Cada entregable incluye **backend + frontend**. Cada cambio va en ramas `feature
 
 ## Fase 5 — Libros
 
-- [ ] API: Libro Diario (rango/período/categoría), Libro Mayor (cuenta o rango, saldo anterior y acumulado); exportar PDF y Excel.
-- [ ] UI: filtros, vista previa en pantalla, botones de exportación.
-- [ ] Test: Σ Diario = Σ Mayor = Σ comprobantes aprobados.
+- [x] API: Libro Diario (rango/período, tipo y centro de costo), Libro Mayor (una cuenta o rango por código, con subcuentas; saldo anterior, saldo por renglón según naturaleza y saldo final); paginados en pantalla, completos al exportar.
+- [x] Exportación: Excel (`.xlsx` con montos numéricos, encabezado de empresa, RIF, filtros, fecha y usuario) y hoja carta para imprimir o guardar como PDF (el Mayor en horizontal).
+- [x] UI: filtros guardados en la dirección, atajo por período o ejercicio, totales del rango con verificación de cuadre, enlaces a cada comprobante.
+- [x] Test: Σ Diario = Σ Mayor = Σ comprobantes aprobados; borradores y anulados fuera de los libros.
 
 ## Fase 6 — Operación
 

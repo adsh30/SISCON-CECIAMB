@@ -138,6 +138,18 @@ dialog::backdrop {
     size: letter;
     margin: 12mm;
   }
+  /* El Libro Mayor lleva más columnas: carta horizontal */
+  @page apaisada {
+    size: letter landscape;
+    margin: 10mm;
+  }
+  .apaisada {
+    page: apaisada;
+  }
+  /* Los títulos de la tabla se repiten en cada hoja */
+  thead {
+    display: table-header-group;
+  }
   html,
   body {
     background: #fff !important;

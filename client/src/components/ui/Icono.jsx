@@ -41,6 +41,7 @@ const trazos = {
   imprimir:
     'M6 9V3h12v6M6 18H4a1 1 0 0 1-1-1v-6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6a1 1 0 0 1-1 1h-2M6 14h12v7H6z',
   reverso: 'M7 4 3 8l4 4M3 8h13a5 5 0 0 1 0 10h-4',
+  descargar: 'M12 3v12M7 10l5 5 5-5M4 21h16',
 }
 
 export function Icono({ nombre, className = 'size-5', ...props }) {
