@@ -13,6 +13,7 @@ import { empresaRoutes } from './modules/empresa/empresa.routes.js'
 import { healthRoutes } from './modules/health/health.routes.js'
 import { periodosRoutes } from './modules/periodos/periodos.routes.js'
 import { comprobantesRoutes } from './modules/comprobantes/comprobantes.routes.js'
+import { librosRoutes } from './modules/libros/libros.routes.js'
 import { cuentasRoutes } from './modules/cuentas/cuentas.routes.js'
 import { centrosCostoRoutes } from './modules/centros-costo/centros-costo.routes.js'
 import { rolesRoutes } from './modules/roles/roles.routes.js'
@@ -53,6 +54,7 @@ export function createApp({ servirCliente = env.nodeEnv === 'production' && hayC
   api.use('/empresa', empresaRoutes)
   api.use('/periodos', periodosRoutes)
   api.use('/comprobantes', comprobantesRoutes)
+  api.use('/libros', librosRoutes)
   api.use('/cuentas', cuentasRoutes)
   api.use('/centros-costo', centrosCostoRoutes)
   api.use('/tasas', tasasRoutes)

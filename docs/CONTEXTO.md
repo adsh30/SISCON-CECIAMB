@@ -2,7 +2,7 @@
 
 Documento para quien se suma al proyecto, sea una persona o un asistente de IA (Claude Code, Antigravity…). Resume qué es el sistema, cómo está hecho, en qué va, qué reglas no se rompen y cómo tener una copia funcionando **con los mismos datos** en un solo paso.
 
-> Estado al 10/10/2026 · versión **0.4.0** (Fases 0 a 4 terminadas).
+> Estado al 10/10/2026 · versión **0.5.0** (Fases 0 a 5 terminadas).
 
 ---
 
@@ -34,6 +34,7 @@ Funciona **en la red local**: un equipo hace de servidor (MariaDB + Node) y los 
 | `helmet` + CSP con hashes          | `server/src/app.js`     | Cabeceras de seguridad; en producción, la API sirve `client/dist` |
 | `express-rate-limit`               | servidor                | Frena intentos de inicio de sesión                                |
 | `pino` / `pino-pretty`             | servidor                | Registro de eventos                                               |
+| `write-excel-file`                 | servidor                | Libros en Excel (`.xlsx`) sin dependencias pesadas                |
 
 ## 3. Estructura
 
@@ -71,8 +72,8 @@ docs/                GOAL, REQUIREMENTS, PLAN, ROADMAP, DESPLIEGUE, INSTALACION,
 | 2    | 0.2.0   | Datos de la empresa (RIF, logo), ejercicios y 12 períodos, cierre en orden y reapertura con motivo | ✅           |
 | 3    | 0.3.0   | Plan de cuentas jerárquico (VEN-NIF salud) y centros de costo                                      | ✅           |
 | 4    | 0.4.0   | Comprobantes: borrador → aprobado → anulado, correlativos, duplicar, reverso, impresión/PDF        | ✅           |
-| 5    | 0.5.0   | **Libro Diario y Libro Mayor** con PDF y Excel                                                     | ⬜ siguiente |
-| 6    | 0.6.0   | Tablero contable, importar resúmenes (ventas, compras, honorarios, nómina), adjuntos               | ⬜           |
+| 5    | 0.5.0   | Libro Diario y Libro Mayor: filtros, saldo anterior y acumulado, Excel e impresión/PDF             | ✅           |
+| 6    | 0.6.0   | **Tablero contable, importar resúmenes (ventas, compras, honorarios, nómina), adjuntos**           | ⬜ siguiente |
 | 7    | 1.0.0   | Carga de los datos del hospital, respaldos automáticos, pruebas con los contadores                 | ⬜           |
 
 Detalle en [ROADMAP.md](ROADMAP.md); requisitos en [REQUIREMENTS.md](REQUIREMENTS.md).
@@ -218,6 +219,8 @@ Si los navegadores de los plugins no conectan, el recorrido se puede probar con 
 
 - **MariaDB 11.8+ trae `innodb_snapshot_isolation` activo.** En `REPEATABLE READ`, bloquear una fila que otra transacción cambió después de la primera lectura da «Record has changed since last read». Las transacciones que comparten un contador (correlativos) usan `{ isolationLevel: 'read committed' }` y bloquean la fila del tipo antes de tocar el correlativo.
 - **Express 5:** `req.query` es de solo lectura; la consulta validada queda en `req.consulta`.
+- **Códigos de cuenta:** se comparan con `COLLATE utf8mb4_bin` (byte a byte) para que `1.1` vaya antes que `1.1.01` y que `1.2`; la intercalación `unicode_ci` puede ordenar distinto los puntos.
+- **Libros:** solo leen comprobantes `APROBADO`. El saldo anterior del Mayor es todo lo aprobado antes de la fecha inicial (también de ejercicios anteriores).
 - **Zod 4:** los mensajes se pasan como texto (`z.string('mensaje')`), no con `required_error`/`errorMap`. `z.coerce.boolean()` convierte `'false'` en `true`: para la URL se usa `booleanoConsulta`.
 - **knex + MariaDB:** `select(lista, 'otra')` ignora el segundo argumento (usar `select([...lista, 'otra'])`); en `GROUP BY` un alias igual a una columna toma la columna.
 - **mysql2 entrega las columnas JSON ya convertidas**; `DECIMAL` llega como texto (bien, no tocar).
