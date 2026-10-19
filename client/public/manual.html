@@ -1384,6 +1384,44 @@
           <strong>Historial</strong> completo tomado de la bitácora.
         </p>
 
+        <h3>Importar un resumen (CSV)</h3>
+        <p>
+          Para no transcribir a mano un resumen de ventas, compras, honorarios o nómina, pulse
+          <span class="boton">Importar resumen</span> (junto a Nuevo comprobante) y suba un archivo
+          <strong>CSV</strong> exportado de Excel. El sistema ubica las cuentas por su
+          <strong>código</strong> y arma el comprobante.
+        </p>
+        <ol>
+          <li>
+            Pulse <span class="boton">Descargar plantilla</span> si no tiene el archivo a mano, y
+            complétela en Excel: columnas <code>cuenta</code>, <code>descripcion</code>,
+            <code>debe</code>, <code>haber</code>, y opcionalmente <code>centro</code> y
+            <code>referencia</code> (los nombres de columna no distinguen mayúsculas ni el orden).
+            Hasta 500 filas y 200 KB.
+          </li>
+          <li>
+            Pulse <span class="boton">Elegir archivo CSV</span>. El sistema analiza cada fila: si el
+            código de cuenta no existe, la cuenta es de grupo o está inactiva, o el monto no es
+            válido, la fila sale en rojo con el motivo. Corrija el archivo y vuelva a subirlo.
+          </li>
+          <li>
+            Cuando todas las filas están sanas y el resumen <strong>cuadra</strong>, complete el
+            <strong>Tipo de comprobante</strong>, la <strong>Fecha</strong> y el
+            <strong>Concepto</strong> (Referencia y Beneficiario son opcionales) y pulse
+            <span class="boton">Crear borrador</span>.
+          </li>
+          <li>
+            El sistema lo lleva al <strong>borrador</strong> ya creado, con un renglón por cada fila
+            del archivo: revíselo, ajústelo si hace falta y apruébelo como cualquier otro
+            comprobante.
+          </li>
+        </ol>
+        <div class="nota">
+          La importación respeta las mismas reglas que un comprobante registrado a mano: período
+          abierto, cuentas de movimiento activas y partida cuadrada. Requiere el mismo permiso que
+          registrar comprobantes.
+        </div>
+
         <h3>Reglas que el sistema hace cumplir</h3>
         <ul>
           <li>Debe y Haber iguales y al menos 2 renglones para aprobar.</li>
