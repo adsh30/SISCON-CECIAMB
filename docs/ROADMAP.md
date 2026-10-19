@@ -67,7 +67,7 @@ Cada entregable incluye **backend + frontend**. Cada cambio va en ramas `feature
 - [x] Cierre/reapertura de período con validaciones (adelantado en Fase 2); no se cierra un período con borradores (Fase 4).
 - [x] Tablero de inicio base (estilo MGG): KPIs de tasas con variación, evolución BCV con historial oficial desde 2023, actividad de bitácora, usuarios por rol.
 - [ ] Dashboard contable (comprobantes por categoría). El aviso de borradores pendientes en Inicio ya está (Fase 4).
-- [ ] Importación CSV/Excel de resúmenes (ventas, compras, honorarios, nómina) → comprobante en borrador.
+- [x] Importación CSV/Excel de resúmenes (ventas, compras, honorarios, nómina) → comprobante en borrador.
 - [ ] Adjuntos de documentos soporte.
 
 ## Operación continua

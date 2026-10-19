@@ -111,6 +111,12 @@ export default function ComprobantesPage() {
             </Button>
           )}
           {can('comprobantes', 'escritura') && (
+            <Link to="/app/comprobantes/importar" className={buttonClass('secundario')}>
+              <Icono nombre="subir" className="size-4" />
+              Importar resumen
+            </Link>
+          )}
+          {can('comprobantes', 'escritura') && (
             <Link to={nuevoHref} className={buttonClass('primario')}>
               <Icono nombre="mas" className="size-4" />
               Nuevo comprobante
