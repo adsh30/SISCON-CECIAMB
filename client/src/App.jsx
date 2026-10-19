@@ -6,6 +6,7 @@ import ComprobantePage from './features/comprobantes/ComprobantePage.jsx'
 import ComprobantesPage from './features/comprobantes/ComprobantesPage.jsx'
 import ImprimirComprobante from './features/comprobantes/ImprimirComprobante.jsx'
 import EmpresaPage from './features/empresa/EmpresaPage.jsx'
+import ImportarPage from './features/importaciones/ImportarPage.jsx'
 import ImprimirLibro from './features/libros/ImprimirLibro.jsx'
 import LibroDiarioPage from './features/libros/LibroDiarioPage.jsx'
 import LibroMayorPage from './features/libros/LibroMayorPage.jsx'
@@ -53,6 +54,14 @@ export default function App() {
                 element={
                   <RequireModulo modulo="comprobantes">
                     <ComprobantesPage />
+                  </RequireModulo>
+                }
+              />
+              <Route
+                path="comprobantes/importar"
+                element={
+                  <RequireModulo modulo="comprobantes">
+                    <ImportarPage />
                   </RequireModulo>
                 }
               />
