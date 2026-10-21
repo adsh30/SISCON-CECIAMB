@@ -1,0 +1,408 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Instalar SISCON en otra PC</title>
+<style>
+  :root {
+    --fondo: #f5f7fb;
+    --papel: #ffffff;
+    --tinta: #0b2e5c;
+    --texto: #1f2937;
+    --suave: #5b6676;
+    --linea: #dbe3ef;
+    --marca: #1d4ed8;
+    --marca-claro: #eef3ff;
+    --codigo: #0f172a;
+    --codigo-texto: #e2e8f0;
+    --verde: #15803d;
+    --verde-claro: #e8f6ee;
+    --ambar: #b45309;
+    --ambar-claro: #fff6e5;
+    --rojo: #c62828;
+    --rojo-claro: #fdecec;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme='light']) {
+      --fondo: #0b1426;
+      --papel: #111d33;
+      --tinta: #dbe6ff;
+      --texto: #d5dbe5;
+      --suave: #98a4b8;
+      --linea: #24324d;
+      --marca: #7aa2ff;
+      --marca-claro: #16264a;
+      --codigo: #050b17;
+      --codigo-texto: #e2e8f0;
+      --verde: #4ade80;
+      --verde-claro: #10291c;
+      --ambar: #fbbf24;
+      --ambar-claro: #2a2110;
+      --rojo: #f87171;
+      --rojo-claro: #2c1416;
+      color-scheme: dark;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--fondo);
+    color: var(--texto);
+    font: 16px/1.6 'Segoe UI', system-ui, -apple-system, Arial, sans-serif;
+  }
+  main { max-width: 860px; margin: 0 auto; padding: 32px 16px 64px; }
+  header h1 { color: var(--tinta); font-size: 30px; line-height: 1.2; margin: 0 0 8px; }
+  header p { color: var(--suave); margin: 0; }
+  h2 {
+    color: var(--tinta);
+    font-size: 21px;
+    margin: 40px 0 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--linea);
+  }
+  .resumen {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+    margin-top: 24px;
+  }
+  .resumen div {
+    background: var(--papel);
+    border: 1px solid var(--linea);
+    border-radius: 12px;
+    padding: 14px 16px;
+  }
+  .resumen strong { color: var(--tinta); display: block; }
+  .resumen span { color: var(--suave); font-size: 14px; }
+  ol.pasos { list-style: none; padding: 0; margin: 0; counter-reset: paso; }
+  ol.pasos > li {
+    counter-increment: paso;
+    position: relative;
+    background: var(--papel);
+    border: 1px solid var(--linea);
+    border-radius: 14px;
+    padding: 18px 20px 18px 68px;
+    margin-bottom: 14px;
+  }
+  ol.pasos > li::before {
+    content: counter(paso);
+    position: absolute;
+    left: 18px;
+    top: 16px;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--marca);
+    color: #fff;
+    font-weight: 700;
+    display: grid;
+    place-items: center;
+  }
+  ol.pasos > li h3 { margin: 4px 0 6px; color: var(--tinta); font-size: 18px; }
+  ol.pasos > li p { margin: 6px 0; }
+  .donde {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 2px 10px;
+    border-radius: 99px;
+    margin-bottom: 4px;
+  }
+  .donde.origen { background: var(--ambar-claro); color: var(--ambar); }
+  .donde.nueva { background: var(--marca-claro); color: var(--marca); }
+  .cmd {
+    position: relative;
+    background: var(--codigo);
+    color: var(--codigo-texto);
+    border-radius: 10px;
+    padding: 12px 92px 12px 14px;
+    margin: 10px 0;
+    font: 14px/1.6 Consolas, 'Cascadia Code', monospace;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+  .cmd button {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    border: 1px solid #334155;
+    background: #1e293b;
+    color: #e2e8f0;
+    border-radius: 8px;
+    padding: 4px 10px;
+    font: 600 13px 'Segoe UI', system-ui, sans-serif;
+    cursor: pointer;
+  }
+  .cmd button:hover { background: #334155; }
+  code {
+    font-family: Consolas, 'Cascadia Code', monospace;
+    font-size: 0.92em;
+    background: var(--marca-claro);
+    color: var(--tinta);
+    padding: 1px 6px;
+    border-radius: 6px;
+  }
+  table { width: 100%; border-collapse: collapse; margin: 8px 0; font-size: 15px; }
+  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--linea); vertical-align: top; }
+  th { color: var(--suave); font-weight: 600; }
+  .tabla { overflow-x: auto; }
+  .nota, .alerta, .ok {
+    border-radius: 12px;
+    padding: 12px 16px;
+    margin: 12px 0;
+    border-left: 4px solid;
+  }
+  .nota { background: var(--marca-claro); border-color: var(--marca); }
+  .alerta { background: var(--rojo-claro); border-color: var(--rojo); }
+  .ok { background: var(--verde-claro); border-color: var(--verde); }
+  .nota strong, .alerta strong, .ok strong { color: var(--tinta); }
+  a { color: var(--marca); }
+  footer { color: var(--suave); font-size: 14px; margin-top: 40px; }
+  @media print {
+    body { background: #fff; }
+    .cmd button { display: none; }
+    ol.pasos > li { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Instalar SISCON-CECIAMB en otra PC</h1>
+    <p>
+      Paso a paso para tener el sistema funcionando en otra computadora, con los
+      <strong>mismos datos</strong> (usuarios, plan de cuentas, comprobantes) que la PC donde ya se usa.
+    </p>
+  </header>
+
+  <div class="resumen">
+    <div><strong>⏱ Tiempo</strong><span>30 a 45 minutos la primera vez</span></div>
+    <div><strong>💻 Sistema</strong><span>Windows 10 u 11, con internet</span></div>
+    <div><strong>📁 Necesita</strong><span>El archivo <code>.sql</code> con la copia de la base de datos</span></div>
+  </div>
+
+  <div class="nota">
+    <strong>Dos computadoras:</strong> la <span class="donde origen">PC de origen</span> es la que ya
+    tiene el sistema con los datos; la <span class="donde nueva">PC nueva</span> es donde se va a
+    instalar. Todos los comandos se escriben en <strong>PowerShell</strong> (menú Inicio → escriba
+    «PowerShell» → Enter).
+  </div>
+
+  <h2>Parte 1 · Sacar la copia de los datos</h2>
+  <ol class="pasos">
+    <li>
+      <span class="donde origen">PC de origen</span>
+      <h3>Exportar la base de datos</h3>
+      <p>Abra PowerShell en la carpeta del proyecto y ejecute:</p>
+      <div class="cmd">cd $HOME\Documents\GitHub\SISCON-CECIAMB
+npm run bd:exportar</div>
+      <p>
+        Al terminar dice <code>Copia creada: respaldos\siscon_db-AAAA-MM-DD-HHMM.sql</code>. Ese
+        archivo es la copia completa: usuarios, datos de la empresa con su logo, plan de cuentas,
+        comprobantes y tasas.
+      </p>
+      <div class="alerta">
+        <strong>Ese archivo es confidencial.</strong> Lleva los usuarios con sus claves cifradas y
+        los datos del hospital. Páselo solo por USB, carpeta compartida de la red o Drive con
+        acceso restringido. <strong>Nunca</strong> por grupos de WhatsApp ni subido a GitHub.
+      </div>
+      <p>
+        Consejo: si la persona de la PC nueva va a entrar con su propio usuario, créelo antes en
+        <strong>Usuarios y roles → Agregar usuario</strong> y luego exporte.
+      </p>
+    </li>
+  </ol>
+
+  <h2>Parte 2 · Preparar la PC nueva</h2>
+  <ol class="pasos">
+    <li>
+      <span class="donde nueva">PC nueva</span>
+      <h3>Instalar los 3 programas (una sola vez)</h3>
+      <div class="tabla">
+        <table>
+          <tr><th>Programa</th><th>Dónde</th><th>Atención</th></tr>
+          <tr>
+            <td><strong>Node.js 24</strong> o superior</td>
+            <td><a href="https://nodejs.org">nodejs.org</a></td>
+            <td>Siguiente, siguiente, finalizar.</td>
+          </tr>
+          <tr>
+            <td><strong>Git</strong></td>
+            <td><a href="https://git-scm.com">git-scm.com</a></td>
+            <td>Deje las opciones que trae.</td>
+          </tr>
+          <tr>
+            <td><strong>MariaDB 11.8</strong> o superior</td>
+            <td><a href="https://mariadb.org/download">mariadb.org/download</a></td>
+            <td>Le pide una <strong>clave para root</strong>: <strong>anótela</strong>, se usa en el paso 4.</td>
+          </tr>
+        </table>
+      </div>
+      <p>Después de instalarlos, <strong>cierre y vuelva a abrir PowerShell</strong>.</p>
+    </li>
+
+    <li>
+      <span class="donde nueva">PC nueva</span>
+      <h3>Descargar el sistema</h3>
+      <p>
+        El repositorio es privado: el dueño debe agregar su cuenta de GitHub en
+        <code>adsh30/SISCON-CECIAMB</code> → <strong>Settings → Collaborators</strong>. Luego:
+      </p>
+      <div class="cmd">cd $HOME\Documents
+git clone https://github.com/adsh30/SISCON-CECIAMB.git
+cd SISCON-CECIAMB
+git checkout dev
+npm install</div>
+      <p>La primera vez Git puede abrir una ventana para iniciar sesión en GitHub.</p>
+    </li>
+
+    <li>
+      <span class="donde nueva">PC nueva</span>
+      <h3>Crear la clave secreta</h3>
+      <p>Este comando genera una cadena larga al azar. Cópiela; se usa en el paso siguiente:</p>
+      <div class="cmd">node -e "console.log(require('crypto').randomBytes(48).toString('hex'))"</div>
+    </li>
+
+    <li>
+      <span class="donde nueva">PC nueva</span>
+      <h3>Configurar el archivo .env</h3>
+      <div class="cmd">copy .env.example .env
+notepad .env</div>
+      <p>En el Bloc de notas complete estas líneas y guarde (<strong>Ctrl + S</strong>):</p>
+      <div class="tabla">
+        <table>
+          <tr><th>Línea</th><th>Qué poner</th></tr>
+          <tr><td><code>DB_PASSWORD=</code></td><td>Una clave que usted invente para la base de datos del sistema.</td></tr>
+          <tr><td><code>DB_ROOT_PASSWORD=</code></td><td>La clave de <strong>root</strong> que anotó al instalar MariaDB.</td></tr>
+          <tr><td><code>JWT_SECRET=</code></td><td>La cadena larga del paso 3.</td></tr>
+          <tr>
+            <td><code>MARIADB_DUMP=</code></td>
+            <td>
+              Solo si instaló otra versión de MariaDB: cambie <code>MariaDB 13.0</code> por la suya
+              (mire el nombre de la carpeta en <code>C:\Program Files</code>).
+            </td>
+          </tr>
+        </table>
+      </div>
+      <p>Las demás líneas se dejan como están.</p>
+    </li>
+
+    <li>
+      <span class="donde nueva">PC nueva</span>
+      <h3>Cargar la base de datos (un solo comando)</h3>
+      <p>
+        Copie el archivo <code>.sql</code> de la Parte 1 dentro de la carpeta
+        <code>respaldos</code> del proyecto (si no existe, créela) y ejecute, con el
+        <strong>nombre real</strong> de su archivo:
+      </p>
+      <div class="cmd">npm run bd:preparar -- respaldos\siscon_db-2026-10-10-1711.sql</div>
+      <p>Este comando lo hace todo solo:</p>
+      <ul>
+        <li>crea la base de datos del sistema y la de pruebas;</li>
+        <li>crea el usuario de MariaDB con la clave de <code>DB_PASSWORD</code>;</li>
+        <li>carga la copia;</li>
+        <li>la pone al día si el sistema es más nuevo que la copia.</li>
+      </ul>
+      <div class="ok">Termina con <strong>«Listo: la base tiene los mismos datos que la copia»</strong>.</div>
+    </li>
+
+    <li>
+      <span class="donde nueva">PC nueva</span>
+      <h3>Encender el sistema</h3>
+      <div class="cmd">npm run dev</div>
+      <p>
+        Deje esa ventana de PowerShell <strong>abierta</strong> mientras use el sistema. Abra Chrome o Edge en:
+      </p>
+      <div class="cmd">http://localhost:5173</div>
+      <div class="ok">
+        Entre con <strong>el mismo correo y la misma clave</strong> que usa en la PC de origen. Verá
+        los mismos datos.
+      </div>
+      <p>Para apagarlo: en PowerShell pulse <strong>Ctrl + C</strong>. Para volver a encenderlo otro día:</p>
+      <div class="cmd">cd $HOME\Documents\SISCON-CECIAMB
+npm run dev</div>
+    </li>
+  </ol>
+
+  <h2>Parte 3 · Después de instalado</h2>
+  <ol class="pasos">
+    <li>
+      <span class="donde nueva">PC nueva</span>
+      <h3>Traer la última versión del sistema</h3>
+      <p>Cuando haya cambios nuevos (apague antes con <strong>Ctrl + C</strong>):</p>
+      <div class="cmd">git pull
+npm install
+npm run db:migrate
+npm run dev</div>
+    </li>
+    <li>
+      <span class="donde origen">PC de origen</span> <span class="donde nueva">PC nueva</span>
+      <h3>Volver a copiar los datos</h3>
+      <p>
+        Cada PC tiene su <strong>propia</strong> base: lo que se registra en una no aparece en la otra. Para
+        traer de nuevo los datos de la PC de origen, repita la Parte 1 y en la PC nueva ejecute:
+      </p>
+      <div class="cmd">npm run bd:importar -- respaldos\ARCHIVO-NUEVO.sql --reemplazar</div>
+      <div class="alerta">
+        <code>--reemplazar</code> <strong>borra</strong> lo que había en la PC nueva y deja solo la copia.
+      </div>
+    </li>
+  </ol>
+
+  <div class="nota">
+    <strong>¿Solo necesita usar el sistema, no tener una copia aparte?</strong> No instale nada:
+    desde otra PC de la misma red abra en el navegador <code>http://IP-DEL-SERVIDOR:8080</code>
+    (o <code>:5173</code> si el servidor está en modo desarrollo). Así todos trabajan sobre los mismos
+    datos. La IP se ve con <code>ipconfig</code> en el equipo servidor.
+  </div>
+
+  <h2>Si algo sale mal</h2>
+  <div class="tabla">
+    <table>
+      <tr><th>Mensaje</th><th>Qué hacer</th></tr>
+      <tr><td><code>npm</code> o <code>git</code> «no se reconoce»</td><td>Cierre y abra PowerShell de nuevo. Si sigue, reinstale Node.js o Git.</td></tr>
+      <tr><td><code>Falta DB_ROOT_PASSWORD</code></td><td>Complete esa línea del <code>.env</code> (paso 4).</td></tr>
+      <tr><td><code>Access denied for user 'root'</code></td><td>La clave de root del <code>.env</code> no es la que puso al instalar MariaDB.</td></tr>
+      <tr><td><code>Access denied for user 'siscon_app'</code></td><td>Cambió <code>DB_PASSWORD</code>: ejecute <code>npm run bd:crear</code> para igualarla.</td></tr>
+      <tr><td><code>No se encontró mariadb.exe</code></td><td>Corrija <code>MARIADB_DUMP</code> en el <code>.env</code> con la carpeta de su versión de MariaDB.</td></tr>
+      <tr><td><code>La base siscon_db ya tiene … tablas</code></td><td>Ya había datos. Para reemplazarlos use <code>npm run bd:importar -- respaldos\archivo.sql --reemplazar</code>.</td></tr>
+      <tr><td><code>No existe el archivo</code></td><td>Revise que el <code>.sql</code> esté en la carpeta <code>respaldos</code> y que el nombre esté bien escrito.</td></tr>
+      <tr><td>La página dice «Sin conexión con el sistema»</td><td>Se cerró la ventana de PowerShell o se detuvo: vuelva a ejecutar <code>npm run dev</code>.</td></tr>
+      <tr><td>No abre <code>localhost:5173</code></td><td>Espere unos segundos tras <code>npm run dev</code> y recargue con <strong>F5</strong>.</td></tr>
+    </table>
+  </div>
+
+  <footer>
+    SISCON-CECIAMB · Hospital de Clínicas CECIAMB. Guía técnica completa: <code>docs/INSTALACION.md</code>.
+  </footer>
+</main>
+
+<script>
+  // Botón «Copiar» en cada bloque de comandos
+  document.querySelectorAll('.cmd').forEach((bloque) => {
+    const texto = bloque.textContent
+    const boton = document.createElement('button')
+    boton.type = 'button'
+    boton.textContent = 'Copiar'
+    boton.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(texto)
+      } catch {
+        const area = Object.assign(document.createElement('textarea'), { value: texto })
+        document.body.append(area)
+        area.select()
+        document.execCommand('copy')
+        area.remove()
+      }
+      boton.textContent = '✓ Copiado'
+      setTimeout(() => (boton.textContent = 'Copiar'), 1500)
+    })
+    bloque.append(boton)
+  })
+</script>
+</body>
+</html>

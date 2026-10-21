@@ -8,6 +8,7 @@ import { nombreAccion } from '../../lib/bitacora.js'
 import { ESTADOS, esCero, numeroComprobante } from '../../lib/comprobantes.js'
 import { formatoFecha, formatoFechaHoraCaracas, formatoMonto } from '../../lib/formato.js'
 import { AnularModal, CopiarModal } from './AccionesComprobante.jsx'
+import { AdjuntosComprobante } from './AdjuntosComprobante.jsx'
 
 function Dato({ etiqueta, children }) {
   return (
@@ -183,6 +184,9 @@ export function ComprobanteVista({ comprobante: c }) {
           </ol>
         </div>
       </section>
+
+      {/* Documentos soporte (RF-05.11) */}
+      <AdjuntosComprobante comprobante={c} puedeModificar={puedeModificar} />
 
       {(dialogo === 'duplicar' || dialogo === 'reversar') && (
         <CopiarModal comprobante={c} tipo={dialogo} onClose={() => setDialogo(null)} />

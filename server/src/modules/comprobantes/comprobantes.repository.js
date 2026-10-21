@@ -193,3 +193,40 @@ export const tipos = (trx = db) =>
     .orderBy([{ column: 'orden' }, { column: 'nombre' }])
 
 export const tipoPorId = (id, trx = db) => trx('tipos_comprobante').where({ id }).first()
+
+// --- Adjuntos de documentos soporte (RF-05.11) ---
+
+export function listarAdjuntos(comprobanteId, trx = db) {
+  return trx('comprobante_adjuntos as a')
+    .leftJoin('usuarios as u', 'u.id', 'a.creado_por')
+    .select(
+      'a.id',
+      'a.comprobante_id',
+      'a.nombre_archivo',
+      'a.tipo_mime',
+      'a.tamano_bytes',
+      'a.sha256',
+      'a.creado_en',
+      'u.nombre as creado_por_nombre',
+      'u.apellido as creado_por_apellido',
+    )
+    .where('a.comprobante_id', comprobanteId)
+    .orderBy('a.id', 'desc')
+}
+
+export function adjuntoPorId(comprobanteId, adjuntoId, trx = db) {
+  return trx('comprobante_adjuntos')
+    .where({ id: adjuntoId, comprobante_id: comprobanteId })
+    .first()
+}
+
+export async function guardarAdjunto(datos, trx = db) {
+  const [id] = await trx('comprobante_adjuntos').insert(datos)
+  return id
+}
+
+export function eliminarAdjunto(comprobanteId, adjuntoId, trx = db) {
+  return trx('comprobante_adjuntos')
+    .where({ id: adjuntoId, comprobante_id: comprobanteId })
+    .del()
+}
