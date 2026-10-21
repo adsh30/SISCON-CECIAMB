@@ -177,3 +177,53 @@ export async function nombresFiltros({ tipoId, centroCostoId }) {
 }
 
 export const nombreUsuario = (id) => db('usuarios').where({ id }).first('nombre', 'apellido')
+
+/**
+ * Balance de Comprobación: obtiene todas las cuentas contables activas con sus sumas de movimientos
+ * anteriores (para saldos iniciales) y dentro del rango de fechas.
+ */
+export async function resumenBalance(filtros) {
+  const { desde, hasta, centroCostoId, tipoId, cuentaDesde, cuentaHasta } = filtros
+
+  const subDetalle = db('comprobante_detalle as d')
+    .join('comprobantes as c', 'c.id', 'd.comprobante_id')
+    .where('c.estado', 'APROBADO')
+    .where('c.fecha', '<=', hasta)
+
+  if (tipoId) subDetalle.where('c.tipo_id', tipoId)
+  if (centroCostoId) subDetalle.where('d.centro_costo_id', centroCostoId)
+
+  subDetalle
+    .groupBy('d.cuenta_id')
+    .select('d.cuenta_id')
+    .select({
+      debe_anterior: db.raw(`SUM(CASE WHEN c.fecha < ? THEN d.debe ELSE 0 END)`, [desde]),
+      haber_anterior: db.raw(`SUM(CASE WHEN c.fecha < ? THEN d.haber ELSE 0 END)`, [desde]),
+      debe: db.raw(`SUM(CASE WHEN c.fecha >= ? THEN d.debe ELSE 0 END)`, [desde]),
+      haber: db.raw(`SUM(CASE WHEN c.fecha >= ? THEN d.haber ELSE 0 END)`, [desde]),
+      movimientos: db.raw(`SUM(CASE WHEN c.fecha >= ? THEN 1 ELSE 0 END)`, [desde]),
+    })
+    .as('mov')
+
+  let q = db('cuentas as cu')
+    .leftJoin(subDetalle, 'mov.cuenta_id', 'cu.id')
+    .select(
+      'cu.id',
+      'cu.codigo',
+      'cu.nombre',
+      'cu.tipo',
+      'cu.naturaleza',
+      'cu.nivel',
+      'cu.padre_id',
+      'cu.es_movimiento',
+      db.raw('COALESCE(mov.debe_anterior, 0) as debe_anterior'),
+      db.raw('COALESCE(mov.haber_anterior, 0) as haber_anterior'),
+      db.raw('COALESCE(mov.debe, 0) as debe'),
+      db.raw('COALESCE(mov.haber, 0) as haber'),
+      db.raw('COALESCE(mov.movimientos, 0) as movimientos'),
+    )
+    .where('cu.activa', true)
+    .orderByRaw(CODIGO)
+
+  return enRango(q, { cuentaDesde, cuentaHasta })
+}

@@ -8,6 +8,7 @@ import ImprimirComprobante from './features/comprobantes/ImprimirComprobante.jsx
 import EmpresaPage from './features/empresa/EmpresaPage.jsx'
 import ImportarPage from './features/importaciones/ImportarPage.jsx'
 import ImprimirLibro from './features/libros/ImprimirLibro.jsx'
+import BalanceComprobacionPage from './features/libros/BalanceComprobacionPage.jsx'
 import LibroDiarioPage from './features/libros/LibroDiarioPage.jsx'
 import LibroMayorPage from './features/libros/LibroMayorPage.jsx'
 import PeriodosPage from './features/periodos/PeriodosPage.jsx'
@@ -86,6 +87,14 @@ export default function App() {
                 element={
                   <RequireModulo modulo="libros">
                     <LibroMayorPage />
+                  </RequireModulo>
+                }
+              />
+              <Route
+                path="libros/balance"
+                element={
+                  <RequireModulo modulo="libros">
+                    <BalanceComprobacionPage />
                   </RequireModulo>
                 }
               />
