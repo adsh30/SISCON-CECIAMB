@@ -15,8 +15,17 @@ import {
 } from '../../lib/formato.js'
 import { mesEnCurso } from './filtros.js'
 
-const LIBROS = { diario: 'Libro Diario', mayor: 'Libro Mayor' }
-const CLAVES = ['desde', 'hasta', 'tipoId', 'centroCostoId', 'cuentaDesde', 'cuentaHasta']
+const LIBROS = { diario: 'Libro Diario', mayor: 'Libro Mayor', balance: 'Balance de Comprobación' }
+const CLAVES = [
+  'desde',
+  'hasta',
+  'tipoId',
+  'centroCostoId',
+  'cuentaDesde',
+  'cuentaHasta',
+  'modo',
+  'incluirCeros',
+]
 const ahoraUtc = () => new Date().toISOString().slice(0, 19).replace('T', ' ')
 const monto = (v) => (esCero(v) ? '' : formatoMonto(v))
 
@@ -140,6 +149,86 @@ function Mayor({ data, meta }) {
   )
 }
 
+function Balance({ data, meta }) {
+  const t = meta.totales
+  return (
+    <table className="mt-4 w-full border-collapse">
+      <thead>
+        <tr className="border-t-2 border-b border-[#111827] text-center font-bold">
+          <th colSpan={2} className="py-1.5 px-2 text-left border-r border-[#9ca3af]">
+            Identificación de la Cuenta
+          </th>
+          <th colSpan={2} className="py-1.5 px-2 border-r border-[#9ca3af]">
+            Saldos Anteriores
+          </th>
+          <th colSpan={2} className="py-1.5 px-2 border-r border-[#9ca3af]">
+            Movimientos del Período
+          </th>
+          <th colSpan={2} className="py-1.5 px-2">
+            Saldos Actuales
+          </th>
+        </tr>
+        <tr className="border-b-2 border-[#111827] text-left">
+          <th className="py-1 px-2 w-32">Código</th>
+          <th className="py-1 px-2 border-r border-[#9ca3af]">Nombre</th>
+          <th className="py-1 px-2 text-right">Deudor</th>
+          <th className="py-1 px-2 text-right border-r border-[#9ca3af]">Acreedor</th>
+          <th className="py-1 px-2 text-right">Debe</th>
+          <th className="py-1 px-2 text-right border-r border-[#9ca3af]">Haber</th>
+          <th className="py-1 px-2 text-right">Deudor</th>
+          <th className="py-1 px-2 text-right">Acreedor</th>
+        </tr>
+      </thead>
+      <tbody>
+        {data.map((c) => {
+          const esGrupo = !c.esMovimiento
+          const sangria = esGrupo ? (c.nivel - 1) * 10 : c.nivel * 10
+          return (
+            <tr
+              key={c.id}
+              className={`border-b border-[#e5e7eb] break-inside-avoid ${
+                esGrupo ? 'bg-[#f3f4f6] font-semibold' : ''
+              }`}
+            >
+              <td className="py-0.5 px-2 font-mono whitespace-nowrap">{c.codigo}</td>
+              <td className="py-0.5 px-2 border-r border-[#9ca3af]">
+                <span style={{ paddingLeft: `${sangria}px` }}>{c.nombre}</span>
+              </td>
+              <td className="cifras py-0.5 px-2 text-right">{monto(c.saldoAnteriorDeudor)}</td>
+              <td className="cifras py-0.5 px-2 text-right border-r border-[#9ca3af]">
+                {monto(c.saldoAnteriorAcreedor)}
+              </td>
+              <td className="cifras py-0.5 px-2 text-right">{monto(c.movimientoDebe)}</td>
+              <td className="cifras py-0.5 px-2 text-right border-r border-[#9ca3af]">
+                {monto(c.movimientoHaber)}
+              </td>
+              <td className="cifras py-0.5 px-2 text-right">{monto(c.saldoActualDeudor)}</td>
+              <td className="cifras py-0.5 px-2 text-right">{monto(c.saldoActualAcreedor)}</td>
+            </tr>
+          )
+        })}
+      </tbody>
+      <tfoot>
+        <tr className="border-t-2 border-b-2 border-[#111827] font-bold break-inside-avoid bg-[#f9fafb]">
+          <td colSpan={2} className="py-2 px-2 text-right border-r border-[#9ca3af]">
+            Totales y Sumas Iguales ({formatoEntero(meta.total)} cuentas):
+          </td>
+          <td className="cifras py-2 px-2 text-right">{formatoMonto(t.saldoAnteriorDeudor)}</td>
+          <td className="cifras py-2 px-2 text-right border-r border-[#9ca3af]">
+            {formatoMonto(t.saldoAnteriorAcreedor)}
+          </td>
+          <td className="cifras py-2 px-2 text-right">{formatoMonto(t.movimientoDebe)}</td>
+          <td className="cifras py-2 px-2 text-right border-r border-[#9ca3af]">
+            {formatoMonto(t.movimientoHaber)}
+          </td>
+          <td className="cifras py-2 px-2 text-right">{formatoMonto(t.saldoActualDeudor)}</td>
+          <td className="cifras py-2 px-2 text-right">{formatoMonto(t.saldoActualAcreedor)}</td>
+        </tr>
+      </tfoot>
+    </table>
+  )
+}
+
 /** Libro completo en formato carta, listo para imprimir o guardar como PDF (RF-06.4) */
 export default function ImprimirLibro() {
   const { libro } = useParams()
@@ -202,7 +291,7 @@ export default function ImprimirLibro() {
 
       <article
         className={`mx-auto p-8 text-[10.5px] leading-snug print:p-0 ${
-          libro === 'mayor' ? 'apaisada max-w-[279mm]' : 'max-w-[216mm]'
+          libro === 'mayor' || libro === 'balance' ? 'apaisada max-w-[279mm]' : 'max-w-[216mm]'
         }`}
       >
         <header className="flex items-start justify-between gap-6 border-b-2 border-[#111827] pb-3">
@@ -232,8 +321,10 @@ export default function ImprimirLibro() {
           <p className="mt-8 text-center">No hay movimientos aprobados en este rango.</p>
         ) : libro === 'diario' ? (
           <Diario data={data.data} meta={data.meta} />
-        ) : (
+        ) : libro === 'mayor' ? (
           <Mayor data={data.data} meta={data.meta} />
+        ) : (
+          <Balance data={data.data} meta={data.meta} />
         )}
 
         <footer className="mt-8 border-t border-[#e5e7eb] pt-2 text-[9px] text-[#6b7280]">

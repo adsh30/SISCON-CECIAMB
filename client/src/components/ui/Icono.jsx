@@ -4,6 +4,7 @@ const trazos = {
   comprobantes: 'M6 3h12v18l-3-2-3 2-3-2-3 2zM9 8h6M9 12h6M9 16h3',
   libros: 'M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2zM4 21V5M8 7h7',
   mayor: 'M4 4h16v16H4zM4 9h16M10 9v11',
+  balance: 'M12 3v18M3 7l9-4 9 4M6 21h12M4 7l3 6H1l3-6zm16 0l3 6h-6l3-6z',
   cuentas: 'M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01',
   periodos: 'M4 6h16v14H4zM4 10h16M8 3v4M16 3v4',
   tasas: 'M7 7h11l-3-3M17 17H6l3 3',

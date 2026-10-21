@@ -1,9 +1,11 @@
-import { diarioExcel, mayorExcel } from './libros.excel.js'
+import { balanceExcel, diarioExcel, mayorExcel } from './libros.excel.js'
 import * as service from './libros.service.js'
 
 export const diario = async (req, res) => res.json(await service.diario(req.consulta))
 
 export const mayor = async (req, res) => res.json(await service.mayor(req.consulta))
+
+export const balance = async (req, res) => res.json(await service.balance(req.consulta))
 
 const XLSX = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
 
@@ -26,3 +28,4 @@ function excel(libro, armar, nombre) {
 
 export const diarioXlsx = excel(service.diario, diarioExcel, 'libro-diario')
 export const mayorXlsx = excel(service.mayor, mayorExcel, 'libro-mayor')
+export const balanceXlsx = excel(service.balance, balanceExcel, 'balance-comprobacion')

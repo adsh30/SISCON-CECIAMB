@@ -2,7 +2,7 @@ import { Router } from 'express'
 import { auth, claveVigente, requirePermiso } from '../../middlewares/auth.js'
 import { validate } from '../../middlewares/validate.js'
 import * as c from './libros.controller.js'
-import { diarioSchema, mayorSchema } from './libros.schema.js'
+import { balanceSchema, diarioSchema, mayorSchema } from './libros.schema.js'
 
 export const librosRoutes = Router()
 
@@ -13,3 +13,5 @@ librosRoutes.get('/diario', validate(diarioSchema, 'query'), c.diario)
 librosRoutes.get('/diario/excel', validate(diarioSchema, 'query'), c.diarioXlsx)
 librosRoutes.get('/mayor', validate(mayorSchema, 'query'), c.mayor)
 librosRoutes.get('/mayor/excel', validate(mayorSchema, 'query'), c.mayorXlsx)
+librosRoutes.get('/balance', validate(balanceSchema, 'query'), c.balance)
+librosRoutes.get('/balance/excel', validate(balanceSchema, 'query'), c.balanceXlsx)

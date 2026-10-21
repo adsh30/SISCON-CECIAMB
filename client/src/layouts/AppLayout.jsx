@@ -21,6 +21,12 @@ const SECCIONES = [
       },
       { to: '/app/libros/diario', etiqueta: 'Libro Diario', icono: 'libros', modulo: 'libros' },
       { to: '/app/libros/mayor', etiqueta: 'Libro Mayor', icono: 'mayor', modulo: 'libros' },
+      {
+        to: '/app/libros/balance',
+        etiqueta: 'Balance de Comprobación',
+        icono: 'balance',
+        modulo: 'libros',
+      },
       { to: '/app/cuentas', etiqueta: 'Plan de cuentas', icono: 'cuentas', modulo: 'plan_cuentas' },
       { to: '/app/periodos', etiqueta: 'Períodos', icono: 'periodos', modulo: 'periodos' },
     ],
