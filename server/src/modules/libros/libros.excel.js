@@ -187,3 +187,60 @@ export function mayorExcel({ data, meta }, filtros, cab) {
     stickyRowsCount: FILAS_FIJAS,
   }).toBuffer()
 }
+
+export function balanceExcel({ data, meta }, filtros, cab) {
+  const titulos = [
+    'Código',
+    'Nombre de la cuenta',
+    'Saldo Ant. Deudor',
+    'Saldo Ant. Acreedor',
+    'Mov. Debe',
+    'Mov. Haber',
+    'Saldo Act. Deudor',
+    'Saldo Act. Acreedor',
+  ]
+  const filas = [
+    ...filasEncabezado('Balance de Comprobación', cab, filtros, titulos.length),
+    cabecera(titulos, 6),
+  ]
+
+  for (const c of data) {
+    const esGrupo = !c.esMovimiento
+    const formatoFila = esGrupo ? { fontWeight: 'bold', backgroundColor: AZUL } : {}
+    const sangria = esGrupo && c.nivel > 1 ? '  '.repeat(c.nivel - 1) : ''
+
+    filas.push([
+      negrita(c.codigo, formatoFila),
+      negrita(`${sangria}${c.nombre}`, formatoFila),
+      montoOVacio(c.saldoAnteriorDeudor),
+      montoOVacio(c.saldoAnteriorAcreedor),
+      montoOVacio(c.movimientoDebe),
+      montoOVacio(c.movimientoHaber),
+      montoOVacio(c.saldoActualDeudor),
+      montoOVacio(c.saldoActualAcreedor),
+    ])
+  }
+
+  filas.push([])
+  const t = meta.totales
+  filas.push([
+    ...unir(
+      negrita(`Totales y sumas iguales (${meta.total} cuentas):`, {
+        align: 'right',
+      }),
+      2,
+    ),
+    monto(t.saldoAnteriorDeudor, { fontWeight: 'bold' }),
+    monto(t.saldoAnteriorAcreedor, { fontWeight: 'bold' }),
+    monto(t.movimientoDebe, { fontWeight: 'bold' }),
+    monto(t.movimientoHaber, { fontWeight: 'bold' }),
+    monto(t.saldoActualDeudor, { fontWeight: 'bold' }),
+    monto(t.saldoActualAcreedor, { fontWeight: 'bold' }),
+  ])
+
+  return writeExcelFile(filas, {
+    sheet: 'Balance de Comprobación',
+    columns: [16, 42, 18, 18, 18, 18, 18, 18].map((width) => ({ width })),
+    stickyRowsCount: FILAS_FIJAS,
+  }).toBuffer()
+}

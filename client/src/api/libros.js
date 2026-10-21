@@ -5,7 +5,7 @@ import { ApiError, api } from './client.js'
 export const consultaLibro = (filtros) =>
   new URLSearchParams(Object.entries(filtros).filter(([, v]) => v !== '' && v != null)).toString()
 
-/** Libro Diario o Mayor (`libro` = 'diario' | 'mayor') con sus filtros */
+/** Libro Diario o Mayor (`libro` = 'diario' | 'mayor' | 'balance') con sus filtros */
 export function useLibro(libro, filtros) {
   return useQuery({
     queryKey: ['libros', libro, filtros],
@@ -13,6 +13,8 @@ export function useLibro(libro, filtros) {
     placeholderData: keepPreviousData,
   })
 }
+
+export const useBalance = (filtros) => useLibro('balance', filtros)
 
 /** Sin la paginación de pantalla: las exportaciones llevan el libro completo */
 export const filtrosExportacion = ({ pagina: _p, porPagina: _pp, ...resto }) => resto

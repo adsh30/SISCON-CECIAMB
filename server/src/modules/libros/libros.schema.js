@@ -50,3 +50,24 @@ export const mayorSchema = z
       path: ['cuentaDesde'],
     },
   )
+
+export const balanceSchema = z
+  .object({
+    ...base,
+    cuentaDesde: opcional(codigoCuenta),
+    cuentaHasta: opcional(codigoCuenta),
+    modo: z.enum(['movimiento', 'completo']).default('movimiento'),
+    incluirCeros: booleanoConsulta.default(false),
+  })
+  .refine(rangoValido, errorRango)
+  .refine(
+    (f) =>
+      !f.cuentaDesde ||
+      !f.cuentaHasta ||
+      f.cuentaDesde <= f.cuentaHasta ||
+      f.cuentaDesde.startsWith(`${f.cuentaHasta}.`),
+    {
+      message: 'La cuenta inicial debe ir antes que la final en el plan de cuentas',
+      path: ['cuentaDesde'],
+    },
+  )

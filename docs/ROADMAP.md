@@ -81,3 +81,9 @@ Cada entregable incluye **backend + frontend**. Cada cambio va en ramas `feature
 - [ ] Carga de los datos contables del Hospital CECIAMB (plan de cuentas, saldos e histórico). Los datos son del hospital: Sparrow es solo la herramienta que los usa hoy y de donde se exportarán.
 - [ ] Revisión de seguridad, backups automáticos con `mysqldump`, manual de usuario.
 - [ ] Pruebas de aceptación con los contadores.
+
+## Fase 8 — Reportes contables ampliados
+
+- [x] Balance de Comprobación (Sumas y Saldos a 8 Columnas): Saldos Anteriores (Deudor/Acreedor), Movimientos (Debe/Haber), Saldos Actuales (Deudor/Acreedor), certificación de cuadre en 3 parejas de columnas, modos 'solo movimientos' y 'árbol completo', exportación oficial a Excel (.xlsx) e impresión/PDF en hoja horizontal.
+- [ ] Estados Financieros (Balance General y Estado de Resultados).
+- [ ] Multimoneda y conciliación bancaria.

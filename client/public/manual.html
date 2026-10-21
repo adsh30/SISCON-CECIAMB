@@ -349,7 +349,7 @@
           <li><a href="#periodos">Ejercicios y períodos</a></li>
           <li><a href="#cuentas">Plan de cuentas y centros de costo</a></li>
           <li><a href="#comprobantes">Comprobantes contables</a></li>
-          <li><a href="#libros">Libro Diario y Libro Mayor</a></li>
+          <li><a href="#libros">Libros contables: Diario, Mayor y Balance de Comprobación</a></li>
           <li><a href="#bitacora">Bitácora de auditoría: consultar y exportar</a></li>
           <li><a href="#problemas">Problemas frecuentes</a></li>
           <li><a href="#proximamente">Próximos módulos</a></li>
@@ -493,7 +493,7 @@
         <ul>
           <li>
             Está dividido en <strong>Contabilidad</strong> (Inicio, Comprobantes, Libro Diario,
-            Libro Mayor, Plan de cuentas, Períodos) y <strong>Sistema</strong> (Empresa, Usuarios y
+            Libro Mayor, Balance de Comprobación, Plan de cuentas, Períodos) y <strong>Sistema</strong> (Empresa, Usuarios y
             roles, Bitácora, Ajustes, Manual del sistema).
           </li>
           <li>La opción en la que está aparece resaltada en azul con una barra a la izquierda.</li>
@@ -1480,17 +1480,17 @@
       </section>
 
       <section id="libros">
-        <h2>13. Libro Diario y Libro Mayor</h2>
+        <h2>13. Libros contables: Diario, Mayor y Balance de Comprobación</h2>
         <p>
           Los libros se arman solos con los comprobantes <strong>aprobados</strong>: no hay que
           pasar nada a mano. Los borradores todavía no son contabilidad y los anulados no cuentan,
           así que no aparecen. Todos los roles pueden consultarlos y exportarlos (el Auditor
-          incluido); se abren desde el menú en <strong>Libro Diario</strong> y
-          <strong>Libro Mayor</strong>.
+          incluido); se abren desde el menú en <strong>Libro Diario</strong>,
+          <strong>Libro Mayor</strong> y <strong>Balance de Comprobación</strong>.
         </p>
 
         <h3>Elegir qué ver</h3>
-        <p>Los dos libros comparten estos filtros. Al entrar muestran el mes en curso.</p>
+        <p>Los libros contables comparten estos filtros. Al entrar muestran el mes en curso.</p>
         <ul>
           <li>
             <strong>Período</strong>: elija un mes o <em>Ejercicio … completo</em> y las fechas se
@@ -1558,6 +1558,50 @@
           </li>
           <li>Pulse <span class="boton">Todas</span> para volver a ver todas las cuentas.</li>
         </ol>
+
+        <h3>Balance de Comprobación (Sumas y Saldos a 8 Columnas)</h3>
+        <p>
+          Presenta la verificación global de la contabilidad en una tabla consolidada a 8 columnas:
+        </p>
+        <ul>
+          <li>
+            <strong>1 y 2. Identificación de la cuenta</strong>: código jerárquico y nombre.
+            Haga clic en el código de una cuenta de movimiento para consultar directamente su Libro Mayor.
+          </li>
+          <li>
+            <strong>3 y 4. Saldos Anteriores</strong>: monto <strong>Deudor</strong> o <strong>Acreedor</strong>
+            acumulado en todos los períodos previos a la fecha inicial <em>Desde</em>.
+          </li>
+          <li>
+            <strong>5 y 6. Movimientos del Período</strong>: sumas de <strong>Debe</strong> y
+            <strong>Haber</strong> de los comprobantes aprobados dentro del rango de fechas.
+          </li>
+          <li>
+            <strong>7 y 8. Saldos Actuales</strong>: saldo final <strong>Deudor</strong> o <strong>Acreedor</strong>
+            al corte de la fecha <em>Hasta</em>.
+          </li>
+        </ul>
+        <p><strong>Modos de visualización</strong>:</p>
+        <ul>
+          <li>
+            <span class="boton">Solo movimientos</span>: muestra únicamente las cuentas donde se asientan
+            comprobantes, ideal para auditoría rápida y conciliación.
+          </li>
+          <li>
+            <span class="boton">Árbol completo</span>: incluye las cuentas de grupo y subgrupo (Activo,
+            Pasivo, Patrimonio, etc.) con sus subtotales calculados automáticamente a partir de sus cuentas hijas.
+          </li>
+          <li>
+            <strong>Incluir cuentas en cero</strong>: active esta casilla si desea listar también las cuentas
+            que no presentan saldo inicial ni movimientos en el período.
+          </li>
+        </ul>
+        <p>
+          Arriba, tres tarjetas de control certifican en tiempo real si los
+          <strong>Saldos Anteriores</strong>, los <strong>Movimientos del Mes</strong> y los
+          <strong>Saldos Actuales</strong> están exactamente cuadrados con diferencia cero (indicador verde
+          <strong>✓ Cuadrado</strong>).
+        </p>
 
         <h3>Exportar e imprimir</h3>
         <p>
