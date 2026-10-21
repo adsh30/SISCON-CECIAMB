@@ -11,6 +11,7 @@ import {
 } from '../../lib/formato.js'
 import { ActividadReciente } from './ActividadReciente.jsx'
 import { AvisosInicio } from './AvisosInicio.jsx'
+import { DashboardContable } from './DashboardContable.jsx'
 import { GraficaActividad } from './GraficaActividad.jsx'
 import { GraficaTasas } from './GraficaTasas.jsx'
 import { Kpi } from './Kpi.jsx'
@@ -147,6 +148,8 @@ export default function InicioPage() {
           </div>
         )}
       </div>
+
+      {data?.comprobantes && <DashboardContable comprobantes={data.comprobantes} />}
 
       <div className="mt-4 grid gap-4 grid-cols-[repeat(auto-fit,minmax(min(100%,440px),1fr))]">
         <div id="grafica-tasas" className="scroll-mt-20">

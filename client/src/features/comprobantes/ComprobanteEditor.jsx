@@ -20,6 +20,7 @@ import { esCero, numeroComprobante, totalesRenglones } from '../../lib/comproban
 import { formatoMonto } from '../../lib/formato.js'
 import { hoyCaracas } from '../../lib/series.js'
 import { CopiarModal } from './AccionesComprobante.jsx'
+import { AdjuntosComprobante } from './AdjuntosComprobante.jsx'
 import { GrillaRenglones } from './GrillaRenglones.jsx'
 import { renglonVacio } from './renglones.js'
 
@@ -363,6 +364,9 @@ export function ComprobanteEditor({ comprobante, tipoInicial }) {
           {general}
         </p>
       )}
+
+      {/* Documentos soporte (RF-05.11) */}
+      {comprobante?.id && <AdjuntosComprobante comprobante={comprobante} puedeModificar={true} />}
 
       {/* Totales y acciones, siempre a la vista */}
       {/* En el teléfono va al final del formulario; fija taparía media pantalla */}

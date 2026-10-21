@@ -44,7 +44,7 @@ export function createApp({ servirCliente = env.nodeEnv === 'production' && hayC
     }),
   )
   app.use(cors({ origin: env.clientOrigin, credentials: true }))
-  app.use(express.json({ limit: '1mb' }))
+  app.use(express.json({ limit: '15mb' }))
   app.use(cookieParser())
 
   const api = express.Router()

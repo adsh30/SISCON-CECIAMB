@@ -4,6 +4,7 @@ import { validate } from '../../middlewares/validate.js'
 import * as c from './comprobantes.controller.js'
 import {
   actualizarTipoSchema,
+  adjuntoSchema,
   anularSchema,
   comprobanteSchema,
   copiaSchema,
@@ -33,3 +34,8 @@ comprobantesRoutes.post('/:id/aprobar', total, c.aprobar)
 comprobantesRoutes.post('/:id/anular', total, validate(anularSchema), c.anular)
 comprobantesRoutes.post('/:id/duplicar', modificar, validate(copiaSchema), c.duplicar)
 comprobantesRoutes.post('/:id/reversar', modificar, validate(copiaSchema), c.reversar)
+
+comprobantesRoutes.get('/:id/adjuntos', ver, c.listarAdjuntos)
+comprobantesRoutes.post('/:id/adjuntos', modificar, validate(adjuntoSchema), c.subirAdjunto)
+comprobantesRoutes.get('/:id/adjuntos/:adjuntoId', ver, c.descargarAdjunto)
+comprobantesRoutes.delete('/:id/adjuntos/:adjuntoId', modificar, c.eliminarAdjunto)

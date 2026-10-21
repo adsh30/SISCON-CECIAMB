@@ -8,7 +8,7 @@ import { db } from '../src/config/db.js'
 export function limpiarComprobantes() {
   return db.transaction(async (trx) => {
     await trx.raw('SET FOREIGN_KEY_CHECKS = 0')
-    for (const tabla of ['comprobante_detalle', 'comprobantes', 'correlativos']) {
+    for (const tabla of ['comprobante_adjuntos', 'comprobante_detalle', 'comprobantes', 'correlativos']) {
       await trx.raw(`TRUNCATE TABLE ${tabla}`)
     }
     await trx.raw('SET FOREIGN_KEY_CHECKS = 1')

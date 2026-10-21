@@ -60,3 +60,28 @@ export async function actualizarTipo(req, res) {
     data: await service.actualizarTipo(idDe(req), req.body, req.user, requestContext(req)),
   })
 }
+
+export const listarAdjuntos = async (req, res) =>
+  res.json({ data: await service.listarAdjuntos(idDe(req)) })
+
+export async function subirAdjunto(req, res) {
+  res.status(201).json({
+    data: await service.subirAdjunto(idDe(req), req.body, req.user, requestContext(req)),
+  })
+}
+
+export async function descargarAdjunto(req, res) {
+  const adjuntoId = Number(req.params.adjuntoId)
+  if (!Number.isInteger(adjuntoId) || adjuntoId < 1) throw new AppError(404, 'NO_ENCONTRADO', 'No existe')
+  const { buffer, tipo, nombre: nombreArchivo } = await service.descargarAdjunto(idDe(req), adjuntoId)
+  res.set('Content-Type', tipo)
+  res.set('Content-Disposition', `inline; filename="${encodeURIComponent(nombreArchivo)}"`)
+  res.send(buffer)
+}
+
+export async function eliminarAdjunto(req, res) {
+  const adjuntoId = Number(req.params.adjuntoId)
+  if (!Number.isInteger(adjuntoId) || adjuntoId < 1) throw new AppError(404, 'NO_ENCONTRADO', 'No existe')
+  await service.eliminarAdjunto(idDe(req), adjuntoId, req.user, requestContext(req))
+  res.status(204).end()
+}

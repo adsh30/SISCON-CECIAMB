@@ -72,3 +72,35 @@ export const useGuardarTipo = () =>
       ? enviar(`/comprobantes/tipos/${id}`, 'PUT', datos)
       : enviar('/comprobantes/tipos', 'POST', datos),
   )
+
+export function useAdjuntos(comprobanteId) {
+  return useQuery({
+    queryKey: [...KEY, 'adjuntos', Number(comprobanteId)],
+    queryFn: async () => (await api(`/comprobantes/${comprobanteId}/adjuntos`)).data,
+    enabled: !!comprobanteId,
+  })
+}
+
+export function useSubirAdjunto() {
+  const qc = useQueryClient()
+  return useMutation({
+    mutationFn: ({ comprobanteId, nombre, contenido }) =>
+      enviar(`/comprobantes/${comprobanteId}/adjuntos`, 'POST', { nombre, contenido }),
+    onSuccess: (_, { comprobanteId }) => {
+      qc.invalidateQueries({ queryKey: [...KEY, 'adjuntos', Number(comprobanteId)] })
+      qc.invalidateQueries({ queryKey: [...KEY, 'detalle', Number(comprobanteId)] })
+    },
+  })
+}
+
+export function useEliminarAdjunto() {
+  const qc = useQueryClient()
+  return useMutation({
+    mutationFn: ({ comprobanteId, adjuntoId }) =>
+      api(`/comprobantes/${comprobanteId}/adjuntos/${adjuntoId}`, { method: 'DELETE' }),
+    onSuccess: (_, { comprobanteId }) => {
+      qc.invalidateQueries({ queryKey: [...KEY, 'adjuntos', Number(comprobanteId)] })
+      qc.invalidateQueries({ queryKey: [...KEY, 'detalle', Number(comprobanteId)] })
+    },
+  })
+}
