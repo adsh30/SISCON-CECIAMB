@@ -84,11 +84,72 @@ export async function resumenComprobantes(fecha) {
         mes,
       ]),
       db.raw("SUM(estado = 'ANULADO' AND DATE_FORMAT(fecha, '%Y-%m') = ?) AS anulados_mes", [mes]),
+      db.raw(
+        "COALESCE(SUM(CASE WHEN estado = 'APROBADO' AND DATE_FORMAT(fecha, '%Y-%m') = ? THEN total_debe ELSE 0 END), 0) AS total_movilizado_mes",
+        [mes],
+      ),
     )
     .first()
+
+  // Comprobantes aprobados por categoría en el mes
+  const categorias = await db('tipos_comprobante as tc')
+    .leftJoin('comprobantes as c', function () {
+      this.on('c.tipo_id', '=', 'tc.id')
+        .andOn(db.raw("c.estado = 'APROBADO'"))
+        .andOn(db.raw("DATE_FORMAT(c.fecha, '%Y-%m') = ?", [mes]))
+    })
+    .select(
+      'tc.id as tipo_id',
+      'tc.codigo',
+      'tc.nombre',
+      db.raw('COUNT(c.id) as cantidad'),
+      db.raw('COALESCE(SUM(c.total_debe), 0) as total_monto'),
+    )
+    .where('tc.activo', true)
+    .groupBy('tc.id', 'tc.codigo', 'tc.nombre', 'tc.orden')
+    .orderBy('tc.orden')
+
+  // Últimos comprobantes aprobados para acceso directo
+  const ultimosAprobados = await db('comprobantes as c')
+    .join('tipos_comprobante as tc', 'tc.id', 'c.tipo_id')
+    .select(
+      'c.id',
+      'c.codigo',
+      'c.fecha',
+      'c.concepto',
+      'c.total_debe as monto',
+      'tc.nombre as tipo_nombre',
+      'tc.codigo as tipo_codigo',
+    )
+    .where('c.estado', 'APROBADO')
+    .orderBy('c.fecha', 'desc')
+    .orderBy('c.id', 'desc')
+    .limit(5)
+
   return {
+    mes,
     borradores: Number(fila?.borradores ?? 0),
     aprobadosMes: Number(fila?.aprobados_mes ?? 0),
     anuladosMes: Number(fila?.anulados_mes ?? 0),
+    totalMovilizadoMes: Number(fila?.total_movilizado_mes ?? 0).toFixed(2),
+    porCategoria: categorias.map((cat) => ({
+      tipoId: cat.tipo_id,
+      codigo: cat.codigo,
+      nombre: cat.nombre,
+      cantidad: Number(cat.cantidad ?? 0),
+      monto: Number(cat.total_monto ?? 0).toFixed(2),
+    })),
+    ultimosAprobados: ultimosAprobados.map((u) => ({
+      id: u.id,
+      codigo: u.codigo,
+      fecha:
+        u.fecha instanceof Date
+          ? u.fecha.toISOString().slice(0, 10)
+          : String(u.fecha).slice(0, 10),
+      concepto: u.concepto,
+      monto: Number(u.monto ?? 0).toFixed(2),
+      tipoNombre: u.tipo_nombre,
+      tipoCodigo: u.tipo_codigo,
+    })),
   }
 }

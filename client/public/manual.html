@@ -570,6 +570,15 @@
                 </td>
               </tr>
               <tr>
+                <td><strong>Operación contable del mes</strong></td>
+                <td>
+                  Resumen mensual con el total movilizado en bolívares, cantidad de comprobantes
+                  aprobados, borradores pendientes de revisión y comprobantes anulados. Presenta la
+                  distribución porcentual por categoría (Ventas, Compras, Nómina, etc.) y los accesos
+                  directos a los últimos comprobantes aprobados.
+                </td>
+              </tr>
+              <tr>
                 <td><strong>Evolución de la tasa</strong></td>
                 <td>
                   Gráfica de la tasa elegida (<span class="boton">$ BCV</span>,
@@ -1383,6 +1392,36 @@
           <strong>modificó</strong>, lo <strong>aprobó</strong> o lo <strong>anuló</strong>, y su
           <strong>Historial</strong> completo tomado de la bitácora.
         </p>
+
+        <h3>Documentos soporte adjuntos</h3>
+        <p>
+          Tanto en la vista como en la edición de un comprobante (aprobado o borrador), puede adjuntar
+          archivos soporte que justifiquen el asiento contable (facturas de proveedores o clientes,
+          recibos de pago, comprobantes de retención de IVA/ISLR, comprobantes bancarios, etc.):
+        </p>
+        <ul>
+          <li>
+            <strong>Formatos admitidos</strong>: documentos <strong>PDF</strong> e imágenes
+            <strong>PNG</strong>, <strong>JPG / JPEG</strong> y <strong>WEBP</strong>.
+          </li>
+          <li>
+            <strong>Límite de tamaño</strong>: hasta <strong>10 MB</strong> por archivo.
+          </li>
+          <li>
+            <strong>Integridad y auditoría</strong>: cada documento almacena su huella criptográfica
+            (SHA-256) garantizando que el archivo no haya sido alterado en el tiempo, y tanto su
+            incorporación como eliminación quedan asentadas en la bitácora del sistema.
+          </li>
+          <li>
+            <strong>Visualización y descarga</strong>: pulse el nombre del archivo para abrir la
+            vista previa en una pestaña nueva o descargarlo con un solo clic.
+          </li>
+          <li>
+            <strong>Comprobantes anulados</strong>: los comprobantes en estado Anulado conservan
+            sus archivos adjuntos para consulta y auditoría histórica, pero no permiten adjuntar
+            nuevos documentos ni eliminar los existentes.
+          </li>
+        </ul>
 
         <h3>Importar un resumen (CSV)</h3>
         <p>

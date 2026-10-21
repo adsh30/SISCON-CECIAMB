@@ -1,3 +1,4 @@
+import crypto from 'node:crypto'
 import { db } from '../../config/db.js'
 import { AppError } from '../../middlewares/errorHandler.js'
 import { fechaHoyVE } from '../../utils/fechas.js'
@@ -6,6 +7,7 @@ import { ACCIONES, registrar } from '../bitacora/bitacora.service.js'
 import { fechaVE, nombrePeriodo } from '../periodos/periodos.fechas.js'
 import { exigirPeriodoAbierto } from '../periodos/periodos.service.js'
 import * as repo from './comprobantes.repository.js'
+import { ADJUNTO_MAX_BYTES } from './comprobantes.schema.js'
 
 const ENTIDAD = 'comprobantes'
 
@@ -462,5 +464,142 @@ export async function actualizarTipo(id, datos, actor, ctx) {
       ctx,
     })
     return despues
+  })
+}
+
+// --- Adjuntos de documentos soporte (RF-05.11) ---
+
+function detectarTipoMime(buffer) {
+  if (buffer.subarray(0, 4).equals(Buffer.from([0x25, 0x50, 0x44, 0x46]))) {
+    return 'application/pdf'
+  }
+  if (buffer.subarray(0, 8).equals(Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]))) {
+    return 'image/png'
+  }
+  if (buffer[0] === 0xff && buffer[1] === 0xd8 && buffer[2] === 0xff) {
+    return 'image/jpeg'
+  }
+  if (buffer.toString('ascii', 0, 4) === 'RIFF' && buffer.toString('ascii', 8, 12) === 'WEBP') {
+    return 'image/webp'
+  }
+  return null
+}
+
+const aAdjuntoPublico = (a) => ({
+  id: a.id,
+  comprobanteId: a.comprobante_id,
+  nombre: a.nombre_archivo,
+  tipo: a.tipo_mime,
+  tamano: a.tamano_bytes,
+  sha256: a.sha256,
+  creadoEn: a.creado_en,
+  creadoPor: nombre(a.creado_por_nombre, a.creado_por_apellido),
+})
+
+export async function listarAdjuntos(comprobanteId) {
+  const comprobante = await repo.porId(comprobanteId)
+  if (!comprobante) throw noExiste()
+  const filas = await repo.listarAdjuntos(comprobanteId)
+  return filas.map(aAdjuntoPublico)
+}
+
+export async function subirAdjunto(comprobanteId, { nombre: nombreArchivo, contenido }, actor, ctx) {
+  const comprobante = await repo.porId(comprobanteId)
+  if (!comprobante) throw noExiste()
+  if (comprobante.estado === 'ANULADO') {
+    throw invalido('COMPROBANTE_ANULADO', 'No se pueden adjuntar documentos a un comprobante anulado')
+  }
+
+  const buffer = Buffer.from(contenido, 'base64')
+  if (!buffer.length) throw invalido('ARCHIVO_VACIO', 'El archivo está vacío')
+  if (buffer.length > ADJUNTO_MAX_BYTES) {
+    throw invalido('ARCHIVO_GRANDE', 'El archivo no puede pesar más de 10 MB')
+  }
+
+  const mime = detectarTipoMime(buffer)
+  if (!mime) {
+    throw invalido('FORMATO_NO_PERMITIDO', 'Formato no admitido. Use documentos PDF o imágenes JPG, PNG o WEBP')
+  }
+
+  const hash = crypto.createHash('sha256').update(buffer).digest('hex')
+
+  return db.transaction(async (trx) => {
+    const id = await repo.guardarAdjunto(
+      {
+        comprobante_id: comprobanteId,
+        nombre_archivo: nombreArchivo.slice(0, 255),
+        tipo_mime: mime,
+        tamano_bytes: buffer.length,
+        datos: buffer,
+        sha256: hash,
+        creado_por: actor.id,
+        creado_en: trx.fn.now(),
+      },
+      trx,
+    )
+
+    const nuevo = await repo.adjuntoPorId(comprobanteId, id, trx)
+
+    await registrar(trx, {
+      usuarioId: actor.id,
+      accion: ACCIONES.CREAR,
+      entidad: 'comprobante_adjuntos',
+      entidadId: id,
+      despues: {
+        comprobanteId,
+        nombre: nombreArchivo,
+        tipo: mime,
+        tamano: buffer.length,
+        sha256: hash,
+      },
+      ctx,
+    })
+
+    const lista = await repo.listarAdjuntos(comprobanteId, trx)
+    const creado = lista.find((item) => item.id === id)
+    return aAdjuntoPublico(creado || nuevo)
+  })
+}
+
+export async function descargarAdjunto(comprobanteId, adjuntoId) {
+  const comprobante = await repo.porId(comprobanteId)
+  if (!comprobante) throw noExiste()
+  const adjunto = await repo.adjuntoPorId(comprobanteId, adjuntoId)
+  if (!adjunto) throw new AppError(404, 'NO_ENCONTRADO', 'El archivo adjunto no existe')
+  return {
+    buffer: adjunto.datos,
+    tipo: adjunto.tipo_mime,
+    nombre: adjunto.nombre_archivo,
+  }
+}
+
+export async function eliminarAdjunto(comprobanteId, adjuntoId, actor, ctx) {
+  return db.transaction(async (trx) => {
+    const comprobante = await repo.porId(comprobanteId, trx)
+    if (!comprobante) throw noExiste()
+    if (comprobante.estado === 'ANULADO') {
+      throw invalido('COMPROBANTE_ANULADO', 'No se pueden eliminar adjuntos de un comprobante anulado')
+    }
+
+    const adjunto = await repo.adjuntoPorId(comprobanteId, adjuntoId, trx)
+    if (!adjunto) throw new AppError(404, 'NO_ENCONTRADO', 'El archivo adjunto no existe')
+
+    await repo.eliminarAdjunto(comprobanteId, adjuntoId, trx)
+
+    await registrar(trx, {
+      usuarioId: actor.id,
+      accion: ACCIONES.ELIMINAR,
+      entidad: 'comprobante_adjuntos',
+      entidadId: adjuntoId,
+      antes: {
+        comprobanteId,
+        nombre: adjunto.nombre_archivo,
+        tipo: adjunto.tipo_mime,
+        tamano: adjunto.tamano_bytes,
+      },
+      ctx,
+    })
+
+    return true
   })
 }

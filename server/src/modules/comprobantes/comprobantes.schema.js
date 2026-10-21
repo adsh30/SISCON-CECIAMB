@@ -123,3 +123,17 @@ export const actualizarTipoSchema = z.object({
   orden: z.coerce.number().int().min(0).max(9999).optional(),
   activo: z.boolean().optional(),
 })
+
+export const ADJUNTO_MAX_BYTES = 10 * 1024 * 1024 // 10 MB
+
+export const adjuntoSchema = z.object({
+  nombre: z
+    .string({ required_error: 'Indique el nombre del archivo' })
+    .trim()
+    .min(1, 'El nombre es requerido')
+    .max(255, 'El nombre no puede pasar de 255 caracteres'),
+  contenido: z
+    .string({ required_error: 'Seleccione un documento' })
+    .min(1, 'El archivo no puede estar vacío')
+    .transform((v) => v.replace(/^data:[^;]+;base64,/, '')),
+})

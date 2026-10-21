@@ -10,8 +10,8 @@ Cada entregable incluye **backend + frontend**. Cada cambio va en ramas `feature
 | 2    | v0.2.0  | Empresa, ejercicios y períodos                                                  | ✅     |
 | 3    | v0.3.0  | Plan de cuentas                                                                 | ✅     |
 | 4    | v0.4.0  | Comprobantes (núcleo) — **MVP interno**                                         | ✅     |
-| 5    | v0.5.0  | Libro Diario y Libro Mayor (PDF/Excel) — **MVP usable**                         | ⬜     |
-| 6    | v0.6.0  | Cierre de período, dashboard, importación de resúmenes                          | ⬜     |
+| 5    | v0.5.0  | Libro Diario y Libro Mayor (PDF/Excel) — **MVP usable**                         | ✅     |
+| 6    | v0.6.0  | Cierre de período, dashboard, importación de resúmenes                          | ✅     |
 | 7    | v1.0.0  | Endurecimiento, carga de los datos contables del Hospital CECIAMB, capacitación | ⬜     |
 | 8    | v1.x    | Extras: Balance de Comprobación, Estados Financieros, multimoneda, conciliación | ⬜     |
 
@@ -66,9 +66,9 @@ Cada entregable incluye **backend + frontend**. Cada cambio va en ramas `feature
 
 - [x] Cierre/reapertura de período con validaciones (adelantado en Fase 2); no se cierra un período con borradores (Fase 4).
 - [x] Tablero de inicio base (estilo MGG): KPIs de tasas con variación, evolución BCV con historial oficial desde 2023, actividad de bitácora, usuarios por rol.
-- [ ] Dashboard contable (comprobantes por categoría). El aviso de borradores pendientes en Inicio ya está (Fase 4).
+- [x] Dashboard contable (comprobantes por categoría, métricas de operación y accesos directos). El aviso de borradores pendientes en Inicio ya está (Fase 4).
 - [x] Importación CSV/Excel de resúmenes (ventas, compras, honorarios, nómina) → comprobante en borrador.
-- [ ] Adjuntos de documentos soporte.
+- [x] Adjuntos de documentos soporte (PDF/PNG/JPG/WEBP, hash sha256 y bitácora de auditoría).
 
 ## Operación continua
 
