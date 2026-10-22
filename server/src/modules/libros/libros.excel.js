@@ -37,7 +37,11 @@ function emitido() {
 
 function filasEncabezado(titulo, cab, filtros, columnas) {
   const lineaFiltros = [
-    `Desde ${fechaVE(filtros.desde)} hasta ${fechaVE(filtros.hasta)}`,
+    filtros.desde && filtros.hasta
+      ? `Desde ${fechaVE(filtros.desde)} hasta ${fechaVE(filtros.hasta)}`
+      : filtros.hasta
+        ? `Al corte del ${fechaVE(filtros.hasta)}`
+        : null,
     filtros.cuentaDesde || filtros.cuentaHasta
       ? `Cuentas ${filtros.cuentaDesde ?? 'desde el inicio'} a ${filtros.cuentaHasta ?? 'el final'}`
       : null,
@@ -244,3 +248,210 @@ export function balanceExcel({ data, meta }, filtros, cab) {
     stickyRowsCount: FILAS_FIJAS,
   }).toBuffer()
 }
+
+export function balanceGeneralExcel({ data, meta: _meta }, filtros, cab) {
+  const titulos = ['Código', 'Cuenta / Rubro', 'Subtotal (Bs)', 'Total (Bs)']
+  const filas = [
+    ...filasEncabezado('Balance General', cab, filtros, titulos.length),
+    cabecera(titulos, 2),
+  ]
+
+  const agregarSeccion = (seccion) => {
+    filas.push([
+      negrita(seccion.codigo, { backgroundColor: AZUL }),
+      negrita(seccion.nombre, { backgroundColor: AZUL }),
+      null,
+      null,
+    ])
+
+    for (const c of seccion.cuentas) {
+      if (c.codigo === seccion.codigo) continue
+      const esGrupo = !c.esMovimiento
+      const sangria = esGrupo ? '  '.repeat(Math.max(0, c.nivel - 1)) : '    '
+      const estilo = esGrupo ? { fontWeight: 'bold' } : {}
+
+      filas.push([
+        { value: c.codigo, ...estilo },
+        { value: `${sangria}${c.nombre}`, ...estilo },
+        c.esMovimiento ? montoOVacio(c.saldo) : null,
+        !c.esMovimiento && c.nivel === 2 ? monto(c.saldo, { fontWeight: 'bold' }) : null,
+      ])
+    }
+
+    filas.push([
+      ...unir(negrita(`TOTAL ${seccion.nombre}`, { align: 'right' }), 3),
+      monto(seccion.total, { fontWeight: 'bold', backgroundColor: GRIS }),
+    ])
+    filas.push([])
+  }
+
+  agregarSeccion(data.activo)
+  agregarSeccion(data.pasivo)
+
+  // PATRIMONIO
+  filas.push([
+    negrita(data.patrimonio.codigo, { backgroundColor: AZUL }),
+    negrita(data.patrimonio.nombre, { backgroundColor: AZUL }),
+    null,
+    null,
+  ])
+  for (const c of data.patrimonio.cuentas) {
+    if (c.codigo === data.patrimonio.codigo) continue
+    const esGrupo = !c.esMovimiento
+    const sangria = esGrupo ? '  '.repeat(Math.max(0, c.nivel - 1)) : '    '
+    const estilo = esGrupo ? { fontWeight: 'bold' } : {}
+    filas.push([
+      { value: c.codigo, ...estilo },
+      { value: `${sangria}${c.nombre}`, ...estilo },
+      c.esMovimiento ? montoOVacio(c.saldo) : null,
+      !c.esMovimiento && c.nivel === 2 ? monto(c.saldo, { fontWeight: 'bold' }) : null,
+    ])
+  }
+  // Renglón de Resultado del Ejercicio
+  filas.push([
+    { value: '3.2.02', fontWeight: 'bold' },
+    {
+      value: `  ${data.patrimonio.esUtilidad ? 'Utilidad' : 'Pérdida'} Neta del Ejercicio`,
+      fontWeight: 'bold',
+    },
+    monto(data.patrimonio.resultadoEjercicio, { fontWeight: 'bold' }),
+    null,
+  ])
+  filas.push([
+    ...unir(negrita('TOTAL PATRIMONIO', { align: 'right' }), 3),
+    monto(data.patrimonio.total, { fontWeight: 'bold', backgroundColor: GRIS }),
+  ])
+  filas.push([])
+
+  // TOTAL PASIVO Y PATRIMONIO
+  filas.push([
+    ...unir(negrita('TOTAL PASIVO Y PATRIMONIO', { align: 'right' }), 3),
+    monto(data.totales.totalPasivoPatrimonio, { fontWeight: 'bold', backgroundColor: AZUL }),
+  ])
+
+  // Verificación de cuadre
+  filas.push([
+    ...unir(
+      {
+        value: data.totales.cuadrado
+          ? '✓ BALANCE CUADRADO: TOTAL ACTIVO = TOTAL PASIVO Y PATRIMONIO'
+          : `⚠ DIFERENCIA DE CUADRE: ${data.totales.diferencia} BS`,
+        fontWeight: 'bold',
+        align: 'center',
+      },
+      4,
+    ),
+  ])
+
+  return writeExcelFile(filas, {
+    sheet: 'Balance General',
+    columns: [16, 44, 20, 20].map((width) => ({ width })),
+    stickyRowsCount: FILAS_FIJAS,
+  }).toBuffer()
+}
+
+export function estadoResultadosExcel({ data, meta: _meta }, filtros, cab) {
+  const titulos = ['Código', 'Concepto / Cuenta', 'Subtotal (Bs)', 'Total (Bs)']
+  const filas = [
+    ...filasEncabezado('Estado de Resultados', cab, filtros, titulos.length),
+    cabecera(titulos, 2),
+  ]
+
+  // INGRESOS (4)
+  filas.push([
+    negrita(data.ingresos.codigo, { backgroundColor: AZUL }),
+    negrita(data.ingresos.nombre, { backgroundColor: AZUL }),
+    null,
+    null,
+  ])
+  for (const c of data.ingresos.cuentas) {
+    if (c.codigo === data.ingresos.codigo) continue
+    const esGrupo = !c.esMovimiento
+    const sangria = esGrupo ? '  '.repeat(Math.max(0, c.nivel - 1)) : '    '
+    const estilo = esGrupo ? { fontWeight: 'bold' } : {}
+    filas.push([
+      { value: c.codigo, ...estilo },
+      { value: `${sangria}${c.nombre}`, ...estilo },
+      c.esMovimiento ? montoOVacio(c.saldo) : null,
+      !c.esMovimiento && c.nivel === 2 ? monto(c.saldo, { fontWeight: 'bold' }) : null,
+    ])
+  }
+  filas.push([
+    ...unir(negrita('TOTAL INGRESOS', { align: 'right' }), 3),
+    monto(data.ingresos.total, { fontWeight: 'bold', backgroundColor: GRIS }),
+  ])
+  filas.push([])
+
+  // COSTOS (5)
+  filas.push([
+    negrita(data.costos.codigo, { backgroundColor: AZUL }),
+    negrita(data.costos.nombre, { backgroundColor: AZUL }),
+    null,
+    null,
+  ])
+  for (const c of data.costos.cuentas) {
+    if (c.codigo === data.costos.codigo) continue
+    const esGrupo = !c.esMovimiento
+    const sangria = esGrupo ? '  '.repeat(Math.max(0, c.nivel - 1)) : '    '
+    const estilo = esGrupo ? { fontWeight: 'bold' } : {}
+    filas.push([
+      { value: c.codigo, ...estilo },
+      { value: `${sangria}${c.nombre}`, ...estilo },
+      c.esMovimiento ? montoOVacio(c.saldo) : null,
+      !c.esMovimiento && c.nivel === 2 ? monto(c.saldo, { fontWeight: 'bold' }) : null,
+    ])
+  }
+  filas.push([
+    ...unir(negrita('TOTAL COSTOS', { align: 'right' }), 3),
+    monto(data.costos.total, { fontWeight: 'bold', backgroundColor: GRIS }),
+  ])
+  filas.push([])
+
+  // UTILIDAD BRUTA
+  filas.push([
+    ...unir(negrita('UTILIDAD BRUTA (MARGEN BRUTO)', { align: 'right' }), 3),
+    monto(data.utilidadBruta, { fontWeight: 'bold', backgroundColor: AZUL }),
+  ])
+  filas.push([])
+
+  // GASTOS (6)
+  filas.push([
+    negrita(data.gastos.codigo, { backgroundColor: AZUL }),
+    negrita(data.gastos.nombre, { backgroundColor: AZUL }),
+    null,
+    null,
+  ])
+  for (const c of data.gastos.cuentas) {
+    if (c.codigo === data.gastos.codigo) continue
+    const esGrupo = !c.esMovimiento
+    const sangria = esGrupo ? '  '.repeat(Math.max(0, c.nivel - 1)) : '    '
+    const estilo = esGrupo ? { fontWeight: 'bold' } : {}
+    filas.push([
+      { value: c.codigo, ...estilo },
+      { value: `${sangria}${c.nombre}`, ...estilo },
+      c.esMovimiento ? montoOVacio(c.saldo) : null,
+      !c.esMovimiento && c.nivel === 2 ? monto(c.saldo, { fontWeight: 'bold' }) : null,
+    ])
+  }
+  filas.push([
+    ...unir(negrita('TOTAL GASTOS OPERATIVOS', { align: 'right' }), 3),
+    monto(data.gastos.total, { fontWeight: 'bold', backgroundColor: GRIS }),
+  ])
+  filas.push([])
+
+  // UTILIDAD O PÉRDIDA NETA
+  const etiquetaResultado = data.totales.esUtilidad
+    ? 'UTILIDAD NETA DEL PERÍODO'
+    : 'PÉRDIDA NETA DEL PERÍODO'
+  filas.push([
+    ...unir(negrita(etiquetaResultado, { align: 'right' }), 3),
+    monto(data.utilidadNeta, { fontWeight: 'bold', backgroundColor: AZUL }),
+  ])
+
+  return writeExcelFile(filas, {
+    sheet: 'Estado de Resultados',
+    columns: [16, 44, 20, 20].map((width) => ({ width })),
+    stickyRowsCount: FILAS_FIJAS,
+  }).toBuffer()
+}
+

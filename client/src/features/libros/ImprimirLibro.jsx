@@ -15,7 +15,13 @@ import {
 } from '../../lib/formato.js'
 import { mesEnCurso } from './filtros.js'
 
-const LIBROS = { diario: 'Libro Diario', mayor: 'Libro Mayor', balance: 'Balance de Comprobación' }
+const LIBROS = {
+  diario: 'Libro Diario',
+  mayor: 'Libro Mayor',
+  balance: 'Balance de Comprobación',
+  'balance-general': 'Balance General',
+  'estado-resultados': 'Estado de Resultados',
+}
 const CLAVES = [
   'desde',
   'hasta',
@@ -229,6 +235,142 @@ function Balance({ data, meta }) {
   )
 }
 
+function BalanceGeneral({ data }) {
+  const renderCuentas = (seccion) => (
+    <>
+      <tr className="bg-[#f3f4f6] font-bold border-y border-[#111827]">
+        <td className="py-1 px-2 font-mono">{seccion.codigo}</td>
+        <td className="py-1 px-2" colSpan={2}>{seccion.nombre}</td>
+        <td className="py-1 px-2 text-right">{formatoMonto(seccion.total)}</td>
+      </tr>
+      {seccion.cuentas.filter((c) => c.codigo !== seccion.codigo).map((c) => {
+        const esGrupo = !c.esMovimiento
+        const sangria = esGrupo ? (c.nivel - 1) * 12 : c.nivel * 12
+        return (
+          <tr key={c.id} className={`border-b border-[#e5e7eb] ${esGrupo ? 'font-semibold text-[#1f2937]' : ''}`}>
+            <td className="py-0.5 px-2 font-mono whitespace-nowrap">{c.codigo}</td>
+            <td className="py-0.5 px-2" colSpan={2}>
+              <span style={{ paddingLeft: `${sangria}px` }}>{c.nombre}</span>
+            </td>
+            <td className="cifras py-0.5 px-2 text-right">{formatoMonto(c.saldo)}</td>
+          </tr>
+        )
+      })}
+    </>
+  )
+
+  return (
+    <div className="mt-4 space-y-6">
+      <table className="w-full border-collapse">
+        <thead>
+          <tr className="border-b-2 border-[#111827] text-left">
+            <th className="py-1 px-2 w-28">Código</th>
+            <th className="py-1 px-2" colSpan={2}>Cuenta / Rubro</th>
+            <th className="py-1 px-2 text-right w-36">Saldo Bs</th>
+          </tr>
+        </thead>
+        <tbody>
+          {renderCuentas(data.activo)}
+          <tr className="border-t-2 border-b-2 border-[#111827] font-bold bg-[#f9fafb]">
+            <td colSpan={3} className="py-1.5 px-2 text-right">TOTAL ACTIVO:</td>
+            <td className="cifras py-1.5 px-2 text-right">{formatoMonto(data.activo.total)}</td>
+          </tr>
+
+          {renderCuentas(data.pasivo)}
+          <tr className="border-t-2 border-b-2 border-[#111827] font-bold bg-[#f9fafb]">
+            <td colSpan={3} className="py-1.5 px-2 text-right">TOTAL PASIVO:</td>
+            <td className="cifras py-1.5 px-2 text-right">{formatoMonto(data.pasivo.total)}</td>
+          </tr>
+
+          {renderCuentas(data.patrimonio)}
+          <tr className="border-b border-[#e5e7eb] font-semibold">
+            <td className="py-0.5 px-2 font-mono">3.2.02</td>
+            <td className="py-0.5 px-2" colSpan={2}>
+              <span className="pl-6">{data.patrimonio.esUtilidad ? 'Utilidad' : 'Pérdida'} Neta del Ejercicio</span>
+            </td>
+            <td className="cifras py-0.5 px-2 text-right">{formatoMonto(data.patrimonio.resultadoEjercicio)}</td>
+          </tr>
+          <tr className="border-t-2 border-b-2 border-[#111827] font-bold bg-[#f9fafb]">
+            <td colSpan={3} className="py-1.5 px-2 text-right">TOTAL PATRIMONIO:</td>
+            <td className="cifras py-1.5 px-2 text-right">{formatoMonto(data.patrimonio.total)}</td>
+          </tr>
+
+          <tr className="border-t-2 border-b-2 border-[#111827] font-bold bg-[#e0e7ff] text-[11px]">
+            <td colSpan={3} className="py-2 px-2 text-right">TOTAL PASIVO Y PATRIMONIO:</td>
+            <td className="cifras py-2 px-2 text-right">{formatoMonto(data.totales.totalPasivoPatrimonio)}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div className={`p-2 border rounded text-center font-bold ${data.totales.cuadrado ? 'border-emerald-500 bg-emerald-50 text-emerald-800' : 'border-rose-500 bg-rose-50 text-rose-800'}`}>
+        {data.totales.cuadrado ? '✓ ECUACIÓN PATRIMONIAL CUADRADA: TOTAL ACTIVO = TOTAL PASIVO Y PATRIMONIO' : `⚠ DESCUADRE: DIFERENCIA DE ${formatoMonto(data.totales.diferencia)} BS`}
+      </div>
+    </div>
+  )
+}
+
+function EstadoResultados({ data }) {
+  const renderGrupo = (seccion, labelTotal) => (
+    <>
+      <tr className="bg-[#f3f4f6] font-bold border-y border-[#111827]">
+        <td className="py-1 px-2 font-mono">{seccion.codigo}</td>
+        <td className="py-1 px-2">{seccion.nombre}</td>
+        <td className="py-1 px-2 text-right">{formatoMonto(seccion.total)}</td>
+      </tr>
+      {seccion.cuentas.filter((c) => c.codigo !== seccion.codigo).map((c) => {
+        const esGrupo = !c.esMovimiento
+        const sangria = esGrupo ? (c.nivel - 1) * 12 : c.nivel * 12
+        return (
+          <tr key={c.id} className={`border-b border-[#e5e7eb] ${esGrupo ? 'font-semibold' : ''}`}>
+            <td className="py-0.5 px-2 font-mono whitespace-nowrap">{c.codigo}</td>
+            <td className="py-0.5 px-2">
+              <span style={{ paddingLeft: `${sangria}px` }}>{c.nombre}</span>
+            </td>
+            <td className="cifras py-0.5 px-2 text-right">{formatoMonto(c.saldo)}</td>
+          </tr>
+        )
+      })}
+      <tr className="border-t-2 border-b-2 border-[#111827] font-bold bg-[#f9fafb]">
+        <td colSpan={2} className="py-1.5 px-2 text-right">{labelTotal}:</td>
+        <td className="cifras py-1.5 px-2 text-right">{formatoMonto(seccion.total)}</td>
+      </tr>
+    </>
+  )
+
+  return (
+    <div className="mt-4 space-y-6">
+      <table className="w-full border-collapse">
+        <thead>
+          <tr className="border-b-2 border-[#111827] text-left">
+            <th className="py-1 px-2 w-28">Código</th>
+            <th className="py-1 px-2">Concepto / Cuenta</th>
+            <th className="py-1 px-2 text-right w-36">Monto Bs</th>
+          </tr>
+        </thead>
+        <tbody>
+          {renderGrupo(data.ingresos, 'TOTAL INGRESOS')}
+          {renderGrupo(data.costos, 'TOTAL COSTOS')}
+
+          <tr className="border-t-2 border-b-2 border-[#111827] font-bold bg-[#e0e7ff]">
+            <td colSpan={2} className="py-2 px-2 text-right">UTILIDAD BRUTA (MARGEN BRUTO):</td>
+            <td className="cifras py-2 px-2 text-right">{formatoMonto(data.utilidadBruta)}</td>
+          </tr>
+
+          {renderGrupo(data.gastos, 'TOTAL GASTOS OPERATIVOS')}
+
+          <tr className={`border-t-2 border-b-2 border-[#111827] font-bold text-[12px] ${data.totales.esUtilidad ? 'bg-emerald-100 text-emerald-900' : 'bg-rose-100 text-rose-900'}`}>
+            <td colSpan={2} className="py-2 px-2 text-right">
+              {data.totales.esUtilidad ? 'UTILIDAD NETA DEL PERÍODO:' : 'PÉRDIDA NETA DEL PERÍODO:'}
+            </td>
+            <td className="cifras py-2 px-2 text-right">{formatoMonto(data.utilidadNeta)}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  )
+}
+
+
 /** Libro completo en formato carta, listo para imprimir o guardar como PDF (RF-06.4) */
 export default function ImprimirLibro() {
   const { libro } = useParams()
@@ -317,14 +459,18 @@ export default function ImprimirLibro() {
           </div>
         </header>
 
-        {data.meta.total === 0 ? (
+        {((data.meta.total ?? data.meta.totalCuentas ?? 1) === 0) ? (
           <p className="mt-8 text-center">No hay movimientos aprobados en este rango.</p>
         ) : libro === 'diario' ? (
           <Diario data={data.data} meta={data.meta} />
         ) : libro === 'mayor' ? (
           <Mayor data={data.data} meta={data.meta} />
-        ) : (
+        ) : libro === 'balance' ? (
           <Balance data={data.data} meta={data.meta} />
+        ) : libro === 'balance-general' ? (
+          <BalanceGeneral data={data.data} meta={data.meta} />
+        ) : (
+          <EstadoResultados data={data.data} meta={data.meta} />
         )}
 
         <footer className="mt-8 border-t border-[#e5e7eb] pt-2 text-[9px] text-[#6b7280]">

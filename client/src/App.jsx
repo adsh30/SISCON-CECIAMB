@@ -9,6 +9,8 @@ import EmpresaPage from './features/empresa/EmpresaPage.jsx'
 import ImportarPage from './features/importaciones/ImportarPage.jsx'
 import ImprimirLibro from './features/libros/ImprimirLibro.jsx'
 import BalanceComprobacionPage from './features/libros/BalanceComprobacionPage.jsx'
+import BalanceGeneralPage from './features/libros/BalanceGeneralPage.jsx'
+import EstadoResultadosPage from './features/libros/EstadoResultadosPage.jsx'
 import LibroDiarioPage from './features/libros/LibroDiarioPage.jsx'
 import LibroMayorPage from './features/libros/LibroMayorPage.jsx'
 import PeriodosPage from './features/periodos/PeriodosPage.jsx'
@@ -95,6 +97,22 @@ export default function App() {
                 element={
                   <RequireModulo modulo="libros">
                     <BalanceComprobacionPage />
+                  </RequireModulo>
+                }
+              />
+              <Route
+                path="libros/balance-general"
+                element={
+                  <RequireModulo modulo="libros">
+                    <BalanceGeneralPage />
+                  </RequireModulo>
+                }
+              />
+              <Route
+                path="libros/estado-resultados"
+                element={
+                  <RequireModulo modulo="libros">
+                    <EstadoResultadosPage />
                   </RequireModulo>
                 }
               />

@@ -15,6 +15,8 @@ export function useLibro(libro, filtros) {
 }
 
 export const useBalance = (filtros) => useLibro('balance', filtros)
+export const useBalanceGeneral = (filtros) => useLibro('balance-general', filtros)
+export const useEstadoResultados = (filtros) => useLibro('estado-resultados', filtros)
 
 /** Sin la paginación de pantalla: las exportaciones llevan el libro completo */
 export const filtrosExportacion = ({ pagina: _p, porPagina: _pp, ...resto }) => resto
