@@ -349,7 +349,7 @@
           <li><a href="#periodos">Ejercicios y períodos</a></li>
           <li><a href="#cuentas">Plan de cuentas y centros de costo</a></li>
           <li><a href="#comprobantes">Comprobantes contables</a></li>
-          <li><a href="#libros">Libros contables: Diario, Mayor y Balance de Comprobación</a></li>
+          <li><a href="#libros">Libros contables y Estados Financieros</a></li>
           <li><a href="#bitacora">Bitácora de auditoría: consultar y exportar</a></li>
           <li><a href="#problemas">Problemas frecuentes</a></li>
           <li><a href="#proximamente">Próximos módulos</a></li>
@@ -493,7 +493,7 @@
         <ul>
           <li>
             Está dividido en <strong>Contabilidad</strong> (Inicio, Comprobantes, Libro Diario,
-            Libro Mayor, Balance de Comprobación, Plan de cuentas, Períodos) y <strong>Sistema</strong> (Empresa, Usuarios y
+            Libro Mayor, Balance de Comprobación, Balance General, Estado de Resultados, Plan de cuentas, Períodos) y <strong>Sistema</strong> (Empresa, Usuarios y
             roles, Bitácora, Ajustes, Manual del sistema).
           </li>
           <li>La opción en la que está aparece resaltada en azul con una barra a la izquierda.</li>
@@ -1480,13 +1480,14 @@
       </section>
 
       <section id="libros">
-        <h2>13. Libros contables: Diario, Mayor y Balance de Comprobación</h2>
+        <h2>13. Libros contables y Estados Financieros</h2>
         <p>
-          Los libros se arman solos con los comprobantes <strong>aprobados</strong>: no hay que
+          Los libros y estados financieros se arman solos con los comprobantes <strong>aprobados</strong>: no hay que
           pasar nada a mano. Los borradores todavía no son contabilidad y los anulados no cuentan,
           así que no aparecen. Todos los roles pueden consultarlos y exportarlos (el Auditor
           incluido); se abren desde el menú en <strong>Libro Diario</strong>,
-          <strong>Libro Mayor</strong> y <strong>Balance de Comprobación</strong>.
+          <strong>Libro Mayor</strong>, <strong>Balance de Comprobación</strong>,
+          <strong>Balance General</strong> y <strong>Estado de Resultados</strong>.
         </p>
 
         <h3>Elegir qué ver</h3>
@@ -1602,6 +1603,63 @@
           <strong>Saldos Actuales</strong> están exactamente cuadrados con diferencia cero (indicador verde
           <strong>✓ Cuadrado</strong>).
         </p>
+
+        <h3>Balance General (Estado de Situación Financiera)</h3>
+        <p>
+          Presenta la fotografía patrimonial del Hospital CECIAMB clasificada bajo normativa VEN-NIF
+          a la fecha de corte seleccionada (acumulando todos los movimientos aprobados hasta esa fecha):
+        </p>
+        <ul>
+          <li>
+            <strong>1. ACTIVO</strong>: recursos controlados por la institución divididos en
+            <em>Activo Corriente</em> (efectivo, bancos, cuentas por cobrar, inventarios de farmacia) y
+            <em>Activo No Corriente</em> (propiedad, planta y equipos médicos e instalaciones, menos depreciaciones acumuladas).
+          </li>
+          <li>
+            <strong>2. PASIVO</strong>: deudas y obligaciones divididas en
+            <em>Pasivo Corriente</em> (cuentas por pagar a proveedores, retenciones fiscales, nómina por pagar) y
+            <em>Pasivo No Corriente</em> (obligaciones a largo plazo).
+          </li>
+          <li>
+            <strong>3. PATRIMONIO</strong>: capital social suscrito y pagado, reservas y resultados acumulados.
+            Incorpora automáticamente el renglón <strong>Resultado del Ejercicio Actual</strong>
+            (superávit o déficit calculado de la diferencia entre ingresos, costos y gastos) para cerrar
+            de manera exacta la ecuación patrimonial.
+          </li>
+          <li>
+            <strong>Control de Cuadre Patrimonial</strong>: una tarjeta de control verifica que
+            <code>Total Activo = Total Pasivo + Total Patrimonio</code>, mostrando una insignia verde
+            <strong>✓ Cuadrado</strong> cuando la diferencia es exactamente cero.
+          </li>
+        </ul>
+
+        <h3>Estado de Resultados (Ganancias y Pérdidas)</h3>
+        <p>
+          Mide el desempeño y rendimiento económico del hospital dentro de un rango de fechas o período mensual:
+        </p>
+        <ul>
+          <li>
+            <strong>4. INGRESOS</strong>: ingresos por servicios asistenciales de hospitalización,
+            quirófano, emergencia, triaje, laboratorio clínico y ventas de farmacia.
+          </li>
+          <li>
+            <strong>5. COSTOS</strong>: costos directos de prestación de servicios de salud
+            (medicamentos dispensados, material médico-quirúrgico, honorarios médicos especialistas y personal de enfermería).
+          </li>
+          <li>
+            <strong>Utilidad Bruta (Margen Bruto)</strong>: ingresos menos costos directos, reflejando el
+            margen generado para cubrir los gastos de la institución.
+          </li>
+          <li>
+            <strong>6. GASTOS OPERATIVOS</strong>: sueldos administrativos, mantenimiento preventivo de equipos médicos,
+            servicios básicos y suministros de oficina.
+          </li>
+          <li>
+            <strong>Utilidad o Pérdida Neta del Período</strong>: resultado neto final. Si es positivo se resalta
+            en verde como <em>Superávit</em>, y si es negativo en rojo como <em>Déficit</em>. Este valor cuadra
+            con exactitud matemática con el resultado incorporado en el Balance General.
+          </li>
+        </ul>
 
         <h3>Exportar e imprimir</h3>
         <p>

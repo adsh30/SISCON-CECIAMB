@@ -322,3 +322,298 @@ export async function balance(filtros) {
     },
   }
 }
+
+/**
+ * Balance General (Estado de Situación Financiera):
+ * Muestra Activos, Pasivos y Patrimonio a la fecha de corte.
+ * Incorpora el Resultado del Ejercicio (Ingresos - Costos - Gastos) para el cuadre de la ecuación patrimonial.
+ */
+export async function balanceGeneral(filtros) {
+  const { hasta, desde, nivel, incluirCeros } = filtros
+  const cuentas = await repo.resumenBalanceGeneral(filtros)
+
+  const cuentasMap = new Map()
+  const cuentasMovimiento = []
+
+  for (const c of cuentas) {
+    const obj = {
+      id: c.id,
+      codigo: c.codigo,
+      nombre: c.nombre,
+      tipo: c.tipo,
+      naturaleza: c.naturaleza,
+      nivel: c.nivel,
+      padreId: c.padre_id,
+      esMovimiento: Boolean(c.es_movimiento),
+      debe: aEscalado(c.debe),
+      haber: aEscalado(c.haber),
+      movimientos: Number(c.movimientos),
+      saldo: 0n,
+    }
+    cuentasMap.set(c.codigo, obj)
+    if (obj.esMovimiento) {
+      cuentasMovimiento.push(obj)
+    }
+  }
+
+  // 1. Calculamos saldos de cuentas de movimiento:
+  // - ACTIVO: saldo = debe - haber
+  // - PASIVO: saldo = haber - debe
+  // - PATRIMONIO: saldo = haber - debe
+  for (const m of cuentasMovimiento) {
+    if (m.tipo === 'ACTIVO') {
+      m.saldo = m.debe - m.haber
+    } else if (m.tipo === 'PASIVO' || m.tipo === 'PATRIMONIO') {
+      m.saldo = m.haber - m.debe
+    }
+  }
+
+  // 2. Resultado del Ejercicio / Período:
+  let totIngresos = 0n
+  let totCostos = 0n
+  let totGastos = 0n
+  for (const m of cuentasMovimiento) {
+    if (m.tipo === 'INGRESO') totIngresos += m.haber - m.debe
+    else if (m.tipo === 'COSTO') totCostos += m.debe - m.haber
+    else if (m.tipo === 'GASTO') totGastos += m.debe - m.haber
+  }
+  const resultadoEjercicio = totIngresos - totCostos - totGastos
+
+  // 3. Cuentas de grupo (suma de descendientes con el mismo tipo)
+  for (const c of cuentas) {
+    if (!c.es_movimiento && ['ACTIVO', 'PASIVO', 'PATRIMONIO'].includes(c.tipo)) {
+      let saldoGrupo = 0n
+      const prefijo = `${c.codigo}.`
+      for (const m of cuentasMovimiento) {
+        if (m.tipo === c.tipo && m.codigo.startsWith(prefijo)) {
+          saldoGrupo += m.saldo
+        }
+      }
+      const obj = cuentasMap.get(c.codigo)
+      if (obj) obj.saldo = saldoGrupo
+    }
+  }
+
+  // Totales
+  let totActivo = 0n
+  let totPasivo = 0n
+  let totPatrimonioCuentas = 0n
+
+  for (const m of cuentasMovimiento) {
+    if (m.tipo === 'ACTIVO') totActivo += m.saldo
+    else if (m.tipo === 'PASIVO') totPasivo += m.saldo
+    else if (m.tipo === 'PATRIMONIO') totPatrimonioCuentas += m.saldo
+  }
+
+  const totPatrimonio = totPatrimonioCuentas + resultadoEjercicio
+  const totPasivoPatrimonio = totPasivo + totPatrimonio
+  const cuadrado = totActivo === totPasivoPatrimonio
+  const absBigInt = (n) => (n < 0n ? -n : n)
+  const diferencia = absBigInt(totActivo - totPasivoPatrimonio)
+
+  const armarSeccion = (tipoSeccion) => {
+    const lista = []
+    for (const c of cuentas) {
+      if (c.tipo !== tipoSeccion) continue
+      const obj = cuentasMap.get(c.codigo)
+      if (!obj) continue
+      if (nivel && obj.nivel > nivel) continue
+      if (!incluirCeros && obj.saldo === 0n && obj.nivel > 1) continue
+
+      lista.push({
+        id: obj.id,
+        codigo: obj.codigo,
+        nombre: obj.nombre,
+        tipo: obj.tipo,
+        naturaleza: obj.naturaleza,
+        nivel: obj.nivel,
+        esMovimiento: obj.esMovimiento,
+        saldo: deEscalado(obj.saldo),
+      })
+    }
+    return lista
+  }
+
+  const cuentasActivo = armarSeccion('ACTIVO')
+  const cuentasPasivo = armarSeccion('PASIVO')
+  const cuentasPatrimonio = armarSeccion('PATRIMONIO')
+
+  return {
+    data: {
+      activo: {
+        codigo: '1',
+        nombre: 'ACTIVO',
+        total: deEscalado(totActivo),
+        cuentas: cuentasActivo,
+      },
+      pasivo: {
+        codigo: '2',
+        nombre: 'PASIVO',
+        total: deEscalado(totPasivo),
+        cuentas: cuentasPasivo,
+      },
+      patrimonio: {
+        codigo: '3',
+        nombre: 'PATRIMONIO',
+        totalCuentas: deEscalado(totPatrimonioCuentas),
+        resultadoEjercicio: deEscalado(resultadoEjercicio),
+        total: deEscalado(totPatrimonio),
+        esUtilidad: resultadoEjercicio >= 0n,
+        cuentas: cuentasPatrimonio,
+      },
+      totales: {
+        totalActivo: deEscalado(totActivo),
+        totalPasivo: deEscalado(totPasivo),
+        totalPatrimonio: deEscalado(totPatrimonio),
+        totalPasivoPatrimonio: deEscalado(totPasivoPatrimonio),
+        resultadoEjercicio: deEscalado(resultadoEjercicio),
+        cuadrado,
+        diferencia: deEscalado(diferencia),
+      },
+    },
+    meta: {
+      hasta,
+      desde: desde ?? null,
+      totalCuentas: cuentasActivo.length + cuentasPasivo.length + cuentasPatrimonio.length,
+    },
+  }
+}
+
+/**
+ * Estado de Resultados (Estado de Rendimiento Financiero):
+ * Ingresos, Costos y Gastos en el período (desde..hasta).
+ */
+export async function estadoResultados(filtros) {
+  const { desde, hasta, nivel, incluirCeros } = filtros
+  const cuentas = await repo.resumenEstadoResultados(filtros)
+
+  const cuentasMap = new Map()
+  const cuentasMovimiento = []
+
+  for (const c of cuentas) {
+    const obj = {
+      id: c.id,
+      codigo: c.codigo,
+      nombre: c.nombre,
+      tipo: c.tipo,
+      naturaleza: c.naturaleza,
+      nivel: c.nivel,
+      padreId: c.padre_id,
+      esMovimiento: Boolean(c.es_movimiento),
+      debe: aEscalado(c.debe),
+      haber: aEscalado(c.haber),
+      movimientos: Number(c.movimientos),
+      saldo: 0n,
+    }
+    cuentasMap.set(c.codigo, obj)
+    if (obj.esMovimiento) {
+      cuentasMovimiento.push(obj)
+    }
+  }
+
+  // Cuentas de movimiento:
+  // INGRESO: haber - debe
+  // COSTO: debe - haber
+  // GASTO: debe - haber
+  for (const m of cuentasMovimiento) {
+    if (m.tipo === 'INGRESO') {
+      m.saldo = m.haber - m.debe
+    } else if (m.tipo === 'COSTO' || m.tipo === 'GASTO') {
+      m.saldo = m.debe - m.haber
+    }
+  }
+
+  // Grupos
+  for (const c of cuentas) {
+    if (!c.es_movimiento) {
+      let saldoGrupo = 0n
+      const prefijo = `${c.codigo}.`
+      for (const m of cuentasMovimiento) {
+        if (m.tipo === c.tipo && m.codigo.startsWith(prefijo)) {
+          saldoGrupo += m.saldo
+        }
+      }
+      const obj = cuentasMap.get(c.codigo)
+      if (obj) obj.saldo = saldoGrupo
+    }
+  }
+
+  let totIngresos = 0n
+  let totCostos = 0n
+  let totGastos = 0n
+
+  for (const m of cuentasMovimiento) {
+    if (m.tipo === 'INGRESO') totIngresos += m.saldo
+    else if (m.tipo === 'COSTO') totCostos += m.saldo
+    else if (m.tipo === 'GASTO') totGastos += m.saldo
+  }
+
+  const utilidadBruta = totIngresos - totCostos
+  const utilidadNeta = utilidadBruta - totGastos
+
+  const armarSeccion = (tipoSeccion) => {
+    const lista = []
+    for (const c of cuentas) {
+      if (c.tipo !== tipoSeccion) continue
+      const obj = cuentasMap.get(c.codigo)
+      if (!obj) continue
+      if (nivel && obj.nivel > nivel) continue
+      if (!incluirCeros && obj.saldo === 0n && obj.nivel > 1) continue
+
+      lista.push({
+        id: obj.id,
+        codigo: obj.codigo,
+        nombre: obj.nombre,
+        tipo: obj.tipo,
+        naturaleza: obj.naturaleza,
+        nivel: obj.nivel,
+        esMovimiento: obj.esMovimiento,
+        saldo: deEscalado(obj.saldo),
+      })
+    }
+    return lista
+  }
+
+  const cuentasIngresos = armarSeccion('INGRESO')
+  const cuentasCostos = armarSeccion('COSTO')
+  const cuentasGastos = armarSeccion('GASTO')
+
+  return {
+    data: {
+      ingresos: {
+        codigo: '4',
+        nombre: 'INGRESOS',
+        total: deEscalado(totIngresos),
+        cuentas: cuentasIngresos,
+      },
+      costos: {
+        codigo: '5',
+        nombre: 'COSTOS',
+        total: deEscalado(totCostos),
+        cuentas: cuentasCostos,
+      },
+      utilidadBruta: deEscalado(utilidadBruta),
+      gastos: {
+        codigo: '6',
+        nombre: 'GASTOS',
+        total: deEscalado(totGastos),
+        cuentas: cuentasGastos,
+      },
+      utilidadNeta: deEscalado(utilidadNeta),
+      totales: {
+        totalIngresos: deEscalado(totIngresos),
+        totalCostos: deEscalado(totCostos),
+        utilidadBruta: deEscalado(utilidadBruta),
+        totalGastos: deEscalado(totGastos),
+        utilidadNeta: deEscalado(utilidadNeta),
+        esUtilidad: utilidadNeta >= 0n,
+      },
+    },
+    meta: {
+      desde,
+      hasta,
+      totalCuentas: cuentasIngresos.length + cuentasCostos.length + cuentasGastos.length,
+    },
+  }
+}
+

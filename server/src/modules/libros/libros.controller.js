@@ -1,4 +1,10 @@
-import { balanceExcel, diarioExcel, mayorExcel } from './libros.excel.js'
+import {
+  balanceExcel,
+  balanceGeneralExcel,
+  diarioExcel,
+  estadoResultadosExcel,
+  mayorExcel,
+} from './libros.excel.js'
 import * as service from './libros.service.js'
 
 export const diario = async (req, res) => res.json(await service.diario(req.consulta))
@@ -6,6 +12,12 @@ export const diario = async (req, res) => res.json(await service.diario(req.cons
 export const mayor = async (req, res) => res.json(await service.mayor(req.consulta))
 
 export const balance = async (req, res) => res.json(await service.balance(req.consulta))
+
+export const balanceGeneral = async (req, res) =>
+  res.json(await service.balanceGeneral(req.consulta))
+
+export const estadoResultados = async (req, res) =>
+  res.json(await service.estadoResultados(req.consulta))
 
 const XLSX = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
 
@@ -18,9 +30,10 @@ function excel(libro, armar, nombre) {
       service.encabezado(filtros, req.user.id),
     ])
     const archivo = await armar(contenido, filtros, cab)
+    const sufijo = filtros.desde ? `${filtros.desde}_${filtros.hasta}` : `${filtros.hasta}`
     res
       .type(XLSX)
-      .attachment(`${nombre}_${filtros.desde}_${filtros.hasta}.xlsx`)
+      .attachment(`${nombre}_${sufijo}.xlsx`)
       .set('Cache-Control', 'no-store')
       .send(archivo)
   }
@@ -29,3 +42,14 @@ function excel(libro, armar, nombre) {
 export const diarioXlsx = excel(service.diario, diarioExcel, 'libro-diario')
 export const mayorXlsx = excel(service.mayor, mayorExcel, 'libro-mayor')
 export const balanceXlsx = excel(service.balance, balanceExcel, 'balance-comprobacion')
+export const balanceGeneralXlsx = excel(
+  service.balanceGeneral,
+  balanceGeneralExcel,
+  'balance-general',
+)
+export const estadoResultadosXlsx = excel(
+  service.estadoResultados,
+  estadoResultadosExcel,
+  'estado-resultados',
+)
+

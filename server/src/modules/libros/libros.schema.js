@@ -71,3 +71,26 @@ export const balanceSchema = z
       path: ['cuentaDesde'],
     },
   )
+
+export const balanceGeneralSchema = z
+  .object({
+    hasta: fecha('Indique la fecha de corte (AAAA-MM-DD)'),
+    desde: opcional(fecha('Indique la fecha inicial (AAAA-MM-DD)')),
+    nivel: opcional(z.coerce.number().int().min(1).max(5)),
+    incluirCeros: booleanoConsulta.default(false),
+    centroCostoId: opcional(z.coerce.number().int().positive()),
+    todo: booleanoConsulta.default(true),
+  })
+  .refine((f) => !f.desde || f.desde <= f.hasta, errorRango)
+
+export const estadoResultadosSchema = z
+  .object({
+    desde: fecha('Indique la fecha inicial (AAAA-MM-DD)'),
+    hasta: fecha('Indique la fecha final (AAAA-MM-DD)'),
+    nivel: opcional(z.coerce.number().int().min(1).max(5)),
+    incluirCeros: booleanoConsulta.default(false),
+    centroCostoId: opcional(z.coerce.number().int().positive()),
+    todo: booleanoConsulta.default(true),
+  })
+  .refine(rangoValido, errorRango)
+
