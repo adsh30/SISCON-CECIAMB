@@ -9,6 +9,7 @@ import {
   comprobanteSchema,
   copiaSchema,
   crearTipoSchema,
+  filtrosDetallesSchema,
   filtrosSchema,
 } from './comprobantes.schema.js'
 
@@ -24,6 +25,9 @@ comprobantesRoutes.use(auth, claveVigente)
 comprobantesRoutes.get('/tipos', ver, c.listarTipos)
 comprobantesRoutes.post('/tipos', total, validate(crearTipoSchema), c.crearTipo)
 comprobantesRoutes.put('/tipos/:id', total, validate(actualizarTipoSchema), c.actualizarTipo)
+
+comprobantesRoutes.get('/detalles', ver, validate(filtrosDetallesSchema, 'query'), c.listarDetalles)
+comprobantesRoutes.get('/detalles/excel', ver, validate(filtrosDetallesSchema, 'query'), c.descargarDetallesExcel)
 
 comprobantesRoutes.get('/', ver, validate(filtrosSchema, 'query'), c.listar)
 comprobantesRoutes.post('/', modificar, validate(comprobanteSchema), c.crear)

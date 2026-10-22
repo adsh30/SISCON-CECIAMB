@@ -10,6 +10,17 @@ const idDe = (req) => {
 
 export const listar = async (req, res) => res.json(await service.listar(req.consulta))
 
+export const listarDetalles = async (req, res) => res.json(await service.listarDetalles(req.consulta))
+
+export async function descargarDetallesExcel(req, res) {
+  const buffer = await service.exportarDetallesExcel(req.consulta, req.user)
+  const hoy = new Intl.DateTimeFormat('sv-SE', { timeZone: 'America/Caracas' }).format(new Date())
+  const archivo = `detalles-comprobantes-${hoy}.xlsx`
+  res.set('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+  res.set('Content-Disposition', `attachment; filename="${archivo}"`)
+  res.send(buffer)
+}
+
 export const detalle = async (req, res) => res.json({ data: await service.detalle(idDe(req)) })
 
 export async function crear(req, res) {

@@ -4,6 +4,7 @@ import AjustesPage from './features/ajustes/AjustesPage.jsx'
 import BitacoraPage from './features/bitacora/BitacoraPage.jsx'
 import ComprobantePage from './features/comprobantes/ComprobantePage.jsx'
 import ComprobantesPage from './features/comprobantes/ComprobantesPage.jsx'
+import DetallesComprobantesPage from './features/comprobantes/DetallesComprobantesPage.jsx'
 import ImprimirComprobante from './features/comprobantes/ImprimirComprobante.jsx'
 import EmpresaPage from './features/empresa/EmpresaPage.jsx'
 import ImportarPage from './features/importaciones/ImportarPage.jsx'
@@ -57,6 +58,14 @@ export default function App() {
                 element={
                   <RequireModulo modulo="comprobantes">
                     <ComprobantesPage />
+                  </RequireModulo>
+                }
+              />
+              <Route
+                path="comprobantes/detalles"
+                element={
+                  <RequireModulo modulo="comprobantes">
+                    <DetallesComprobantesPage />
                   </RequireModulo>
                 }
               />

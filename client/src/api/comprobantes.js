@@ -15,6 +15,18 @@ export function useComprobantes(filtros) {
   })
 }
 
+export function useDetallesComprobantes(filtros) {
+  return useQuery({
+    queryKey: [...KEY, 'detalles', filtros],
+    queryFn: () => api(`/comprobantes/detalles?${query(filtros)}`),
+    placeholderData: keepPreviousData,
+  })
+}
+
+export function urlDescargaDetallesExcel(filtros) {
+  return `/api/v1/comprobantes/detalles/excel?${query(filtros)}`
+}
+
 export function useComprobante(id) {
   return useQuery({
     queryKey: [...KEY, 'detalle', Number(id)],

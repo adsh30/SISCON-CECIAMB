@@ -603,3 +603,75 @@ export async function eliminarAdjunto(comprobanteId, adjuntoId, actor, ctx) {
     return true
   })
 }
+
+// --- Consulta analítica de detalles (Replicación Sparrow) ---
+
+export async function listarDetalles(filtros) {
+  const resultado = await repo.listarDetalles(filtros)
+  return {
+    datos: resultado.filas.map((r) => ({
+      id: r.id,
+      renglon: r.renglon,
+      comprobanteId: r.comprobante_id,
+      comprobanteCodigo: r.comprobante_codigo,
+      comprobanteNumero: r.comprobante_numero,
+      fecha: r.comprobante_fecha,
+      conceptoComprobante: r.comprobante_concepto,
+      estado: r.comprobante_estado,
+      tipo: {
+        id: r.tipo_id,
+        codigo: r.tipo_codigo,
+        nombre: r.tipo_nombre,
+      },
+      cuenta: {
+        id: r.cuenta_id,
+        codigo: r.cuenta_codigo,
+        nombre: r.cuenta_nombre,
+      },
+      centroCosto: r.centro_id
+        ? {
+            id: r.centro_id,
+            codigo: r.centro_codigo,
+            nombre: r.centro_nombre,
+          }
+        : null,
+      referencia: r.referencia,
+      descripcion: r.descripcion,
+      debe: r.debe,
+      haber: r.haber,
+    })),
+    meta: {
+      total: resultado.total,
+      pagina: filtros.pagina ?? 1,
+      porPagina: filtros.porPagina ?? 50,
+    },
+    totales: {
+      totalDebe: resultado.totalDebe,
+      totalHaber: resultado.totalHaber,
+      diferencia: resultado.diferencia,
+    },
+  }
+}
+
+export async function exportarDetallesExcel(filtros, usuario) {
+  const { exportarDetallesExcel: generarExcel } = await import('./comprobantes.excel.js')
+  const empresaRepo = await import('../empresa/empresa.repository.js')
+
+  const resultado = await repo.listarDetalles(filtros, { sinLimite: true })
+  const empresa = await empresaRepo.obtener()
+
+  return generarExcel({
+    filas: resultado.filas,
+    totales: {
+      totalDebe: resultado.totalDebe,
+      totalHaber: resultado.totalHaber,
+      diferencia: resultado.diferencia,
+    },
+    filtros,
+    empresa: {
+      razonSocial: empresa?.razon_social ?? 'SISCON-CECIAMB',
+      rif: empresa?.rif ?? null,
+    },
+    usuario: usuario ? [usuario.nombre, usuario.apellido].filter(Boolean).join(' ') : 'Usuario',
+  })
+}

@@ -89,6 +89,24 @@ export const filtrosSchema = z
     path: ['desde'],
   })
 
+export const filtrosDetallesSchema = z
+  .object({
+    criterio: opcional(z.enum(['documento', 'monto', 'concepto', 'todo'])),
+    busqueda: opcional(z.string().trim().max(100)),
+    desde: opcional(fecha),
+    hasta: opcional(fecha),
+    cuentaId: opcional(z.coerce.number().int().positive()),
+    centroCostoId: opcional(z.coerce.number().int().positive()),
+    tipoId: opcional(z.coerce.number().int().positive()),
+    estado: opcional(z.enum(ESTADOS, 'Estado desconocido')),
+    pagina: z.coerce.number().int().min(1).default(1),
+    porPagina: z.coerce.number().int().min(5).max(500).default(50),
+  })
+  .refine((f) => !f.desde || !f.hasta || f.desde <= f.hasta, {
+    message: 'La fecha inicial debe ser anterior a la final',
+    path: ['desde'],
+  })
+
 export const anularSchema = z.object({
   motivo: z
     .string('Escriba el motivo')

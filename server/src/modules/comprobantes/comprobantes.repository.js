@@ -230,3 +230,110 @@ export function eliminarAdjunto(comprobanteId, adjuntoId, trx = db) {
     .where({ id: adjuntoId, comprobante_id: comprobanteId })
     .del()
 }
+
+// --- Consulta analítica de detalles de comprobantes (Replicación Sparrow) ---
+
+function filtradaDetalles(filtros) {
+  const { criterio, busqueda, desde, hasta, cuentaId, centroCostoId, tipoId, estado } = filtros
+  const q = db('comprobante_detalle as d')
+    .join('comprobantes as c', 'c.id', 'd.comprobante_id')
+    .join('tipos_comprobante as t', 't.id', 'c.tipo_id')
+    .join('cuentas as cu', 'cu.id', 'd.cuenta_id')
+    .leftJoin('centros_costo as cc', 'cc.id', 'd.centro_costo_id')
+
+  if (tipoId) q.where('c.tipo_id', tipoId)
+  if (estado) q.where('c.estado', estado)
+  if (desde) q.where('c.fecha', '>=', desde)
+  if (hasta) q.where('c.fecha', '<=', hasta)
+  if (cuentaId) q.where('d.cuenta_id', cuentaId)
+  if (centroCostoId) q.where('d.centro_costo_id', centroCostoId)
+
+  if (busqueda) {
+    const like = comoLike(busqueda)
+    const limpio = busqueda.trim().replace(/\./g, '').replace(',', '.')
+    const num = !isNaN(Number(limpio)) && limpio !== '' ? Number(limpio) : null
+
+    if (criterio === 'documento') {
+      q.where((w) => w.where('d.referencia', 'like', like).orWhere('c.referencia', 'like', like))
+    } else if (criterio === 'monto') {
+      if (num != null) {
+        q.where((w) => w.where('d.debe', num).orWhere('d.haber', num))
+      }
+    } else if (criterio === 'concepto') {
+      q.where((w) => w.where('d.descripcion', 'like', like).orWhere('c.concepto', 'like', like))
+    } else {
+      q.where((w) => {
+        w.where('d.referencia', 'like', like)
+          .orWhere('c.referencia', 'like', like)
+          .orWhere('d.descripcion', 'like', like)
+          .orWhere('c.concepto', 'like', like)
+          .orWhere('cu.codigo', 'like', like)
+          .orWhere('cu.nombre', 'like', like)
+          .orWhere('c.codigo', 'like', like)
+        if (num != null) {
+          w.orWhere('d.debe', num).orWhere('d.haber', num)
+        }
+      })
+    }
+  }
+
+  return q
+}
+
+export async function listarDetalles(filtros, { sinLimite = false } = {}) {
+  const { pagina = 1, porPagina = 50 } = filtros
+
+  const [totales] = await filtradaDetalles(filtros)
+    .select(
+      db.raw('COUNT(*) as total_filas'),
+      db.raw('COALESCE(SUM(d.debe), 0) as total_debe'),
+      db.raw('COALESCE(SUM(d.haber), 0) as total_haber'),
+    )
+
+  let consulta = filtradaDetalles(filtros)
+    .select(
+      'd.id',
+      'd.renglon',
+      'd.descripcion',
+      'd.referencia',
+      'd.debe',
+      'd.haber',
+      'c.id as comprobante_id',
+      'c.numero as comprobante_numero',
+      'c.codigo as comprobante_codigo',
+      'c.fecha as comprobante_fecha',
+      'c.concepto as comprobante_concepto',
+      'c.estado as comprobante_estado',
+      't.id as tipo_id',
+      't.codigo as tipo_codigo',
+      't.nombre as tipo_nombre',
+      'cu.id as cuenta_id',
+      'cu.codigo as cuenta_codigo',
+      'cu.nombre as cuenta_nombre',
+      'cc.id as centro_id',
+      'cc.codigo as centro_codigo',
+      'cc.nombre as centro_nombre',
+    )
+    .orderBy([
+      { column: 'c.fecha', order: 'desc' },
+      { column: 'c.id', order: 'desc' },
+      { column: 'd.renglon', order: 'asc' },
+    ])
+
+  if (!sinLimite) {
+    consulta = consulta.limit(porPagina).offset((pagina - 1) * porPagina)
+  }
+
+  const filas = await consulta
+
+  const totalDebe = Number(totales?.total_debe || 0)
+  const totalHaber = Number(totales?.total_haber || 0)
+
+  return {
+    filas,
+    total: Number(totales?.total_filas || 0),
+    totalDebe,
+    totalHaber,
+    diferencia: totalDebe - totalHaber,
+  }
+}

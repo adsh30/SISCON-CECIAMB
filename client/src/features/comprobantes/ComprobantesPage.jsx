@@ -104,6 +104,10 @@ export default function ComprobantesPage() {
           </p>
         </div>
         <div className="flex flex-wrap gap-2">
+          <Link to="/app/comprobantes/detalles" className={buttonClass('secundario')}>
+            <Icono nombre="buscar" className="size-4" />
+            Detalles analíticos
+          </Link>
           {can('comprobantes', 'full') && (
             <Button variante="secundario" onClick={() => setVerTipos(true)}>
               <Icono nombre="ajustes" className="size-4" />
