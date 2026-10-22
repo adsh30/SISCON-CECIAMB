@@ -43,5 +43,9 @@ export function sumarDias(fecha, dias) {
 
 export const nombrePeriodo = (p) => `${MESES[p.mes - 1]} ${p.anio}`
 
-/** 'YYYY-MM-DD' → 'dd/mm/aaaa' para mensajes */
-export const fechaVE = (f) => f.split('-').reverse().join('/')
+/** 'YYYY-MM-DD' o Date → 'dd/mm/aaaa' para mensajes */
+export const fechaVE = (f) => {
+  if (!f) return ''
+  const str = f instanceof Date ? f.toISOString().slice(0, 10) : String(f).slice(0, 10)
+  return str.split('-').reverse().join('/')
+}

@@ -19,6 +19,12 @@ const SECCIONES = [
         icono: 'comprobantes',
         modulo: 'comprobantes',
       },
+      {
+        to: '/app/comprobantes/detalles',
+        etiqueta: 'Detalles de comprobantes',
+        icono: 'buscar',
+        modulo: 'comprobantes',
+      },
       { to: '/app/libros/diario', etiqueta: 'Libro Diario', icono: 'libros', modulo: 'libros' },
       { to: '/app/libros/mayor', etiqueta: 'Libro Mayor', icono: 'mayor', modulo: 'libros' },
       {

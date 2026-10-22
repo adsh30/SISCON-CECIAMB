@@ -399,3 +399,26 @@ describe('listado', () => {
     expect(res.body.data.comprobantes.borradores).toBeGreaterThan(0)
   })
 })
+
+describe('consulta analítica de detalles (estilo Sparrow)', () => {
+  it('consulta los renglones con criterios documento, monto y concepto, devolviendo totales y descarga excel', async () => {
+    const res = await auditor.get('/api/v1/comprobantes/detalles')
+    expect(res.status).toBe(200)
+    expect(res.body.datos.length).toBeGreaterThan(0)
+    expect(res.body.totales).toBeDefined()
+    expect(res.body.totales.totalDebe).toBeGreaterThan(0)
+    expect(res.body.totales.totalHaber).toBeGreaterThan(0)
+
+    // Filtro por criterio
+    const porConcepto = await auditor.get('/api/v1/comprobantes/detalles').query({
+      criterio: 'concepto',
+      busqueda: 'Honorarios',
+    })
+    expect(porConcepto.status).toBe(200)
+
+    // Descarga Excel
+    const excel = await auditor.get('/api/v1/comprobantes/detalles/excel')
+    expect(excel.status).toBe(200)
+    expect(excel.header['content-type']).toContain('spreadsheetml')
+  })
+})
