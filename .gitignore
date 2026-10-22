@@ -13,4 +13,6 @@ coverage/
 
 # Producción (bot de despliegue)
 logs/
-respaldos/
+respaldos/*
+!respaldos/contabilidad.sql
+
