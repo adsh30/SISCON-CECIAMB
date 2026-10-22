@@ -70,6 +70,7 @@ const iniciales = (u) =>
     .toUpperCase() || '?'
 
 function ItemMenu({ item, contraido }) {
+  const location = useLocation()
   const base =
     'relative flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors'
   const contenido = (
@@ -105,18 +106,35 @@ function ItemMenu({ item, contraido }) {
       </span>
     )
   }
+
+  // Asegura que /app/comprobantes no se active cuando estamos en /app/comprobantes/detalles
+  const estaActivo = () => {
+    if (item.to === '/app') return location.pathname === '/app'
+    if (item.to === '/app/comprobantes') {
+      return (
+        location.pathname.startsWith('/app/comprobantes') &&
+        !location.pathname.startsWith('/app/comprobantes/detalles')
+      )
+    }
+    if (item.to === '/app/comprobantes/detalles') {
+      return location.pathname.startsWith('/app/comprobantes/detalles')
+    }
+    if (item.fin) return location.pathname === item.to
+    return location.pathname === item.to || location.pathname.startsWith(`${item.to}/`)
+  }
+
+  const activo = estaActivo()
+
   return (
     <NavLink
       to={item.to}
       end={item.fin}
       title={item.etiqueta}
-      className={({ isActive }) =>
-        `${base} ${
-          isActive
-            ? 'bg-marca-claro text-marca before:absolute before:top-1/4 before:bottom-1/4 before:-left-2 before:w-0.75 before:rounded-full before:bg-marca'
-            : 'text-pizarra hover:bg-superficie-2 hover:text-tinta'
-        }`
-      }
+      className={`${base} ${
+        activo
+          ? 'bg-marca-claro text-marca before:absolute before:top-1/4 before:bottom-1/4 before:-left-2 before:w-0.75 before:rounded-full before:bg-marca'
+          : 'text-pizarra hover:bg-superficie-2 hover:text-tinta'
+      }`}
     >
       {contenido}
     </NavLink>
