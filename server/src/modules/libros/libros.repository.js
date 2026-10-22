@@ -227,3 +227,92 @@ export async function resumenBalance(filtros) {
 
   return enRango(q, { cuentaDesde, cuentaHasta })
 }
+
+/**
+ * Balance General (Estado de Situación Financiera):
+ * Cuentas contables activas con movimientos acumulados hasta la fecha de corte.
+ */
+export async function resumenBalanceGeneral(filtros) {
+  const { hasta, centroCostoId } = filtros
+
+  const subDetalle = db('comprobante_detalle as d')
+    .join('comprobantes as c', 'c.id', 'd.comprobante_id')
+    .where('c.estado', 'APROBADO')
+    .where('c.fecha', '<=', hasta)
+
+  if (centroCostoId) subDetalle.where('d.centro_costo_id', centroCostoId)
+
+  subDetalle
+    .groupBy('d.cuenta_id')
+    .select('d.cuenta_id')
+    .select({
+      debe: db.raw('SUM(d.debe)'),
+      haber: db.raw('SUM(d.haber)'),
+      movimientos: db.raw('COUNT(*)'),
+    })
+    .as('mov')
+
+  return db('cuentas as cu')
+    .leftJoin(subDetalle, 'mov.cuenta_id', 'cu.id')
+    .select(
+      'cu.id',
+      'cu.codigo',
+      'cu.nombre',
+      'cu.tipo',
+      'cu.naturaleza',
+      'cu.nivel',
+      'cu.padre_id',
+      'cu.es_movimiento',
+      db.raw('COALESCE(mov.debe, 0) as debe'),
+      db.raw('COALESCE(mov.haber, 0) as haber'),
+      db.raw('COALESCE(mov.movimientos, 0) as movimientos'),
+    )
+    .where('cu.activa', true)
+    .orderByRaw(CODIGO)
+}
+
+/**
+ * Estado de Resultados (Estado de Rendimiento Financiero):
+ * Cuentas de resultados (INGRESO, COSTO, GASTO) con movimientos del período (desde..hasta).
+ */
+export async function resumenEstadoResultados(filtros) {
+  const { desde, hasta, centroCostoId } = filtros
+
+  const subDetalle = db('comprobante_detalle as d')
+    .join('comprobantes as c', 'c.id', 'd.comprobante_id')
+    .where('c.estado', 'APROBADO')
+    .where('c.fecha', '>=', desde)
+    .where('c.fecha', '<=', hasta)
+
+  if (centroCostoId) subDetalle.where('d.centro_costo_id', centroCostoId)
+
+  subDetalle
+    .groupBy('d.cuenta_id')
+    .select('d.cuenta_id')
+    .select({
+      debe: db.raw('SUM(d.debe)'),
+      haber: db.raw('SUM(d.haber)'),
+      movimientos: db.raw('COUNT(*)'),
+    })
+    .as('mov')
+
+  return db('cuentas as cu')
+    .leftJoin(subDetalle, 'mov.cuenta_id', 'cu.id')
+    .select(
+      'cu.id',
+      'cu.codigo',
+      'cu.nombre',
+      'cu.tipo',
+      'cu.naturaleza',
+      'cu.nivel',
+      'cu.padre_id',
+      'cu.es_movimiento',
+      db.raw('COALESCE(mov.debe, 0) as debe'),
+      db.raw('COALESCE(mov.haber, 0) as haber'),
+      db.raw('COALESCE(mov.movimientos, 0) as movimientos'),
+    )
+    .where('cu.activa', true)
+    .whereIn('cu.tipo', ['INGRESO', 'COSTO', 'GASTO'])
+    .orderByRaw(CODIGO)
+}
+

@@ -85,5 +85,6 @@ Cada entregable incluye **backend + frontend**. Cada cambio va en ramas `feature
 ## Fase 8 — Reportes contables ampliados
 
 - [x] Balance de Comprobación (Sumas y Saldos a 8 Columnas): Saldos Anteriores (Deudor/Acreedor), Movimientos (Debe/Haber), Saldos Actuales (Deudor/Acreedor), certificación de cuadre en 3 parejas de columnas, modos 'solo movimientos' y 'árbol completo', exportación oficial a Excel (.xlsx) e impresión/PDF en hoja horizontal.
-- [ ] Estados Financieros (Balance General y Estado de Resultados).
+- [x] Estados Financieros (Balance General y Estado de Resultados): Balance General clasificado bajo VEN-NIF (Activo Corriente/No Corriente, Pasivo Corriente/No Corriente, Patrimonio y Resultado del Ejercicio con verificación de ecuación patrimonial); Estado de Resultados con Ingresos, Costos, Utilidad Bruta, Gastos Operativos y Utilidad/Pérdida Neta; exportación a Excel (.xlsx) e impresión/PDF tamaño carta vertical.
 - [ ] Multimoneda y conciliación bancaria.
+

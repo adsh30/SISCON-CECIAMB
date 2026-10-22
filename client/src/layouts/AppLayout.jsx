@@ -27,6 +27,18 @@ const SECCIONES = [
         icono: 'balance',
         modulo: 'libros',
       },
+      {
+        to: '/app/libros/balance-general',
+        etiqueta: 'Balance General',
+        icono: 'balanceGeneral',
+        modulo: 'libros',
+      },
+      {
+        to: '/app/libros/estado-resultados',
+        etiqueta: 'Estado de Resultados',
+        icono: 'estadoResultados',
+        modulo: 'libros',
+      },
       { to: '/app/cuentas', etiqueta: 'Plan de cuentas', icono: 'cuentas', modulo: 'plan_cuentas' },
       { to: '/app/periodos', etiqueta: 'Períodos', icono: 'periodos', modulo: 'periodos' },
     ],
