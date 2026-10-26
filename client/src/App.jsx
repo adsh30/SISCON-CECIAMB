@@ -22,6 +22,7 @@ import InicioPage from './features/inicio/InicioPage.jsx'
 import LandingPage from './features/landing/LandingPage.jsx'
 import UsuariosPage from './features/usuarios/UsuariosPage.jsx'
 import FasesSistemaPage from './features/fases/FasesSistemaPage.jsx'
+import ImprimirFases from './features/fases/ImprimirFases.jsx'
 import ConciliacionesPage from './features/conciliaciones/ConciliacionesPage.jsx'
 import ConciliacionDetallePage from './features/conciliaciones/ConciliacionDetallePage.jsx'
 import AppLayout from './layouts/AppLayout.jsx'
@@ -54,6 +55,7 @@ export default function App() {
                 </RequireModulo>
               }
             />
+            <Route path="/imprimir/fases" element={<ImprimirFases />} />
             <Route path="/app" element={<AppLayout />}>
               <Route index element={<InicioPage />} />
               <Route

@@ -317,14 +317,23 @@ export default function FasesSistemaPage() {
               lenguajes aplicados y hoja de ruta para la clínica CECIAMB.
             </p>
           </div>
-          <div className="flex shrink-0 items-center gap-3">
-            <div className="rounded-xl bg-white/10 p-3.5 text-center backdrop-blur-md">
+          <div className="flex flex-wrap items-center gap-3">
+            <a
+              href="/imprimir/fases"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-xl bg-white px-4 py-3 text-xs font-bold text-marca shadow-md hover:bg-white/95 transition-all cursor-pointer"
+            >
+              <Icono nombre="imprimir" className="size-4 text-marca" />
+              Vista Previa en PDF / Imprimir
+            </a>
+            <div className="rounded-xl bg-white/10 p-3 text-center backdrop-blur-md">
               <div className="text-2xl font-black text-white">{porcentaje}%</div>
               <div className="text-[11px] font-medium uppercase tracking-wide text-white/75">
                 Progreso Global
               </div>
             </div>
-            <div className="rounded-xl bg-white/10 p-3.5 text-center backdrop-blur-md">
+            <div className="rounded-xl bg-white/10 p-3 text-center backdrop-blur-md">
               <div className="text-2xl font-black text-white">{totalCompletadas}/{FASES.length}</div>
               <div className="text-[11px] font-medium uppercase tracking-wide text-white/75">
                 Fases Listas
@@ -453,6 +462,16 @@ export default function FasesSistemaPage() {
             <Icono nombre="archivo" className="size-4" />
             Migración Sparrow
           </button>
+          <a
+            href="/imprimir/fases"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-1.5 rounded-lg border border-linea bg-superficie px-3.5 py-2 text-xs font-semibold text-marca hover:bg-superficie-2 hover:border-marca/40 transition-colors cursor-pointer"
+            title="Abrir vista de impresión y guardar como PDF"
+          >
+            <Icono nombre="imprimir" className="size-4 text-marca" />
+            <span>Descargar PDF</span>
+          </a>
         </div>
 
         {pestana === 'fases' && (
