@@ -177,12 +177,12 @@ const FASES = [
     id: 82,
     numero: 'Fase 8 (Parte B)',
     nombre: 'Tesorería: Conciliación Bancaria y Multimoneda',
-    release: 'v1.1.0',
-    estado: 'pendiente',
+    release: 'v0.7.0',
+    estado: 'completado',
     lenguaje: 'JavaScript (Node.js & React)',
-    frameworks: 'Algoritmos de coincidencia difusa, Knex.js',
+    frameworks: 'Algoritmos de coincidencia automática, Knex.js, Zod',
     baseDatos: 'MariaDB 13 (siscon_db)',
-    tablas: ['conciliaciones_bancarias', 'extractos_bancarios_lineas', 'ajustes_cambiarios'],
+    tablas: ['conciliaciones', 'conciliacion_partidas'],
     descripcion:
       'Carga de estados de cuenta electrónicos de bancos venezolanos (Banesco, Mercantil, BDV, etc.), cotejo automatizado contra los movimientos contables de la cuenta de banco y generación de asientos por ajuste de diferencial cambiario según tasas BCV.',
     caracteristicas: [
@@ -303,42 +303,50 @@ export default function FasesSistemaPage() {
     <div className="space-y-6 pb-12">
       {/* Encabezado Institucional */}
       <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-marca to-marca/80 p-6 text-white shadow-lg md:p-8">
-        <div className="relative z-10 flex flex-col justify-between gap-6 md:flex-row md:items-center">
-          <div>
+        <div className="relative z-10 flex flex-col justify-between gap-6 lg:flex-row lg:items-center">
+          <div className="space-y-2">
             <div className="inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 text-xs font-semibold uppercase tracking-wider backdrop-blur-sm">
               <Icono nombre="capas" className="size-3.5" />
               Arquitectura Técnica y Ruta de Crecimiento
             </div>
-            <h1 className="mt-2 text-2xl font-bold tracking-tight text-white md:text-3xl">
+            <h1 className="text-2xl font-bold tracking-tight text-white md:text-3xl">
               Fases del Sistema SISCON-CECIAMB
             </h1>
-            <p className="mt-1.5 max-w-2xl text-sm text-white/85 md:text-base">
+            <p className="max-w-2xl text-xs md:text-sm text-white/85 leading-relaxed">
               Estructura integral por capas de software, modelos de base de datos relacional MariaDB,
               lenguajes aplicados y hoja de ruta para la clínica CECIAMB.
             </p>
           </div>
-          <div className="flex flex-wrap items-center gap-3">
+
+          <div className="flex flex-col gap-2.5 shrink-0 w-full sm:w-72">
+            {/* Las 2 tarjetas de métricas siempre unidas horizontalmente en cuadrícula simétrica */}
+            <div className="grid grid-cols-2 gap-2">
+              <div className="rounded-xl bg-white/10 px-3.5 py-2.5 text-center backdrop-blur-md border border-white/15 shadow-inner">
+                <div className="text-2xl font-black text-white leading-none">{porcentaje}%</div>
+                <div className="text-[10px] font-semibold uppercase tracking-wider text-white/80 mt-1">
+                  Progreso Global
+                </div>
+              </div>
+              <div className="rounded-xl bg-white/10 px-3.5 py-2.5 text-center backdrop-blur-md border border-white/15 shadow-inner">
+                <div className="text-2xl font-black text-white leading-none">
+                  {totalCompletadas}/{FASES.length}
+                </div>
+                <div className="text-[10px] font-semibold uppercase tracking-wider text-white/80 mt-1">
+                  Fases Listas
+                </div>
+              </div>
+            </div>
+
+            {/* Botón de Impresión / Guardar PDF ocupando el mismo ancho del bloque */}
             <a
               href="/imprimir/fases"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-xl bg-white px-4 py-3 text-xs font-bold text-marca shadow-md hover:bg-white/95 transition-all cursor-pointer"
+              className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-white px-4 py-2.5 text-xs font-bold text-marca shadow-md hover:bg-white/95 hover:shadow-lg active:scale-95 transition-all cursor-pointer whitespace-nowrap"
             >
               <Icono nombre="imprimir" className="size-4 text-marca" />
-              Vista Previa en PDF / Imprimir
+              <span>Vista Previa en PDF / Imprimir</span>
             </a>
-            <div className="rounded-xl bg-white/10 p-3 text-center backdrop-blur-md">
-              <div className="text-2xl font-black text-white">{porcentaje}%</div>
-              <div className="text-[11px] font-medium uppercase tracking-wide text-white/75">
-                Progreso Global
-              </div>
-            </div>
-            <div className="rounded-xl bg-white/10 p-3 text-center backdrop-blur-md">
-              <div className="text-2xl font-black text-white">{totalCompletadas}/{FASES.length}</div>
-              <div className="text-[11px] font-medium uppercase tracking-wide text-white/75">
-                Fases Listas
-              </div>
-            </div>
           </div>
         </div>
 
