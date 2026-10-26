@@ -46,6 +46,9 @@ const trazos = {
   reverso: 'M7 4 3 8l4 4M3 8h13a5 5 0 0 1 0 10h-4',
   descargar: 'M12 3v12M7 10l5 5 5-5M4 21h16',
   subir: 'M12 21V9M7 14l5-5 5 5M4 3h16',
+  capas: 'M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5',
+  diagrama: 'M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6zM10 7h4M7 10v4M17 10v4M10 17h4',
+  baseDatos: 'M4 6c0 1.66 3.58 3 8 3s8-1.34 8-3-3.58-3-8-3-8 1.34-8 3zm0 6c0 1.66 3.58 3 8 3s8-1.34 8-3M4 18c0 1.66 3.58 3 8 3s8-1.34 8-3M4 6v12M20 6v12',
 }
 
 export function Icono({ nombre, className = 'size-5', ...props }) {

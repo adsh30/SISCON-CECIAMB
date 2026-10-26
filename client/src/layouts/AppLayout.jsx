@@ -52,6 +52,7 @@ const SECCIONES = [
   {
     titulo: 'Sistema',
     items: [
+      { to: '/app/fases', etiqueta: 'Fases y arquitectura', icono: 'capas' },
       { to: '/app/empresa', etiqueta: 'Empresa', icono: 'edificio', modulo: 'empresa' },
       { to: '/app/usuarios', etiqueta: 'Usuarios y roles', icono: 'usuarios', modulo: 'usuarios' },
       { to: '/app/bitacora', etiqueta: 'Bitácora', icono: 'bitacora', modulo: 'bitacora' },

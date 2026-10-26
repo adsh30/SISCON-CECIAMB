@@ -21,6 +21,7 @@ import LoginPage from './features/auth/LoginPage.jsx'
 import InicioPage from './features/inicio/InicioPage.jsx'
 import LandingPage from './features/landing/LandingPage.jsx'
 import UsuariosPage from './features/usuarios/UsuariosPage.jsx'
+import FasesSistemaPage from './features/fases/FasesSistemaPage.jsx'
 import AppLayout from './layouts/AppLayout.jsx'
 import { useAplicarPreferencias } from './lib/preferencias.js'
 import { RequireModulo, RutaProtegida } from './routes/RutaProtegida.jsx'
@@ -165,6 +166,7 @@ export default function App() {
                   </RequireModulo>
                 }
               />
+              <Route path="fases" element={<FasesSistemaPage />} />
               <Route path="ajustes" element={<AjustesPage />} />
             </Route>
           </Route>
