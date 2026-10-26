@@ -22,6 +22,8 @@ import InicioPage from './features/inicio/InicioPage.jsx'
 import LandingPage from './features/landing/LandingPage.jsx'
 import UsuariosPage from './features/usuarios/UsuariosPage.jsx'
 import FasesSistemaPage from './features/fases/FasesSistemaPage.jsx'
+import ConciliacionesPage from './features/conciliaciones/ConciliacionesPage.jsx'
+import ConciliacionDetallePage from './features/conciliaciones/ConciliacionDetallePage.jsx'
 import AppLayout from './layouts/AppLayout.jsx'
 import { useAplicarPreferencias } from './lib/preferencias.js'
 import { RequireModulo, RutaProtegida } from './routes/RutaProtegida.jsx'
@@ -123,6 +125,22 @@ export default function App() {
                 element={
                   <RequireModulo modulo="libros">
                     <EstadoResultadosPage />
+                  </RequireModulo>
+                }
+              />
+              <Route
+                path="conciliaciones"
+                element={
+                  <RequireModulo modulo="libros">
+                    <ConciliacionesPage />
+                  </RequireModulo>
+                }
+              />
+              <Route
+                path="conciliaciones/:id"
+                element={
+                  <RequireModulo modulo="libros">
+                    <ConciliacionDetallePage />
                   </RequireModulo>
                 }
               />

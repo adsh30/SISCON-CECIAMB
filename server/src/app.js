@@ -20,6 +20,7 @@ import { centrosCostoRoutes } from './modules/centros-costo/centros-costo.routes
 import { rolesRoutes } from './modules/roles/roles.routes.js'
 import { tasasRoutes } from './modules/tasas/tasas.routes.js'
 import { usuariosRoutes } from './modules/usuarios/usuarios.routes.js'
+import { conciliacionesRoutes } from './modules/conciliaciones/conciliaciones.routes.js'
 
 /**
  * @param {{ servirCliente?: boolean }} opciones  servirCliente: entregar también la interfaz
@@ -57,6 +58,7 @@ export function createApp({ servirCliente = env.nodeEnv === 'production' && hayC
   api.use('/comprobantes', comprobantesRoutes)
   api.use('/importaciones', importacionesRoutes)
   api.use('/libros', librosRoutes)
+  api.use('/conciliaciones', conciliacionesRoutes)
   api.use('/cuentas', cuentasRoutes)
   api.use('/centros-costo', centrosCostoRoutes)
   api.use('/tasas', tasasRoutes)
