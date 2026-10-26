@@ -130,14 +130,14 @@ const FASES = [
   {
     numero: 'Fase 9',
     nombre: 'Cuentas por Cobrar (CxC Hospitalaria)',
-    release: 'v1.1.0',
-    estado: 'PLANIFICADO',
+    release: 'v0.7.5',
+    estado: 'COMPLETADO',
     lenguaje: 'JavaScript (Node.js & React)',
-    frameworks: 'React Hook Form, Zod, TanStack Query',
+    frameworks: 'Zod, TanStack Query, Knex.js, Tailwind CSS 4',
     baseDatos: 'MariaDB 13 (siscon_db)',
-    tablas: 'clientes_aseguradoras, facturas_cxc, cobros_cxc',
+    tablas: 'cxc_clientes, cxc_facturas, cxc_factura_items, cxc_cobros',
     resumen:
-      'Facturación a aseguradoras y pacientes particulares, recibos de caja, antigüedad de saldos y generación automática de asientos.',
+      'Facturación a aseguradoras y pacientes particulares, recibos de caja, antigüedad de saldos (aging) y generación automática de asientos de venta (VEN) e ingreso (ING).',
   },
   {
     numero: 'Fase 10',

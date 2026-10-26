@@ -25,6 +25,7 @@ import FasesSistemaPage from './features/fases/FasesSistemaPage.jsx'
 import ImprimirFases from './features/fases/ImprimirFases.jsx'
 import ConciliacionesPage from './features/conciliaciones/ConciliacionesPage.jsx'
 import ConciliacionDetallePage from './features/conciliaciones/ConciliacionDetallePage.jsx'
+import CxcPage from './features/cxc/CxcPage.jsx'
 import AppLayout from './layouts/AppLayout.jsx'
 import { useAplicarPreferencias } from './lib/preferencias.js'
 import { RequireModulo, RutaProtegida } from './routes/RutaProtegida.jsx'
@@ -143,6 +144,14 @@ export default function App() {
                 element={
                   <RequireModulo modulo="libros">
                     <ConciliacionDetallePage />
+                  </RequireModulo>
+                }
+              />
+              <Route
+                path="cxc"
+                element={
+                  <RequireModulo modulo="comprobantes">
+                    <CxcPage />
                   </RequireModulo>
                 }
               />
