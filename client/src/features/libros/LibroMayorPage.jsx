@@ -5,15 +5,13 @@ import { useLibro } from '../../api/libros.js'
 import { AccountPicker } from '../../components/ui/AccountPicker.jsx'
 import { Button } from '../../components/ui/Button.jsx'
 import { Insignia } from '../../components/ui/Formulario.jsx'
+import { despuesDe } from '../../lib/codigos.js'
 import { esCero } from '../../lib/comprobantes.js'
 import { formatoFecha, formatoMonto } from '../../lib/formato.js'
 import { BotonesExportar, FiltrosLibro, Paginacion, TotalesLibro } from './ComponentesLibro.jsx'
 import { esNegativo, useFiltrosLibro } from './filtros.js'
 
 const CLAVES = ['desde', 'hasta', 'tipoId', 'centroCostoId', 'cuentaDesde', 'cuentaHasta']
-
-/** ¿`codigo` va después de `hasta` en el plan (sin ser subcuenta suya)? */
-const despuesDe = (codigo, hasta) => codigo > hasta && !codigo.startsWith(`${hasta}.`)
 
 function Saldo({ valor, className = '' }) {
   // Saldo negativo = contrario a la naturaleza de la cuenta: se resalta

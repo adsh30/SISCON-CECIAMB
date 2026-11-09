@@ -24,15 +24,28 @@ const COLORES_TIPO = {
   ORDEN: 'border-linea bg-superficie-2 text-pizarra',
 }
 
-/** Siguiente código libre bajo un padre: 1.1.01, 1.1.02… respetando el ancho de los hermanos */
+/**
+ * Siguiente código libre bajo un padre, respetando el formato y el ancho de los hermanos:
+ * con puntos 1.1.01 → 1.1.02; compacto (plan HCC) 111201 → 111202.
+ * Sin hermanos, copia el formato de otra cuenta del mismo nivel.
+ */
 function siguienteCodigo(padre, cuentas) {
-  const hermanos = cuentas
-    .filter((c) => c.padreId === padre.id)
-    .map((c) => c.codigo.slice(padre.codigo.length + 1))
-    .filter((seg) => /^d+$/.test(seg))
-  const ancho = hermanos.length ? Math.max(...hermanos.map((h) => h.length)) : 2
-  const mayor = hermanos.length ? Math.max(...hermanos.map(Number)) : 0
-  return `${padre.codigo}.${String(mayor + 1).padStart(ancho, '0')}`
+  const hijos = cuentas.filter((c) => c.padreId === padre.id).map((c) => c.codigo)
+  const ejemplo = cuentas.find(
+    (c) => c.nivel === padre.nivel + 1 && c.padreCodigo && c.codigo.length > c.padreCodigo.length,
+  )
+  const conPunto = hijos.length
+    ? hijos.some((h) => h.startsWith(`${padre.codigo}.`))
+    : padre.codigo.includes('.') || !ejemplo || ejemplo.codigo.includes('.')
+  const prefijo = conPunto ? `${padre.codigo}.` : padre.codigo
+  const segmentos = hijos
+    .filter((h) => h.startsWith(prefijo))
+    .map((h) => h.slice(prefijo.length))
+    .filter((s) => /^\d+$/.test(s))
+  const anchoEjemplo = ejemplo && !conPunto ? ejemplo.codigo.length - ejemplo.padreCodigo.length : 2
+  const ancho = segmentos.length ? Math.max(...segmentos.map((s) => s.length)) : anchoEjemplo
+  const mayor = segmentos.length ? Math.max(...segmentos.map(Number)) : 0
+  return `${prefijo}${String(mayor + 1).padStart(ancho, '0')}`
 }
 
 function NodoCuenta({

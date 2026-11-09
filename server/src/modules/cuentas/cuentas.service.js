@@ -1,5 +1,6 @@
 import { db } from '../../config/db.js'
 import { AppError } from '../../middlewares/errorHandler.js'
+import { codigoDeSubcuentaValido } from '../../utils/codigos.js'
 import { ACCIONES, registrar } from '../bitacora/bitacora.service.js'
 import * as repo from './cuentas.repository.js'
 import { NATURALEZA_POR_DEFECTO, TIPOS_CON_MONEDA } from './cuentas.schema.js'
@@ -137,13 +138,14 @@ export async function crear(datos, actor, ctx) {
           `La cuenta superior ${padre.codigo} está inactiva; actívela antes de crearle subcuentas`,
         )
       }
-      // Un solo nivel más que el padre: 1.1 → 1.1.01, nunca 1.1.01.05
-      const resto = datos.codigo.slice(padre.codigo.length + 1)
-      if (!datos.codigo.startsWith(`${padre.codigo}.`) || resto.includes('.')) {
+      // Un solo nivel más que el padre: 1.1 → 1.1.01 (con puntos) o 1112 → 111201 (compacto)
+      if (!codigoDeSubcuentaValido(datos.codigo, padre.codigo)) {
         throw new AppError(
           400,
           'CODIGO_NO_COINCIDE_CON_PADRE',
-          `El código debe ser ${padre.codigo}. seguido de un número, por ejemplo ${padre.codigo}.01`,
+          padre.codigo.includes('.')
+            ? `El código debe ser ${padre.codigo}. seguido de un número, por ejemplo ${padre.codigo}.01`
+            : `El código debe empezar por ${padre.codigo} seguido de dígitos, por ejemplo ${padre.codigo}01 (o ${padre.codigo}.01)`,
         )
       }
       nivel = padre.nivel + 1
