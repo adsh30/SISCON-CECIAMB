@@ -74,7 +74,7 @@ const venta = (monto = '1500.00', extra = {}) => ({
 })
 
 describe('tipos de comprobante', () => {
-  it('trae los 8 tipos del hospital en orden', async () => {
+  it('trae los tipos del hospital en orden, con el de diferencial cambiario al final', async () => {
     const res = await auditor.get('/api/v1/comprobantes/tipos')
     expect(res.status).toBe(200)
     expect(res.body.data.map((t) => t.codigo)).toEqual([
@@ -86,6 +86,7 @@ describe('tipos de comprobante', () => {
       'AJU',
       'ING',
       'EGR',
+      'DIF',
     ])
   })
 

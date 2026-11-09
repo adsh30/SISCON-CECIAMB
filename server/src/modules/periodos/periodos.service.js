@@ -2,6 +2,7 @@ import { db } from '../../config/db.js'
 import { AppError } from '../../middlewares/errorHandler.js'
 import { fechaHoyVE } from '../../utils/fechas.js'
 import { ACCIONES, registrar } from '../bitacora/bitacora.service.js'
+import { generar as generarDiferencial } from '../diferencial/diferencial.service.js'
 import { fechaVE, generarPeriodos, nombrePeriodo, sumarDias } from './periodos.fechas.js'
 import * as repo from './periodos.repository.js'
 
@@ -157,50 +158,61 @@ async function periodoBloqueado(id, trx) {
 }
 
 export async function cerrar(id, actor, ctx) {
-  return db.transaction(async (trx) => {
-    const p = await periodoBloqueado(id, trx)
-    if (p.estado === 'CERRADO') {
-      throw conflicto('PERIODO_CERRADO', `${nombrePeriodo(p)} ya está cerrado`)
-    }
-    if (p.fecha_inicio > fechaHoyVE()) {
-      throw conflicto('PERIODO_FUTURO', `${nombrePeriodo(p)} todavía no ha comenzado`)
-    }
-    // Se cierra en orden: primero los meses anteriores
-    const abierto = await repo.primerAbiertoAntes(p.fecha_inicio, trx)
-    if (abierto) {
-      throw conflicto(
-        'ANTERIORES_ABIERTOS',
-        `Cierre primero ${nombrePeriodo(abierto)}: los períodos se cierran en orden`,
-      )
-    }
-    // RF-08.1: no se cierra con borradores pendientes
-    const borradores = await trx('comprobantes')
-      .where({ periodo_id: id, estado: 'BORRADOR' })
-      .count({ n: '*' })
-      .first()
-    if (Number(borradores.n) > 0) {
-      throw conflicto(
-        'PERIODO_CON_BORRADORES',
-        `${nombrePeriodo(p)} tiene ${borradores.n} comprobante(s) en borrador: apruébelos o elimínelos antes de cerrar`,
-      )
-    }
+  // READ COMMITTED: el diferencial toma un número de comprobante (ver comprobantes.service)
+  return db.transaction(
+    async (trx) => {
+      const p = await periodoBloqueado(id, trx)
+      if (p.estado === 'CERRADO') {
+        throw conflicto('PERIODO_CERRADO', `${nombrePeriodo(p)} ya está cerrado`)
+      }
+      if (p.fecha_inicio > fechaHoyVE()) {
+        throw conflicto('PERIODO_FUTURO', `${nombrePeriodo(p)} todavía no ha comenzado`)
+      }
+      // Se cierra en orden: primero los meses anteriores
+      const abierto = await repo.primerAbiertoAntes(p.fecha_inicio, trx)
+      if (abierto) {
+        throw conflicto(
+          'ANTERIORES_ABIERTOS',
+          `Cierre primero ${nombrePeriodo(abierto)}: los períodos se cierran en orden`,
+        )
+      }
+      // RF-08.1: no se cierra con borradores pendientes
+      const borradores = await trx('comprobantes')
+        .where({ periodo_id: id, estado: 'BORRADOR' })
+        .count({ n: '*' })
+        .first()
+      if (Number(borradores.n) > 0) {
+        throw conflicto(
+          'PERIODO_CON_BORRADORES',
+          `${nombrePeriodo(p)} tiene ${borradores.n} comprobante(s) en borrador: apruébelos o elimínelos antes de cerrar`,
+        )
+      }
 
-    await repo.cambiarEstado(
-      id,
-      { estado: 'CERRADO', cerrado_en: trx.raw('UTC_TIMESTAMP()'), cerrado_por: actor.id },
-      trx,
-    )
-    await registrar(trx, {
-      usuarioId: actor.id,
-      accion: ACCIONES.CERRAR_PERIODO,
-      entidad: 'periodos',
-      entidadId: id,
-      antes: { periodo: nombrePeriodo(p), estado: 'ABIERTO' },
-      despues: { periodo: nombrePeriodo(p), estado: 'CERRADO' },
-      ctx,
-    })
-    return aPeriodo(await repo.periodoPorId(id, trx))
-  })
+      // Las cuentas en divisas se ajustan a la tasa del cierre antes de cerrar el mes
+      const diferencial = await generarDiferencial(p, actor, ctx, trx)
+
+      await repo.cambiarEstado(
+        id,
+        { estado: 'CERRADO', cerrado_en: trx.raw('UTC_TIMESTAMP()'), cerrado_por: actor.id },
+        trx,
+      )
+      await registrar(trx, {
+        usuarioId: actor.id,
+        accion: ACCIONES.CERRAR_PERIODO,
+        entidad: 'periodos',
+        entidadId: id,
+        antes: { periodo: nombrePeriodo(p), estado: 'ABIERTO' },
+        despues: {
+          periodo: nombrePeriodo(p),
+          estado: 'CERRADO',
+          ...(diferencial ? { diferencialCambiario: diferencial.codigo } : {}),
+        },
+        ctx,
+      })
+      return { ...aPeriodo(await repo.periodoPorId(id, trx)), diferencial }
+    },
+    { isolationLevel: 'read committed' },
+  )
 }
 
 export async function reabrir(id, motivo, actor, ctx) {

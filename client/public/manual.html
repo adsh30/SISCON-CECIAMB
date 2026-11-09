@@ -1064,6 +1064,26 @@
           <span class="boton">Cambiar logo</span>; para dejar los reportes sin logo,
           <span class="boton">Quitar logo</span>. Cada cambio queda en la bitácora.
         </p>
+        <h3>Diferencial cambiario</h3>
+        <p>
+          Elija las cuentas contra las que se registra el
+          <a href="#diferencial">diferencial cambiario</a> al cerrar cada período:
+        </p>
+        <ul>
+          <li>
+            <strong>Ganancia en diferencial cambiario</strong>: una cuenta de ingreso, de
+            movimiento y en bolívares (de fábrica, <em>4.2.01 Ganancia en Diferencial Cambiario</em>).
+          </li>
+          <li>
+            <strong>Pérdida en diferencial cambiario</strong>: una cuenta de gasto o costo, de
+            movimiento y en bolívares (de fábrica, <em>6.2.01 Pérdida en Diferencial Cambiario</em>).
+          </li>
+        </ul>
+        <p>
+          Búsquelas por código o nombre y pulse <span class="boton">Guardar cuentas</span>. Aparece
+          el aviso <strong>Cuentas del diferencial cambiario guardadas</strong>. Mientras estén
+          elegidas aquí, esas cuentas no se pueden eliminar ni desactivar.
+        </p>
       </section>
 
       <section id="periodos">
@@ -1114,13 +1134,60 @@
             <span class="boton">Cerrar período</span> aparece solo en el primer mes abierto, y solo
             si ese mes ya comenzó.
           </li>
-          <li>Púlselo y confirme con <span class="boton">Cerrar período</span>.</li>
+          <li>
+            Púlselo. La ventana muestra el <strong>Diferencial cambiario</strong> que se registrará
+            (vea el apartado siguiente). Confirme con <span class="boton">Cerrar período</span> o,
+            si hay ajustes, con <span class="boton">Registrar diferencial y cerrar</span>.
+          </li>
           <li>
             La tarjeta pasa a <strong>Cerrado</strong> y muestra quién lo cerró y cuándo. Queda en
             la bitácora como <em>Cierre de período</em>.
           </li>
         </ol>
         <p>Pueden cerrar el Administrador y el Contador general.</p>
+
+        <h3 id="diferencial">Diferencial cambiario al cierre</h3>
+        <p>
+          Las cuentas que se llevan en divisas (por ejemplo <em>Caja en Divisas</em> en USD o
+          <em>Activos Digitales</em> en USDT, vea el apartado
+          <a href="#cuentas-divisas">Cuentas en divisas</a>) se ajustan solas al cerrar cada
+          período. Para cada <strong>auxiliar</strong> el sistema calcula:
+        </p>
+        <ul>
+          <li>
+            <strong>Saldo ajustado</strong> = saldo en divisa × tasa del último día del mes (USD y
+            EUR con la tasa del BCV; USDT con la referencia de Binance).
+          </li>
+          <li><strong>Diferencia</strong> = saldo ajustado − saldo en bolívares.</li>
+        </ul>
+        <p>
+          La ventana de cierre muestra una tabla con cada auxiliar (y su cuenta de grupo), el saldo
+          en divisa, la tasa con su fuente y fecha, el saldo en Bs, el saldo ajustado y la
+          diferencia, más los totales de <strong>Ganancia cambiaria</strong>,
+          <strong>Pérdida cambiaria</strong> y <strong>Efecto neto</strong>.
+        </p>
+        <p>
+          Al confirmar, el sistema registra y aprueba un comprobante de tipo
+          <strong>DIF · Diferencial cambiario</strong> con fecha del último día del mes (por ejemplo
+          <em>DIF-2026-10-0001</em>): si la divisa subió, el auxiliar va al Debe y la cuenta de
+          ganancia al Haber; si bajó, la cuenta de pérdida va al Debe y el auxiliar al Haber. Cada
+          renglón explica el cálculo, por ejemplo «USD 100,00 × 40,0000 (BCV 31/10/2026)».
+        </p>
+        <ul>
+          <li>
+            Si no hay cuentas en divisas con saldo, o ya están a la tasa del cierre, no se registra
+            nada.
+          </li>
+          <li>
+            Si falta la tasa de una divisa o la cuenta de ganancia o de pérdida, la ventana lo
+            indica en <em>Corrija esto antes de cerrar</em> y el cierre queda bloqueado. Las cuentas
+            se eligen en <a href="#empresa">Datos de la empresa → Diferencial cambiario</a>.
+          </li>
+          <li>
+            Si reabre un período y lo vuelve a cerrar, solo se registra lo que haya cambiado: el
+            ajuste anterior ya está contabilizado y no se repite.
+          </li>
+        </ul>
 
         <h3>Reabrir un período</h3>
         <p>
@@ -1172,6 +1239,31 @@
           <li>
             <strong>Cuentas de grupo:</strong> Agrupan y totalizan los saldos de sus subcuentas; no
             reciben asientos directos ni pueden tener comprobantes.
+          </li>
+        </ul>
+
+        <h3 id="cuentas-divisas">Cuentas en divisas</h3>
+        <p>
+          Las cuentas de <strong>Activo</strong> o <strong>Pasivo</strong> se pueden llevar en
+          <strong>USD</strong>, <strong>EUR</strong> o <strong>USDT</strong> con el campo
+          <strong>Moneda de la cuenta</strong> al crearla o editarla. En el árbol muestran una
+          etiqueta con la divisa. El sistema trae de ejemplo <em>1.1.01.03 Caja en Divisas</em>
+          (USD, con su auxiliar <em>Caja Principal en Dólares</em>) y
+          <em>1.1.01.04 Activos Digitales</em> (USDT, con <em>Billetera Binance USDT</em>).
+        </p>
+        <ul>
+          <li>
+            Si la moneda se pone en una <strong>cuenta de grupo</strong>, la heredan todos sus
+            <strong>auxiliares</strong>, los que ya existen y los que se creen después. En el
+            auxiliar el campo aparece bloqueado con el texto «La define la cuenta superior».
+          </li>
+          <li>
+            Cada auxiliar se ajusta por separado en el
+            <a href="#diferencial">diferencial cambiario</a> del cierre, con su propio saldo.
+          </li>
+          <li>
+            La moneda no se puede cambiar si la cuenta o sus auxiliares ya tienen movimientos. En
+            ese caso cree un auxiliar nuevo en la divisa y traspase el saldo con un comprobante.
           </li>
         </ul>
 
@@ -1320,6 +1412,16 @@
             <strong>Haber</strong>, nunca en los dos: al escribir en uno, el otro se borra. Los
             montos se escriben como <code>1.500,50</code>, <code>1500,50</code> o
             <code>1500.50</code>.
+          </li>
+          <li>
+            Si la cuenta se lleva en divisas (su etiqueta muestra <strong>USD</strong>,
+            <strong>EUR</strong> o <strong>USDT</strong>), debajo aparece el campo del
+            <strong>monto en la divisa</strong>: escriba cuántos dólares, euros o USDT se movieron y,
+            en Debe o Haber, su equivalente en bolívares. Al lado se ve la
+            <strong>tasa</strong> que resulta (bolívares ÷ divisa) para comprobarla. Es obligatorio:
+            sin él aparece «la cuenta se lleva en USD; indique el monto en USD». Solo los
+            comprobantes de tipo <em>DIF · Diferencial cambiario</em> pueden omitirlo, porque
+            ajustan únicamente bolívares.
           </li>
           <li>
             <kbd>Enter</kbd> pasa al campo siguiente. Con un monto en Debe salta directo al renglón

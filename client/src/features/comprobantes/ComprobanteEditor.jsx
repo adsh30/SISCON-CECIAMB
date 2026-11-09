@@ -27,11 +27,12 @@ import { renglonVacio } from './renglones.js'
 const desdeServidor = (r) =>
   renglonVacio({
     cuentaId: r.cuentaId,
-    cuenta: { codigo: r.cuentaCodigo, nombre: r.cuentaNombre },
+    cuenta: { codigo: r.cuentaCodigo, nombre: r.cuentaNombre, moneda: r.cuentaMoneda },
     centroCostoId: r.centroCostoId ? String(r.centroCostoId) : '',
     descripcion: r.descripcion ?? '',
     debe: esCero(r.debe) ? '' : r.debe,
     haber: esCero(r.haber) ? '' : r.haber,
+    montoMoneda: r.montoMoneda ?? '',
     referencia: r.referencia ?? '',
   })
 
@@ -57,7 +58,12 @@ function erroresDe(error) {
     } else cabecera[raiz] ??= d.mensaje
   }
   const n = error?.message?.match(/^Renglón (\d+):/)
-  if (n) renglones[Number(n[1]) - 1] = { mensaje: error.message, campo: 'cuentaId' }
+  if (n) {
+    renglones[Number(n[1]) - 1] = {
+      mensaje: error.message,
+      campo: error.code === 'FALTA_MONTO_DIVISA' ? 'montoMoneda' : 'cuentaId',
+    }
+  }
   return { cabecera, renglones }
 }
 
@@ -97,6 +103,8 @@ export function ComprobanteEditor({ comprobante, tipoInicial }) {
   // Sin tipo elegido (p. ej. desde la pestaña Todos) se propone el primero activo
   const tipoId = cabecera.tipoId || String(tipos.find((t) => t.activo)?.id ?? '')
   const tiposActivos = tipos.filter((t) => t.activo || String(t.id) === tipoId)
+  // Los comprobantes de diferencial cambiario ajustan solo bolívares
+  const esDiferencial = tipos.find((t) => String(t.id) === tipoId)?.codigo === 'DIF'
   const usados = renglones.filter((r) => !vacio(r))
   const totales = totalesRenglones(usados)
   const periodo = periodos ? periodoDe(cabecera.fecha, periodos.ejercicios) : undefined
@@ -132,6 +140,7 @@ export function ComprobanteEditor({ comprobante, tipoInicial }) {
         descripcion: r.descripcion,
         debe: r.debe || '0',
         haber: r.haber || '0',
+        montoMoneda: r.cuenta?.moneda ? r.montoMoneda || null : null,
         referencia: r.referencia,
       })),
     }),
@@ -144,7 +153,12 @@ export function ComprobanteEditor({ comprobante, tipoInicial }) {
     usados.forEach((r, i) => {
       if (!r.cuentaId)
         renglonesConError[i] = { mensaje: `Renglón ${i + 1}: elija la cuenta`, campo: 'cuentaId' }
-      else if (esCero(r.debe) === esCero(r.haber)) {
+      else if (r.cuenta?.moneda && esCero(r.montoMoneda) && !esDiferencial) {
+        renglonesConError[i] = {
+          mensaje: `Renglón ${i + 1}: la cuenta se lleva en ${r.cuenta.moneda}; indique el monto en ${r.cuenta.moneda}`,
+          campo: 'montoMoneda',
+        }
+      } else if (esCero(r.debe) === esCero(r.haber)) {
         renglonesConError[i] = {
           mensaje: `Renglón ${i + 1}: escriba el monto en Debe o en Haber`,
           campo: 'debe',

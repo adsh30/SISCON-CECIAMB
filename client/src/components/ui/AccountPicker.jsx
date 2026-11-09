@@ -171,6 +171,14 @@ export function AccountPicker({
                   )}
                 </div>
                 <div className="flex shrink-0 items-center gap-1.5">
+                  {c.moneda && (
+                    <span
+                      className="rounded bg-aviso-claro px-1.5 py-0.5 text-[10px] font-semibold text-aviso"
+                      title={`Cuenta en ${c.moneda}: el renglón lleva también el monto en ${c.moneda}`}
+                    >
+                      {c.moneda}
+                    </span>
+                  )}
                   <span
                     className={`rounded px-1.5 py-0.5 text-[10px] font-medium uppercase ${
                       c.naturaleza === 'DEUDORA'
