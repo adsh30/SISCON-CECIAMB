@@ -1,0 +1,4256 @@
+{
+  "origen": "Plan de cuentas HCC exportado de Sparrow (docs/plan de cuentas HCC.XLS)",
+  "totalDebe": "46158288.30",
+  "totalHaber": "46158288.30",
+  "cuentas": [
+    {
+      "codigo": "1",
+      "nombre": "ACTIVOS",
+      "nivel": 1,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "11",
+      "nombre": "ACTIVO CIRCULANTE",
+      "nivel": 2,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "111",
+      "nombre": "DISPONIBLE",
+      "nivel": 3,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "1111",
+      "nombre": "CAJA",
+      "nivel": 4,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "111101",
+      "nombre": "CAJA PRINCIPAL",
+      "nivel": 5,
+      "debe": "3377748.56",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "111102",
+      "nombre": "CAJA CHICA",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "111103",
+      "nombre": "CAJA",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "111105",
+      "nombre": "CAJA EN DIVISAS",
+      "nivel": 5,
+      "debe": "110730.19",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "1112",
+      "nombre": "BANCO",
+      "nivel": 4,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "111201",
+      "nombre": "BANCO DE VENEZUELA",
+      "nivel": 5,
+      "debe": "251254.63",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "111202",
+      "nombre": "BANCO CARONI",
+      "nivel": 5,
+      "debe": "12886.95",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "111203",
+      "nombre": "BANCO MERCANTIL",
+      "nivel": 5,
+      "debe": "437494.05",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "111204",
+      "nombre": "BANCO B.O.D",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "111205",
+      "nombre": "BANCO DE SUR",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "111206",
+      "nombre": "BANCO PROVINCIAL DIVISAS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "111207",
+      "nombre": "BANCO BANESCO DIVISAS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "111208",
+      "nombre": "BANCO PROVINCIAL",
+      "nivel": 5,
+      "debe": "3754.11",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "111209",
+      "nombre": "BANCO NACIONAL DE CREDITO",
+      "nivel": 5,
+      "debe": "434969.88",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "111210",
+      "nombre": "FIDEICOMISO BANCO CARONI",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "111211",
+      "nombre": "BANCO NACIONAL DE CREDITO DIVISAS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "111212",
+      "nombre": "BANCO NACIONAL DE CREDITO 0191-0047-2321-4713-3104 (CASHEA)",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "111214",
+      "nombre": "BANCO EXTERIOR",
+      "nivel": 5,
+      "debe": "1260.22",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "111216",
+      "nombre": "BANCO EN DIVISAS $$",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "111218",
+      "nombre": "BANPLUS",
+      "nivel": 5,
+      "debe": "4006.54",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "111220",
+      "nombre": "BANCO DEL TESORO.",
+      "nivel": 5,
+      "debe": "13.24",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "111222",
+      "nombre": "BANPLUS DIVISAS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "111224",
+      "nombre": "BANESCO BANCO UNIVERSAL",
+      "nivel": 5,
+      "debe": "5271.76",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "111225",
+      "nombre": "BANCAMIGA BANCO UNIVERSAL C.A.",
+      "nivel": 5,
+      "debe": "20000.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "112",
+      "nombre": "EXIGIBLE",
+      "nivel": 3,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "1121",
+      "nombre": "CUENTAS POR COBRAR",
+      "nivel": 4,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "112101",
+      "nombre": "CUENTAS POR COBRAR COMERCIALES",
+      "nivel": 5,
+      "debe": "31477201.75",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "112102",
+      "nombre": "ANTICIPO DE CLIENTES",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "112103",
+      "nombre": "ANTICIPO DE PACIENTE",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "112104",
+      "nombre": "CUENTA POR COBRAR CASHEA",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "1122",
+      "nombre": "OTRAS CUENTAS POR COBRAR",
+      "nivel": 4,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "112201",
+      "nombre": "CUENTAS POR COBRAR ACCIONISTAS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "112202",
+      "nombre": "CUENTAS POR COBRAR EMPLEADOS",
+      "nivel": 5,
+      "debe": "168453.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "112203",
+      "nombre": "CUENTAS POR COBRAR MEDICOS",
+      "nivel": 5,
+      "debe": "1129.50",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "112205",
+      "nombre": "CUENTAS POR COBRAR ICG,C.A",
+      "nivel": 5,
+      "debe": "75295.27",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "112207",
+      "nombre": "CUENTAS POR COBRAR I.C.I.",
+      "nivel": 5,
+      "debe": "446328.40",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "112208",
+      "nombre": "CUENTAS POR COBRAR CECIAMB,C.A",
+      "nivel": 5,
+      "debe": "744316.82",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "112210",
+      "nombre": "CUENTAS POR COBRAR PRECARDIO",
+      "nivel": 5,
+      "debe": "11596.64",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "112212",
+      "nombre": "CUENTAS POR COBRAR FARMACIA ENTRE RIOS,C.A",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "112213",
+      "nombre": "CUENTAS POR COBRAR INVERSIONES 2H,C.A",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "1123",
+      "nombre": "EFECTOS POR COBRAR",
+      "nivel": 4,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "112301",
+      "nombre": "EFECTOS POR COBRAR COMERCIALES",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "112302",
+      "nombre": "EFECTOS POR COBRAR PARTICULARES",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "1124",
+      "nombre": "CREDITOS FISCALES",
+      "nivel": 4,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "112401",
+      "nombre": "IVA CREDITO FISCAL",
+      "nivel": 5,
+      "debe": "38394.75",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "112402",
+      "nombre": "IVA RETENIDO POR TERCEROS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "112403",
+      "nombre": "EXCEDENTE DE CREDITO FISCAL",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "113",
+      "nombre": "REALIZABLE",
+      "nivel": 3,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "1131",
+      "nombre": "INVENTARIO",
+      "nivel": 4,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "113101",
+      "nombre": "INVENTARIO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "114",
+      "nombre": "GASTOS PAGADOS POR ANTICIPADO",
+      "nivel": 3,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "1141",
+      "nombre": "ANTICIPOS",
+      "nivel": 4,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "114101",
+      "nombre": "ANTICIPOS A PROVEEDORES",
+      "nivel": 5,
+      "debe": "6083763.13",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "114102",
+      "nombre": "ANTICIPOS HONORARIOS",
+      "nivel": 5,
+      "debe": "8440.79",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "114103",
+      "nombre": "ANTICIPO A EMPLEADOS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "114104",
+      "nombre": "ANTICIPO DE UTILIDADES",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "1142",
+      "nombre": "IMPUESTOS Y CONTRIBUCIONES",
+      "nivel": 4,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "114201",
+      "nombre": "ISLR RETENIDO POR TERCEROS",
+      "nivel": 5,
+      "debe": "735468.56",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "114202",
+      "nombre": "IMPUESTOS MUNICIPALES RETENIDOS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "114203",
+      "nombre": "IMPUESTO SOBRE LA RENTA POR COMPENSAR",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "114204",
+      "nombre": "ESTIMADA DE ISLR",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "114205",
+      "nombre": "IMPUESTO IVA DECLARADO POR ANTICIPADO 99057",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "114206",
+      "nombre": "IMPUESTO ISLR DECLARADO POR ANTICIPADO 99044",
+      "nivel": 5,
+      "debe": "392824.41",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "114207",
+      "nombre": "EXCEDENTE DE CREDITO FISCAL",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "1143",
+      "nombre": "SEGUROS",
+      "nivel": 4,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "114301",
+      "nombre": "SEGUROS PAGADO POR ANTICIPADO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "1144",
+      "nombre": "ALQUILERES",
+      "nivel": 4,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "114401",
+      "nombre": "ALQUILERES PAGADOS POR ANTICIPADO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "1145",
+      "nombre": "OTROS GASTOS PAGADOS POR ANTICIPADO",
+      "nivel": 4,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "12",
+      "nombre": "ACTIVO FIJO",
+      "nivel": 2,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "121",
+      "nombre": "PROPIEDAD PLANTA Y EQUIPOS",
+      "nivel": 3,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "1211",
+      "nombre": "ACTIVOS FIJOS DEPRECIABLES",
+      "nivel": 4,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "121101",
+      "nombre": "EDIFICIO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "121102",
+      "nombre": "MOBILIARIO Y EQUIPOS DE OFICINA",
+      "nivel": 5,
+      "debe": "156374.74",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "121103",
+      "nombre": "EQUIPOS DE COMPUTACION Y COMUNICACIÒN",
+      "nivel": 5,
+      "debe": "43294.10",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "121104",
+      "nombre": "VEHICULO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "121105",
+      "nombre": "EQUIPOS MEDICOS",
+      "nivel": 5,
+      "debe": "225369.57",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "121106",
+      "nombre": "EQUIPOS DE LABORATORIO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "121107",
+      "nombre": "MOBILIARIO Y EQUIPOS DE HOSPITALIZACION",
+      "nivel": 5,
+      "debe": "40131.98",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "121108",
+      "nombre": "MEJORAS A LA PROPIEDAD ARRENDADA",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "121110",
+      "nombre": "INSTALACIONES EDIFICIO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "121112",
+      "nombre": "LOCALES COMERCIALES",
+      "nivel": 5,
+      "debe": "515.96",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "121201",
+      "nombre": "DEPRECIACION ACUM. EDIFICIO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "121202",
+      "nombre": "DEPRECIACION ACUM. MOBILIARIO Y EQUIPOS DE OFICINA",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "32500.00"
+    },
+    {
+      "codigo": "121203",
+      "nombre": "DEPRECIACION ACUM. EQUIPOS DE COMPUTACION Y COMUNICACIÒN",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "121204",
+      "nombre": "DEPRECIACION ACUM. VEHICULO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "121205",
+      "nombre": "DEPRECIACION ACUM. EQUIPOS MEDICOS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "26800.00"
+    },
+    {
+      "codigo": "121206",
+      "nombre": "DEPRECIACION ACUM. EQUIPOS DE LABORATORIO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "121207",
+      "nombre": "DEPRECIACION ACUM. MOBILIARIO Y EQUIPOS DE HOSPITALIZACION",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "121208",
+      "nombre": "DEPRECIACION DE MEJORAS A LA PROPIEDAD ARRENDADA",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "121210",
+      "nombre": "DEPRECIACION ACUMULADA DE INSTALACIONES EDIFICIO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "121212",
+      "nombre": "DEPRECIACION ACUMULADA LOCALES COMERCIALES",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "122",
+      "nombre": "ACTIVOS INTANGIBLES",
+      "nivel": 3,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "1221",
+      "nombre": "ACTIVOS INTANGIBLES",
+      "nivel": 4,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "122101",
+      "nombre": "LICENCIA SOFTWARE",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "122102",
+      "nombre": "AMORTIZACION LICENCIA SOFTWARE",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "13",
+      "nombre": "CARGOS DIFERIDOS",
+      "nivel": 2,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "131",
+      "nombre": "CARGOS DIFERIDOS",
+      "nivel": 3,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "1311",
+      "nombre": "CARGOS DIFERIDOS",
+      "nivel": 4,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "131101",
+      "nombre": "GASTOS DE CONSTITUCION",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "131102",
+      "nombre": "GASTOS DE INSTALACION Y MEJORAS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "131103",
+      "nombre": "CAMPAÑA PUBLICITARIA",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "14",
+      "nombre": "OTROS ACTIVOS",
+      "nivel": 2,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "141",
+      "nombre": "OTROS ACTIVOS",
+      "nivel": 3,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "1411",
+      "nombre": "OTROS ACTIVOS",
+      "nivel": 4,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "141101",
+      "nombre": "FONDO OPCION COMPRA LOCALES",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "141102",
+      "nombre": "CONSTRUCCIONES EN PROCESO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "141103",
+      "nombre": "DEPOSITOS DADOS EN GARANTIA",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "142",
+      "nombre": "BIENES EN ARRENDAMIENTO FINANCIERO",
+      "nivel": 3,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "1421",
+      "nombre": "BIENES EN ARRENDAMIENTO FINANCIERO",
+      "nivel": 4,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "142101",
+      "nombre": "BIENES EN ARRENDAMIENTO FINANCIERO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "142102",
+      "nombre": "AMORTIZACION DE BIENES EN ARRENDAMIENTO FINANCIERO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "143",
+      "nombre": "INVERSIONES PERMANENTES",
+      "nivel": 3,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "1431",
+      "nombre": "INVERSIONES PERMANENTES",
+      "nivel": 4,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "143101",
+      "nombre": "INVERSIONES INMUEBLES",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "143102",
+      "nombre": "INVERSIONES EN BONOS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "143103",
+      "nombre": "INVERSIONES EN ACCIONES",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "143104",
+      "nombre": "INVERSIONES EN ACCIONES ICG, C.A",
+      "nivel": 5,
+      "debe": "849998.80",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "2",
+      "nombre": "PASIVO",
+      "nivel": 1,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "21",
+      "nombre": "PASIVO CIRCULANTE",
+      "nivel": 2,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "211",
+      "nombre": "PASIVO CIRCULANTE",
+      "nivel": 3,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "2111",
+      "nombre": "PAGARES BANCARIOS",
+      "nivel": 4,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "211101",
+      "nombre": "PAGARES BANCARIOS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "2112",
+      "nombre": "CUENTAS POR PAGAR PROVEEDORES",
+      "nivel": 4,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "211201",
+      "nombre": "CUENTAS POR PAGAR PROVEEDORES",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "3021896.85"
+    },
+    {
+      "codigo": "211202",
+      "nombre": "CUENTAS POR PAGAR SEGUROS (POLIZAS VARIAS)",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "211203",
+      "nombre": "CUENTAS POR PAGAR PRECARDIO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "211205",
+      "nombre": "CUENTAS POR PAGAR FARMACIA ENTRE RIOS,C.A",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "1636231.99"
+    },
+    {
+      "codigo": "211207",
+      "nombre": "CUENTAS POR PAGAR DIRECTV",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "211210",
+      "nombre": "CUENTAS POR PAGAR CECIAMB.C.A",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "211215",
+      "nombre": "CUENTAS POR PAGAR INSTITUTO CLINICO INFANTIL,C.A",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "211217",
+      "nombre": "CUENTAS POR PAGAR INSTITUTO CARDIOVASCULAR DE GUAYANA,C.A",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "736815.83"
+    },
+    {
+      "codigo": "211220",
+      "nombre": "CUENTAS POR PAGAR SSO CONVENIO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "2113",
+      "nombre": "OTRAS CUENTAS POR PAGAR",
+      "nivel": 4,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "211301",
+      "nombre": "OTRAS ASIGNACIONES POR PAGAR EMPLEADOS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "211302",
+      "nombre": "CUENTAS POR PAGAR ACCIONISTAS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "211303",
+      "nombre": "ARRENDAMIENTO FINANCIERO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "211304",
+      "nombre": "CESTA TICKET POR PAGAR",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "211305",
+      "nombre": "REINTEGRO PACIENTE",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "211309",
+      "nombre": "DEPOSITOS POR IDENTIFICAR",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "211311",
+      "nombre": "CUENTA POR PAGAR TEMPORAL HONORARIOS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "3886627.99"
+    },
+    {
+      "codigo": "211313",
+      "nombre": "CUENTAS POR PAGAR TEC.RADIOLOGO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "43231.96"
+    },
+    {
+      "codigo": "211314",
+      "nombre": "CUENTA POR PAGAR HONORARIOS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "10846065.35"
+    },
+    {
+      "codigo": "211315",
+      "nombre": "NOMINA POR PAGAR",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "211317",
+      "nombre": "VACACIONES POR PAGAR",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "5084.24"
+    },
+    {
+      "codigo": "211319",
+      "nombre": "INTERESES PRESTACIONES POR PAGAR",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "211321",
+      "nombre": "PRESTACIONES SOCIALES POR PAGAR",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "211322",
+      "nombre": "SUPLENCIA POR PAGAR",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "211323",
+      "nombre": "UTILIDADES POR PAGAR",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "211325",
+      "nombre": "GUARDIA POR PAGAR",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "211326",
+      "nombre": "GUARDERIA POR PAGAR",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "211327",
+      "nombre": "POR PAGAR DEBITOS FISCALES FACTURAS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "2114",
+      "nombre": "IMPUESTOS Y RETENCIONES POR PAGAR",
+      "nivel": 4,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "211401",
+      "nombre": "IVA DEBITO FISCAL",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "56486.85"
+    },
+    {
+      "codigo": "211402",
+      "nombre": "IVA RETENIDO A TERCEROS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "21820.21"
+    },
+    {
+      "codigo": "211403",
+      "nombre": "RETENCION DE ISLR SUELDOS, SALARIOS Y OTRAS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "190.07"
+    },
+    {
+      "codigo": "211404",
+      "nombre": "SSO Y PARO FORZOSO RETENIDO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "7437.08"
+    },
+    {
+      "codigo": "211405",
+      "nombre": "BANAVIH RETENIDO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "7259.68"
+    },
+    {
+      "codigo": "211406",
+      "nombre": "INCE RETENIDO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "163.05"
+    },
+    {
+      "codigo": "211407",
+      "nombre": "RETENCION MUNICIPAL POR ENTERAR",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "23320.36"
+    },
+    {
+      "codigo": "211408",
+      "nombre": "ISLR POR ENTERAR",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "154149.66"
+    },
+    {
+      "codigo": "211409",
+      "nombre": "IGTF PERCIBIDO POR PAGAR",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "211410",
+      "nombre": "RETENCION INCES 0.5% UTILIDADES",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "1275.21"
+    },
+    {
+      "codigo": "211411",
+      "nombre": "IVA POR PAGAR",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "19357.38"
+    },
+    {
+      "codigo": "211412",
+      "nombre": "APORTE PATRONAL ( S.S.O 11%)",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "163434.65"
+    },
+    {
+      "codigo": "211413",
+      "nombre": "IMPUESTO SOBRE LA RENTA POR PAGAR",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "211414",
+      "nombre": "APORTE PATRONAL ( S.P.F 4%)",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "34986.91"
+    },
+    {
+      "codigo": "211415",
+      "nombre": "ISLR POR PAGAR",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "211416",
+      "nombre": "APORTE PATRONAL F.A.O.V.",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "51720.65"
+    },
+    {
+      "codigo": "2116",
+      "nombre": "ANTICIPOS RECIBIDOS",
+      "nivel": 4,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "211601",
+      "nombre": "ANTICIPO CLIENTES",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "10002312.26"
+    },
+    {
+      "codigo": "211602",
+      "nombre": "ANTICIPO POR PAGO DEMAS CLIENTES",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "211603",
+      "nombre": "IGTF EN TRANSITO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "2117",
+      "nombre": "DIVIDENDOS POR PAGAR",
+      "nivel": 4,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "2118",
+      "nombre": "OTROS PASIVOS",
+      "nivel": 4,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "211801",
+      "nombre": "NC TEMPORALES POR APLICACION",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "22",
+      "nombre": "PASIVO A LARGO PLAZO",
+      "nivel": 2,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "221",
+      "nombre": "PASIVO A LARGO PLAZO",
+      "nivel": 3,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "2211",
+      "nombre": "PASIVO A LARGO PLAZO",
+      "nivel": 4,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "221101",
+      "nombre": "PRESTAMOS BANCARIOS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "221102",
+      "nombre": "ARRENDAMIENTO FINANCIERO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "221103",
+      "nombre": "DEPOSITOS RECIBIDOS EN GARANTIA",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "221104",
+      "nombre": "PRESTAMO PROVINCIAL 93511",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "221105",
+      "nombre": "PRESTAMO PROVINCIAL 101611",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "221106",
+      "nombre": "PRESTAMO PROVINCIAL 100895",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "221108",
+      "nombre": "PRESTAMO MERCANTIL 61104476",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "221109",
+      "nombre": "PRESTAMO MERCANTIL 61103982",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "221110",
+      "nombre": "PRESTAMO MERCANTIL 61104090",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "221111",
+      "nombre": "PRESTAMO CARONI 8757",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "221113",
+      "nombre": "PRESTAMO CARONI 10 MILL.",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "221115",
+      "nombre": "PRESTAMO CARONI 1500007615",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "221117",
+      "nombre": "PRESTAMO CARONI N°11298 55 MILLONES",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "221118",
+      "nombre": "PRESTAMO VENEZUELA 25 MILL.",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "221120",
+      "nombre": "PRESTAMO CARONI 100 MILLONES N° 11636",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "221122",
+      "nombre": "PRESTAMO N° 12160 BANCO CARONI",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "221126",
+      "nombre": "PRESTAMO CARONI 969 MILLONES",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "221128",
+      "nombre": "PRESTAMO CARONI NRO 13363 ( 790.341 MILLONES)",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "221130",
+      "nombre": "PRESTAMO CARONI NRO.14093 ( 12 MM)",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "2212",
+      "nombre": "PROVISIONES BENEFICIOS LABORALES",
+      "nivel": 4,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "221201",
+      "nombre": "VACACIONES",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "221202",
+      "nombre": "BONO VACACIONAL",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "221203",
+      "nombre": "UTILIDADES",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "221204",
+      "nombre": "PRESTACIONES SOCIALES",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "221205",
+      "nombre": "INTERESES SOBRE PRESTACIONES SOCIALES",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "221206",
+      "nombre": "ADELANTO DE PRESTACIONES SOCIALES",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "23",
+      "nombre": "CREDITOS DIFERIDOS",
+      "nivel": 2,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "231",
+      "nombre": "CREDITOS DIFERIDOS",
+      "nivel": 3,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "2311",
+      "nombre": "CREDITOS DIFERIDOS",
+      "nivel": 4,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "231101",
+      "nombre": "INTERESES COBRADOS POR ANTICIPADO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "231102",
+      "nombre": "ALQUILERES COBRADOS POR ANTICIPADO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "3",
+      "nombre": "PATRIMONIO",
+      "nivel": 1,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "31",
+      "nombre": "CAPITAL SOCIAL",
+      "nivel": 2,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "311",
+      "nombre": "CAPITAL SOCIAL SUSCRITO Y PAGADO",
+      "nivel": 3,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "3111",
+      "nombre": "CAPITAL SOCIAL SUSCRITO Y PAGADO",
+      "nivel": 4,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "311101",
+      "nombre": "CAPITAL SOCIAL SUSCRITO Y PAGADO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "200000.00"
+    },
+    {
+      "codigo": "32",
+      "nombre": "SUPERAVIT O DEFICIT",
+      "nivel": 2,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "321",
+      "nombre": "SUPERAVIT O DEFICIT",
+      "nivel": 3,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "3211",
+      "nombre": "SUPERAVIT O DEFICIT",
+      "nivel": 4,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "321101",
+      "nombre": "UTILIDAD O PERDIDA DEL EJERCICIO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "8851.96"
+    },
+    {
+      "codigo": "321102",
+      "nombre": "UTILIDADES NO DISTRIBUIDAS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "7606650.27"
+    },
+    {
+      "codigo": "321103",
+      "nombre": "UTILIDAD O PERDIDA 2020",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "35962.15"
+    },
+    {
+      "codigo": "321104",
+      "nombre": "UTILIDAD O PERDIDA DEL EJERCICIO 2024",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "7527295.73"
+    },
+    {
+      "codigo": "33",
+      "nombre": "RESERVAS",
+      "nivel": 2,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "331",
+      "nombre": "RESERVAS",
+      "nivel": 3,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "3311",
+      "nombre": "RESERVAS",
+      "nivel": 4,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "331101",
+      "nombre": "RESERVA LEGAL",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "40.00"
+    },
+    {
+      "codigo": "34",
+      "nombre": "AJUSTE POR INFLACION",
+      "nivel": 2,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "341",
+      "nombre": "AJUSTE POR INFLACION",
+      "nivel": 3,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "3411",
+      "nombre": "AJUSTE POR INFLACION",
+      "nivel": 4,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "341101",
+      "nombre": "REVALORIZACION DE PATRIMONIO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "319.96"
+    },
+    {
+      "codigo": "4",
+      "nombre": "INGRESOS",
+      "nivel": 1,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "41",
+      "nombre": "VENTAS",
+      "nivel": 2,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "411",
+      "nombre": "VENTAS",
+      "nivel": 3,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "4111",
+      "nombre": "VENTAS",
+      "nivel": 4,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "411101",
+      "nombre": "INGRESOS POR SERVICIOS MEDICOS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "411104",
+      "nombre": "RECUPERACION EMPRESAS SEGUROS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "411106",
+      "nombre": "INGRESOS POR HOSPITALIZACION",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "411109",
+      "nombre": "INGRESOS POR LABORATORIO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "411112",
+      "nombre": "INGRESOS POR IMAGENES (RX)",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "411115",
+      "nombre": "INGRESOS POR CONSULTAS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "411118",
+      "nombre": "INGRESOS POR GASTOS ADMINISTRATIVOS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "411121",
+      "nombre": "INGRESOS POR MED/MAT. MEDICO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "411124",
+      "nombre": "INGRESOS POR TRATAMIENTO MEDICO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "411127",
+      "nombre": "INGRESOS POR IMAG. TOMOGRAFIA",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "411130",
+      "nombre": "INGRESOS POR IMAG. DENSITOMETRO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "411133",
+      "nombre": "INGRESOS PARA IMAG. ECOGRAFIA",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "411136",
+      "nombre": "INGRESOS POR BANCO DE SANGRE",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "411139",
+      "nombre": "INGRESOS POR ELECTROENCEFALOGRAMA",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "411140",
+      "nombre": "INGRESOS POR ELECTROCARDIOGRAMA",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "411142",
+      "nombre": "INGRESOS POR ESTUDIOS MEDICOS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "411143",
+      "nombre": "INGRESOS POR UCI",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "411145",
+      "nombre": "INGRESOS POR CONSULTAS FISICA REHAB. Y FISIOTERAPIA",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "411148",
+      "nombre": "INGRESOS POR DEDUCIBLES PARA INTERVENCION",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "411151",
+      "nombre": "INGRESOS POR SERVICIOS CLINICOS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "411152",
+      "nombre": "INGRESOS POR NUTRICION Y DIETA",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "411154",
+      "nombre": "INGRESOS POR CONDOMINIO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "411156",
+      "nombre": "INGRESOS POR ALQUILERES",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "411157",
+      "nombre": "SOBRANTE EN PAGO REALIZADO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "411160",
+      "nombre": "INGRESOS DE PAGOS POR SEGURO EMPLEADOS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "42",
+      "nombre": "DESCUENTOS EN SERVICIOS",
+      "nivel": 2,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "421",
+      "nombre": "DESCUENTOS EN SERVICIOS",
+      "nivel": 3,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "4211",
+      "nombre": "DESCUENTOS EN SERVICIOS",
+      "nivel": 4,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "421101",
+      "nombre": "DESCUENTOS EN SERVICIOS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "43",
+      "nombre": "DEVOLUCIONES EN VENTAS",
+      "nivel": 2,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "431",
+      "nombre": "DEVOLUCIONES EN VENTAS",
+      "nivel": 3,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "4311",
+      "nombre": "DEVOLUCIONES EN VENTAS",
+      "nivel": 4,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "431101",
+      "nombre": "DEVOLUCIONES EN VENTAS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "44",
+      "nombre": "OTROS INGRESOS",
+      "nivel": 2,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "441",
+      "nombre": "OTROS INGRESOS",
+      "nivel": 3,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "4411",
+      "nombre": "OTROS INGRESOS",
+      "nivel": 4,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "441101",
+      "nombre": "INGRESOS EXTRAORDINARIOS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "441102",
+      "nombre": "INTERESES FINANCIEROS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "5",
+      "nombre": "COSTOS",
+      "nivel": 1,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "51",
+      "nombre": "COSTO DE VENTA",
+      "nivel": 2,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "511",
+      "nombre": "COSTO DE VENTA",
+      "nivel": 3,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "5111",
+      "nombre": "COSTO DE VENTA",
+      "nivel": 4,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "511101",
+      "nombre": "COMPRAS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "511102",
+      "nombre": "IMPORTACIONES",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "511103",
+      "nombre": "BONIFICACIONES EN COMPRAS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "511104",
+      "nombre": "DESCUENTO EN COMPRAS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "511105",
+      "nombre": "DEVOLUCIONES EN COMPRAS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "511106",
+      "nombre": "INVENTARIO INICIAL",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "511107",
+      "nombre": "INVENTARIO FINAL",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "52",
+      "nombre": "COSTO DEL SERVICIO",
+      "nivel": 2,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "521",
+      "nombre": "MATERIALES E INSUMOS",
+      "nivel": 3,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "5211",
+      "nombre": "MATERIALES E INSUMOS",
+      "nivel": 4,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "521101",
+      "nombre": "MATERIALES Y SUMINISTROS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "521102",
+      "nombre": "SUMINISTROS AGUA CLARITA",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "521104",
+      "nombre": "EQUIPOS MENORES",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "521105",
+      "nombre": "SUMINISTRO DE PAPELERIA",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "521109",
+      "nombre": "SUMINISTROS DE LIMPIEZA",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "521111",
+      "nombre": "SUMINISTROS DE MEDICAMENTOS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "521112",
+      "nombre": "SUMINISTRO DE LABORATORIO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "521113",
+      "nombre": "SUMINISTROS DE COMIDA",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "521114",
+      "nombre": "SUMINISTROS DE LEGUMBRES",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "521115",
+      "nombre": "SUMINISTROS DE MAT MEDICO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "521117",
+      "nombre": "SUMINISTROS DE COMPUTACION",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "521119",
+      "nombre": "SUMINISTROS DE MATERIALES",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "521121",
+      "nombre": "SUMINISTRO MAT.DESCARTABLE",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "521123",
+      "nombre": "SUMINISTRO DE OXIGENO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "521125",
+      "nombre": "SUMINISTROS DE LENCERIA",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "521127",
+      "nombre": "SUMINISTROS DE DIETA PACIENTE",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "521129",
+      "nombre": "SUMINISTRO EQ. PROTECCION PERSONAL",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "521131",
+      "nombre": "SUMINISTROS VARIOS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "521134",
+      "nombre": "SUMINISTROS TRAJE COVID",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "521135",
+      "nombre": "SUMINISTRO DE AGUA CLARITA",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "522",
+      "nombre": "SUELDOS Y SALARIOS OPERACIONES",
+      "nivel": 3,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "5221",
+      "nombre": "SUELDOS Y SALARIOS OPERACIONES",
+      "nivel": 4,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "522101",
+      "nombre": "SUELDOS Y SALARIOS OPERACIONES",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "522102",
+      "nombre": "SUPLENCIAS OPERACIONES",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "522103",
+      "nombre": "HORAS EXTRAS DIURNAS OPERACIONES",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "522104",
+      "nombre": "SUELDOS APRENDICES",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "522105",
+      "nombre": "BONIFICACION POR EXCELENCIA",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "522106",
+      "nombre": "DESCANSO LEGAL NO DISFRUTADOS ( LOTTT 195)",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "522107",
+      "nombre": "VACACIONES NO DISFRUTADAS (LOTTT ART.195)",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "522108",
+      "nombre": "BONO VACACIONAL NO DISFRUTADO (LOTTT ART.195)",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "522109",
+      "nombre": "DIAS PENDIENTES OPERATIVO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "522112",
+      "nombre": "BONO NOCTURNO OPERATIVO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "522115",
+      "nombre": "DIAS FERIADOS OPERATIVO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "522118",
+      "nombre": "BONO DE ASISTENCIA OPERATIVO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "522121",
+      "nombre": "VACACIONES OPERATIVO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "522122",
+      "nombre": "VACACIONES FRACCIONADAS ( LOTTT ART.196)",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "522123",
+      "nombre": "BONO VACACIONAL FRACCIONADO (LOTTT ART.192)",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "522124",
+      "nombre": "DOMINGOS TRABAJADO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "522127",
+      "nombre": "REPOSOS OPERATIVO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "522130",
+      "nombre": "PASANTIAS OPERATIVO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "522133",
+      "nombre": "SABADO TARDE TRABAJADO OPERATIVO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "522134",
+      "nombre": "DIAS ADICIONALES DE BONO VACACIONAL",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "522135",
+      "nombre": "DIAS DE DESCANSO DEL PERIODO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "522136",
+      "nombre": "DIA TRABAJADO NO LABORABLE OPERATIVO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "522137",
+      "nombre": "DIA ADICIONALES DE DISFRUTE",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "522139",
+      "nombre": "DIA DE DESCANSO DISFRUTADO OPERATIVO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "522142",
+      "nombre": "BECA PARA EDUCACIÓN PRIMARIA Y SECUNDARIA (ART. 105 LOTTT)",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "522143",
+      "nombre": "BECA PARA ESPECIALIZACION EN TERAPIA INTENSIVA (ART. 105 LOTTT)",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "522145",
+      "nombre": "DISPONIBILIDAD PARA TRABAJOS ESPECIALES OPERATIVO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "522147",
+      "nombre": "SUBSIDIO OTORGADO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "522148",
+      "nombre": "DIA 31 OPERATIVO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "522151",
+      "nombre": "DISPONIBILIDAD POR ELECTROS OPERATIVO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "522154",
+      "nombre": "HORAS EXTRAS NOCTURNAS OPERATIVO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "522157",
+      "nombre": "BECA PARA ESPECIALIZACION EN INSTRUMENTACION QUIRURGICA (ART. 105 LOTTT)",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "522159",
+      "nombre": "BONO DE CAMARERA",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "522160",
+      "nombre": "BECA PARA ESPECIALIZACION EN RETEN SANO Y PATOLOGICO (ART. 105 LOTTT)",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "522161",
+      "nombre": "BONO COVID",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "522162",
+      "nombre": "REPOSO MEDICO 33,33%",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "522164",
+      "nombre": "REPOSO LABORAL",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "522165",
+      "nombre": "REPOSO PENDIENTES",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "522167",
+      "nombre": "COMPENSACION POR DESEMPEÑO ( ART.110)",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "522168",
+      "nombre": "BECA PARA ESPECIALIZACION EN GASTRO (ART. 105 LOTTT)",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "522169",
+      "nombre": "OTRAS ASIGNACIONES",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "522171",
+      "nombre": "OTRAS ASIGNACIONES DE LIQUIDACION",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "522174",
+      "nombre": "ANTIGUEDAD ART.142 LITERAL A",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "522176",
+      "nombre": "CONSULTA POR ACCIDENTE LABORAL",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "523",
+      "nombre": "BENEFICIOS LABORALES OPERACIONES",
+      "nivel": 3,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "5231",
+      "nombre": "BENEFICIOS LABORALES OPERACIONES",
+      "nivel": 4,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "523101",
+      "nombre": "BONO VACACIONAL OPERACIONES",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "523102",
+      "nombre": "UTILIDADES OPERACIONES",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "523103",
+      "nombre": "PRESTACIONES SOCIALES OPERACIONES",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "523104",
+      "nombre": "INTERESES SOBRE PRESTACIONES SOCIALES",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "523105",
+      "nombre": "BONO DE ALIMENTACION OPERACIONES",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "523106",
+      "nombre": "APORTES PATRONAL S.S.O Y P.I.E OPERACIONES",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "523107",
+      "nombre": "APORTE PATRONAL REGIMEN PREST DE VIVIENDA Y HÁBITAD OPERACIONES",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "523108",
+      "nombre": "APORTE PATRONAL INCE OPERACIONES",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "523109",
+      "nombre": "SERVICIO DE EDUCACION INICIAL OPERACIONES",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "523110",
+      "nombre": "UNIFORMES Y DOTACIONES OPERACIONES",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "523111",
+      "nombre": "ADIESTRAMIENTO OPERACIONES",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "523112",
+      "nombre": "YES INSTITUTE",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "523113",
+      "nombre": "RECREACIONES LOPCYMAT",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "523114",
+      "nombre": "FUNDEI",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "523115",
+      "nombre": "GUARDERIA",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "523116",
+      "nombre": "PRIMA DE UTILES ESCOLARES",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "523117",
+      "nombre": "CURSO DE CAPACITACIÓN Y FORMACIÓN (ART. 105 LOTTT)",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "523118",
+      "nombre": "PRIMA DE VEHICULO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "523119",
+      "nombre": "AYUDA ALIMENTARIA EMPLEADO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "523120",
+      "nombre": "INTERESES DE MORA DE PRESTACIONES",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "523121",
+      "nombre": "BECA PARA ESPECIALIZACION EN TRASLADO DE PACIENTES (ART. 105 LOTTT)",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "523122",
+      "nombre": "INDEMNIZACION POR DESPIDO ART.125",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "523125",
+      "nombre": "AGASAJO PERSONAL",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "523130",
+      "nombre": "TRANSPORTE DE PERSONAL",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "523135",
+      "nombre": "BECA PARA EDUCACIÓN PRIMARIA Y SECUNDARIA (ART. 105 LOTTT)",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "524",
+      "nombre": "BIENES Y SERVICIOS OPERACIONES",
+      "nivel": 3,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "5241",
+      "nombre": "HONORARIOS PROFESIONALES OPERACIONES",
+      "nivel": 4,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "524101",
+      "nombre": "HONORARIOS ABOGADOS OPERACIONES",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "524102",
+      "nombre": "HONORARIOS CONTADORES OPERACIONES",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "524103",
+      "nombre": "HONORARIOS INGENIEROS OPERACIONES",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "5242",
+      "nombre": "REPARACIONES Y MANTENIMIENTO OPERACIONES",
+      "nivel": 4,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "524201",
+      "nombre": "REPARACIONES Y MANTENIMIENTO OPERACIONES",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "5243",
+      "nombre": "SERVICIOS CONTRATADOS OPERACIONES",
+      "nivel": 4,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "524301",
+      "nombre": "SEGURIDAD Y MONITOREO OPERACIONES",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "524302",
+      "nombre": "EVALUACION PRE-EMPLEO OPERACIONES",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "524303",
+      "nombre": "DOSIMETRIA",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "525",
+      "nombre": "HONORARIOS MEDICOS",
+      "nivel": 3,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "5251",
+      "nombre": "HONORARIOS MEDICOS",
+      "nivel": 4,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "525101",
+      "nombre": "HONORARIOS MEDICOS ESPECIALISTAS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "525103",
+      "nombre": "HONORARIOS MEDICOS RESIDENTES",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "525105",
+      "nombre": "HONORARIOS MEDICOS TERAPIA INTENSIVA",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "525107",
+      "nombre": "HONORARIOS MEDICOS RADIOLOGOS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "6",
+      "nombre": "GASTOS",
+      "nivel": 1,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "61",
+      "nombre": "GASTOS GENERALES ADMINISTRATIVOS",
+      "nivel": 2,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "611",
+      "nombre": "SUELDOS Y SALARIOS ADMINISTRATIVOS",
+      "nivel": 3,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "6111",
+      "nombre": "SUELDOS Y SALARIOS ADMINISTRATIVOS",
+      "nivel": 4,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "611101",
+      "nombre": "SUELDOS ADMINISTRATIVOS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "611102",
+      "nombre": "SUPLENCIAS ADMINISTRATIVOS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "611103",
+      "nombre": "HORAS EXTRAS ADMINISTRATIVOS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "611104",
+      "nombre": "DIAS ADICIONALES ART.102 LITERAL B",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "611105",
+      "nombre": "SUPLENCIA ADMINISTRATIVO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "611106",
+      "nombre": "DIAS DE DESCANSO DISFRUTADO ADMINISTRATIVO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "611109",
+      "nombre": "DIAS PENDIENTES ADMINISTRATIVOS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "611112",
+      "nombre": "BONO NOCTURNO ADMINISTRATIVO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "611115",
+      "nombre": "DIAS FERIADOS ADMINISTRATIVO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "611118",
+      "nombre": "BONO COMPENSATORIO ADMINISTRATIVO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "611121",
+      "nombre": "VACACIONES ADMINISTRATIVO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "611124",
+      "nombre": "DOMINGO ADMINISTRATIVO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "611127",
+      "nombre": "REPOSO ADMINISTRATIVO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "611130",
+      "nombre": "PASANTIA ADMINISTRATIVO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "611133",
+      "nombre": "SABADO TARDE TRABAJADO ADMINISTRATIVO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "611136",
+      "nombre": "DIA TRABAJADO NO LABORABLE ADMINISTRATIVO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "611139",
+      "nombre": "DIA DE DESCANSO DISFRUTADO ADMINISTRATIVO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "611142",
+      "nombre": "BECA PARA UNIVERSIDAD (ART. 105 LOTTT)",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "611145",
+      "nombre": "DISPONIBILIDAD TRABAJOS ESPECIALES ADMINISTRATIVO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "611148",
+      "nombre": "DIA 31 ADMINISTRATIVO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "611151",
+      "nombre": "DISPONIBILIDAD POR ELECTROS ADMINISTRATIVO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "611154",
+      "nombre": "HORAS EXTRAS NOCTURNAS ADMINISTRATIVA",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "611156",
+      "nombre": "BECA PARA EDUCACIÓN INICIAL (ART. 105 LOTTT)",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "611160",
+      "nombre": "UTILIDADES FRACCIONADAS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "611162",
+      "nombre": "INDEMNIZACION POR DESPIDO ART. 125",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "611164",
+      "nombre": "ANTIGUEDAD ART.142 LITERAL C",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "611169",
+      "nombre": "OTRAS ASIGNACIONES ADMON",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "612",
+      "nombre": "BENEFICIOS LABORALES EMPLEADOS",
+      "nivel": 3,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "6121",
+      "nombre": "BENEFICIOS LABORALES EMPLEADOS",
+      "nivel": 4,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "612101",
+      "nombre": "BONO VACACIONAL ADMINISTRATIVOS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "612102",
+      "nombre": "UTILIDADES ADMINISTRATIVOS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "612103",
+      "nombre": "PRESTACIONES SOCIALES ADMINISTRATIVOS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "612104",
+      "nombre": "INTERESES SOBRE PRESTACIONES SOCIALES",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "612105",
+      "nombre": "BONO DE ALIMENTACION ADMINISTRATIVOS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "612106",
+      "nombre": "APORTES PATRONAL S.S.O Y P.I.E ADMINISTRATIVOS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "612107",
+      "nombre": "APORTE PATRONAL REGIMEN PREST DE VIVIENDA Y HÁBITAD ADMINISTRATIVOS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "612108",
+      "nombre": "APORTE PATRONAL INCE ADMINISTRATIVOS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "612109",
+      "nombre": "SERVICIO DE EDUCACION INICIAL ADMINISTRATIVOS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "612110",
+      "nombre": "UNIFORMES Y DOTACIONES ADMINISTRATIVOS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "612111",
+      "nombre": "ADIESTRAMIENTO ADMINISTRATIVOS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "612112",
+      "nombre": "AYUDA DE TRANSPORTE A EMPLEADOS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "612113",
+      "nombre": "BECA POR ESPECIALIZACIÓN (ART. 105 LOTTT)",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "612114",
+      "nombre": "CAPACITACION DEL PERSONAL",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "612115",
+      "nombre": "APORTE DEGUSTACION NAVIDEÑA",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "612116",
+      "nombre": "AYUDA EN GASTOS FUNERARIOS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "612117",
+      "nombre": "OTRAS ASIGNACIONES POR VALORACION DE COMPETENCIAS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "612118",
+      "nombre": "BONO NAVIDEÑO PERSONAL",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613",
+      "nombre": "BIENES Y SERVICIOS",
+      "nivel": 3,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "6131",
+      "nombre": "REPARACIONES Y MANTENIMIENTO GENERAL",
+      "nivel": 4,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613101",
+      "nombre": "MATERIAL DE LIMPIEZA",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613102",
+      "nombre": "REPARACION DE SALA DE QUIROFANO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613103",
+      "nombre": "REPARACION DE SALA DE RX",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613104",
+      "nombre": "REPARACION Y MANTTO VEHICULO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613105",
+      "nombre": "REPARACIONES Y MANTTO EDIFICIO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613106",
+      "nombre": "REPARACIONES DE OFICINA",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613107",
+      "nombre": "REPARACIONES Y MANTTO VARIOS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613108",
+      "nombre": "REPARACIONES Y MANTTO EQUIPOS MEDICOS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "6132",
+      "nombre": "SERVICIOS BÁSICOS",
+      "nivel": 4,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613201",
+      "nombre": "GASTOS DE OFICINA",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613202",
+      "nombre": "ENVIOS Y ENCOMIENDAS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613203",
+      "nombre": "TRANSPORTE- TAXI",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613204",
+      "nombre": "ARTICULOS DE ESCRITORIO Y PAPELERIA",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613205",
+      "nombre": "FLETES",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613206",
+      "nombre": "ENERGIA ELECTRICA",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613207",
+      "nombre": "AGUA ( HIDROBOLIVAR)",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613208",
+      "nombre": "ASEO URBANO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613209",
+      "nombre": "TELEFONOS Y SERVICIOS DE DATOS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613211",
+      "nombre": "TELEVISION POR CABLE",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613212",
+      "nombre": "REDES SOCIALES",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613215",
+      "nombre": "TELEFONIA CELULAR",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "6133",
+      "nombre": "SERVICIOS CONTRATADOS",
+      "nivel": 4,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613301",
+      "nombre": "SERVICIO DE ESCOLTAS Y CHOFERES",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613302",
+      "nombre": "SEGURIDAD VIGILANCIA Y MONITOREO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613303",
+      "nombre": "PUBLICIDAD",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613304",
+      "nombre": "EVALUACION PRE-EMPLEO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613305",
+      "nombre": "OTROS SERVICIOS CONTRATADOS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613306",
+      "nombre": "SERVICIOS DE LIMPIEZA",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613307",
+      "nombre": "SERVICIOS DE TERCEROS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613308",
+      "nombre": "SERVICIOS CONTRATADOS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613309",
+      "nombre": "SERVICIOS DE LABORATORIO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613310",
+      "nombre": "SERVICIOS DE RADIOLOGIA",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613311",
+      "nombre": "SERVICIOS MEDICOS FUNDASALUD",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613312",
+      "nombre": "SERVICIOS CARDIOVASCULAR-HEMODINAMIA",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613313",
+      "nombre": "SERVICIOS DE RADIOLOGIA ICI",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613314",
+      "nombre": "SERVICIO DE ASESORIA ISO 2000",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613315",
+      "nombre": "SERVICIOS DE TELECOMUNICACION",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613316",
+      "nombre": "SERVICIOS DE COMPUTACION",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613317",
+      "nombre": "GASTOS DE REPRESENTACION Y RELACIONES PÚBLICAS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613318",
+      "nombre": "GASTOS DE REPRESENTACION Y RELACIONES PÚBLICAS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "6134",
+      "nombre": "CONTRIBUCIONES DE CARACTER LEGAL",
+      "nivel": 4,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613401",
+      "nombre": "GASTOS LEGALES",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613402",
+      "nombre": "APORTES LOCTI",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613403",
+      "nombre": "APORTES LOD ART.32",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613404",
+      "nombre": "APORTES LDD ART. 68",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613405",
+      "nombre": "IMPUESTO INMOBILIARIO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613406",
+      "nombre": "IMPUESTO DE ACTIVIDADES DE INDUSTRIA Y COMERCIO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613407",
+      "nombre": "TIMBRES FISCALES",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613408",
+      "nombre": "IMPTO COMPLEMENTARIO ALCALDIA",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613409",
+      "nombre": "IMPUESTO PUBLICIDAD ALCALDIA",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613410",
+      "nombre": "ASEO ALCALDIA",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613411",
+      "nombre": "MULTAS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613412",
+      "nombre": "IGTF ( DEBITO BANCARIO)",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613413",
+      "nombre": "IGTF AUTOLIQUIDACION",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613414",
+      "nombre": "FONDO NACIONAL DE CIENCIA, TECNOLOGÍA E INNOVACIÓN (FONACIT)",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613415",
+      "nombre": "TASA ALCALDIA",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613416",
+      "nombre": "APORTE EMPRESARIAL S.S.O",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613417",
+      "nombre": "IPP (IMPUESTO A LA PROTECCION DE PENSIONES)",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613418",
+      "nombre": "APORTE EMPRESARIAL S.P.F",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613420",
+      "nombre": "APORTE EMPRESARIAL F.A.O.V",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "6135",
+      "nombre": "ARRENDAMIENTO Y CONDOMINIO",
+      "nivel": 4,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613501",
+      "nombre": "ARRENDAMIENTO DE CILINDRO-OXIGENO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613502",
+      "nombre": "ALQUILER DE OFICINA",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613503",
+      "nombre": "ALQUILER DE EQUIPOS MEDICOS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613504",
+      "nombre": "CONDOMINIO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "6136",
+      "nombre": "GASTOS DE VIAJES",
+      "nivel": 4,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613601",
+      "nombre": "HOSPEDAJE",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613602",
+      "nombre": "COMIDA",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613603",
+      "nombre": "BOLETOS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613604",
+      "nombre": "TRASLADO Y TRANSPORTE",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613606",
+      "nombre": "GASTOS DE VIAJES",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "6137",
+      "nombre": "CELEBRACIONES Y EVENTOS ESPECIALES",
+      "nivel": 4,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613701",
+      "nombre": "DIA DEL MEDICO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613702",
+      "nombre": "DIA DEL TRABAJADOR",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613703",
+      "nombre": "NAVIDAD",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613704",
+      "nombre": "SEMANA ANIVERSARIA",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613705",
+      "nombre": "PREMIOS Y RECONOCIMIENTOS A EMPLEADOS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613706",
+      "nombre": "AGASAJOS Y REFRIGERIOS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "6138",
+      "nombre": "PERMISOS,LICENCIAS Y HONORARIOS PROFESIONALES",
+      "nivel": 4,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613801",
+      "nombre": "PERMISOS Y LICENCIAS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613802",
+      "nombre": "HONORARIOS PROFESIONALES",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613803",
+      "nombre": "HONORARIOS ABOGADOS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613804",
+      "nombre": "HONORARIOS CONTADORES",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613805",
+      "nombre": "HONORARIOS INGENIEROS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "6139",
+      "nombre": "RELACIONES PUBLICAS ADMINISTRACION",
+      "nivel": 4,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613901",
+      "nombre": "ALMUERZOS Y AGASAJOS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613902",
+      "nombre": "FIESTAS Y CELEBRACIONES",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613903",
+      "nombre": "OBSEQUIOS Y REGALOS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613904",
+      "nombre": "VIATICOS MARIA RUZZA A.",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "613905",
+      "nombre": "VIATICOS DR.HECTOR HURTADO S.",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "62",
+      "nombre": "GASTOS ADMINISTRATIVOS Y FINANCIEROS",
+      "nivel": 2,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "621",
+      "nombre": "GASTOS ADMINISTRATIVOS Y FINANCIEROS",
+      "nivel": 3,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "6211",
+      "nombre": "GASTOS DE DEPRECIACION Y AMORTIZACION",
+      "nivel": 4,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "621101",
+      "nombre": "DEPRECIACION LOCALES",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "621102",
+      "nombre": "DEPRECIACION MOBILIARIO Y EQUIPOS DE OFICINA",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "621103",
+      "nombre": "DEPRECIACION EQUIPOS DE COMPUTACION",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "621104",
+      "nombre": "DEPRECIACION EQUIPOS MEDICOS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "621105",
+      "nombre": "AMORTIZACION LICENCIA SOFTWARE",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "6212",
+      "nombre": "GASTOS FINANCIEROS Y OTROS",
+      "nivel": 4,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "621201",
+      "nombre": "COMISIONES BANCARIAS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "621202",
+      "nombre": "GASTOS BANCARIOS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "621203",
+      "nombre": "INTERESES FINANCIEROS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "621204",
+      "nombre": "GASTOS DE AMORTIZACION DE BIENES EN ARRENDAMIENTO FINANCIERO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "621205",
+      "nombre": "IMPUESTOS MUNICIPALES",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "621206",
+      "nombre": "POLIZAS DE SEGURO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "621207",
+      "nombre": "ISLR",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "621208",
+      "nombre": "DIRECTORES",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "621209",
+      "nombre": "DERECHOS ARANCELARIOS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "621210",
+      "nombre": "GASTOS NO DEDUCIBLES",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "621211",
+      "nombre": "RESPONSABILIDAD SOCIAL EMPRESARIAL",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "621212",
+      "nombre": "OTROS VINCULOS (DIF. CTMS)",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "621213",
+      "nombre": "COLABORACIONES - LIBERALIDADES",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "621215",
+      "nombre": "INTERESES DE MORA",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "621216",
+      "nombre": "INTERESES DE MORA SSO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "621219",
+      "nombre": "INTERESES SOBRE PRESTAMOS BANCARIOS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "621222",
+      "nombre": "OTRAS COMISIONES",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "6213",
+      "nombre": "CUOTAS Y SUSCRIPCIONES",
+      "nivel": 4,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "621301",
+      "nombre": "CUOTAS COLEGIOS PROFESIONALES",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "621302",
+      "nombre": "CAMARA DE COMERCIO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "621303",
+      "nombre": "SUSCRIPCIONES LEGALES",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "621304",
+      "nombre": "ASOCLIGUA",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "621305",
+      "nombre": "CENTRO PORTUGUES VENEZOLANO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "621306",
+      "nombre": "CENTRO ITALO VENEZOLANO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "621307",
+      "nombre": "FUNDACITE",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "621308",
+      "nombre": "COLEGIO DE CONTADORES DEL EDO BOLIVAR",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "621309",
+      "nombre": "DERECHOS DE AUTOR",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "621310",
+      "nombre": "CONATEL",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "621312",
+      "nombre": "SENCAMER -COVENIN",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "6214",
+      "nombre": "GASTOS GENERALES",
+      "nivel": 4,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "621401",
+      "nombre": "GASTOS DE CONSTRUCCION OFICINA",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "621402",
+      "nombre": "DONACIONES ESPECIALES",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "621405",
+      "nombre": "GASTOS GENERALES",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "621406",
+      "nombre": "GASTOS DE MENSAJERIA",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "7",
+      "nombre": "OTROS INGRESOS",
+      "nivel": 1,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "71",
+      "nombre": "OTROS INGRESOS",
+      "nivel": 2,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "711",
+      "nombre": "OTROS INGRESOS",
+      "nivel": 3,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "7111",
+      "nombre": "OTROS INGRESOS",
+      "nivel": 4,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "711101",
+      "nombre": "INGRESOS POR ARRENDAMIENTO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "711102",
+      "nombre": "INGRESOS POR INTERESES BANCARIOS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "711103",
+      "nombre": "DIVIDENDOS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "711104",
+      "nombre": "UTILIDAD EN VENTA DE ACTIVOS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "711105",
+      "nombre": "UTILIDAD EN VENTA DE ACCIONES",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "711106",
+      "nombre": "OTROS INGRESOS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "711107",
+      "nombre": "SOBRANTE EN REGISTRO CONTABLE",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "711110",
+      "nombre": "PERDIDAS Y GANACIAS DEL EJERCICIO",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "8",
+      "nombre": "OTROS EGRESOS",
+      "nivel": 1,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "81",
+      "nombre": "OTROS EGRESOS",
+      "nivel": 2,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "811",
+      "nombre": "OTROS EGRESOS",
+      "nivel": 3,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "8111",
+      "nombre": "OTROS EGRESOS",
+      "nivel": 4,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "811101",
+      "nombre": "PERDIDA POR DESINCORPORACION ACTIVOS FIJOS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "811102",
+      "nombre": "PERDIDA POR CUENTAS INCOBRABLES",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "811103",
+      "nombre": "INTERESES LEASING",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "811104",
+      "nombre": "OTROS EGRESOS",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    },
+    {
+      "codigo": "811105",
+      "nombre": "RECONVERSION MONETARIA",
+      "nivel": 5,
+      "debe": "0.00",
+      "haber": "0.00"
+    }
+  ]
+}

@@ -1,4 +1,5 @@
 import { db } from '../../config/db.js'
+import { prefijoSubcuentas } from '../../utils/codigos.js'
 
 const COLUMNAS = [
   'c.id',
@@ -90,7 +91,9 @@ export async function contarMovimientos(id, trx = db) {
 
 /** La cuenta y todos sus auxiliares (el código del padre es prefijo del de sus hijos) */
 const rama = (q, codigo) =>
-  q.where((w) => w.where('cu.codigo', codigo).orWhere('cu.codigo', 'like', `${codigo}.%`))
+  q.where((w) =>
+    w.where('cu.codigo', codigo).orWhere('cu.codigo', 'like', `${prefijoSubcuentas(codigo)}%`),
+  )
 
 /** Renglones de comprobantes en la cuenta o en cualquiera de sus subcuentas */
 export async function contarMovimientosRama(codigo, trx = db) {
@@ -106,7 +109,8 @@ export async function contarMovimientosRama(codigo, trx = db) {
 /** Fija la moneda de todas las subcuentas (de cualquier nivel); devuelve cuántas son */
 export function cambiarMonedaAuxiliares(codigo, moneda, actorId, trx) {
   return trx('cuentas')
-    .where('codigo', 'like', `${codigo}.%`)
+    .where('codigo', 'like', `${prefijoSubcuentas(codigo)}%`)
+    .whereNot('codigo', codigo)
     .update({ moneda, actualizado_por: actorId, actualizado_en: trx.fn.now() })
 }
 

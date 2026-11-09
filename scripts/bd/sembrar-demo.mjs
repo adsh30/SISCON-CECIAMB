@@ -68,6 +68,24 @@ try {
   const [cuentasRows] = await db.query('SELECT id, codigo, nombre FROM cuentas WHERE es_movimiento = 1')
   const cuentas = Object.fromEntries(cuentasRows.map((c) => [c.codigo, c.id]))
 
+  // Con el plan de cuentas HCC (códigos compactos) cada cuenta de ejemplo usa su equivalente
+  const EQUIVALENTES_HCC = {
+    '1.1.01.01.001': '111101', // Caja principal
+    '1.1.01.02.001': '111203', // Banco Mercantil
+    '1.1.01.02.002': '111224', // Banesco
+    '1.1.01.02.003': '111201', // Banco de Venezuela
+    '1.1.02.02': '112101', // Cuentas por cobrar comerciales
+    '1.1.03.01': '113101', // Inventario
+    '1.2.01.04': '121205', // Depreciación acum. equipos médicos
+    '2.1.01.01': '211201', // Cuentas por pagar proveedores
+    '2.1.01.02': '211314', // Cuenta por pagar honorarios
+    '2.1.02.01': '211408', // ISLR por enterar
+    '2.1.02.02': '211404', // SSO y paro forzoso retenido
+    '4.1.01.01': '411106', // Ingresos por hospitalización
+    '6.1.01.01': '611101', // Sueldos administrativos
+    '6.1.02.01': '613108', // Reparaciones y mantenimiento de equipos médicos
+    '6.1.03.01': '621104', // Depreciación equipos médicos
+  }
   const [centrosRows] = await db.query('SELECT id, codigo FROM centros_costo')
   const centros = Object.fromEntries(centrosRows.map((c) => [c.codigo, c.id]))
 
@@ -216,7 +234,8 @@ try {
 
     let numReng = 1
     for (const r of c.renglones) {
-      const ctaId = cuentas[r.cuenta] || Object.values(cuentas)[0]
+      const ctaId =
+        cuentas[r.cuenta] || cuentas[EQUIVALENTES_HCC[r.cuenta]] || Object.values(cuentas)[0]
       const ccId = centros[r.cc] || null
 
       await db.execute(
