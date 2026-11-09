@@ -3,6 +3,11 @@ import { useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { usePermisos } from '../../api/auth.js'
+import {
+  useConfiguracionDiferencial,
+  useGuardarConfiguracionDiferencial,
+} from '../../api/diferencial.js'
+import { AccountPicker } from '../../components/ui/AccountPicker.jsx'
 import { useActualizarEmpresa, useEmpresa, useQuitarLogo, useSubirLogo } from '../../api/empresa.js'
 import { useAvisos } from '../../components/ui/Avisos.jsx'
 import { Button } from '../../components/ui/Button.jsx'
@@ -133,6 +138,92 @@ function Logo({ empresa, puedeEditar }) {
           }
           onCancel={() => setConfirmar(false)}
         />
+      )}
+    </section>
+  )
+}
+
+/** Cuentas contra las que se registra el diferencial cambiario al cerrar cada período */
+function DiferencialCambiario({ puedeEditar }) {
+  const { data: conf, isPending } = useConfiguracionDiferencial()
+  const guardar = useGuardarConfiguracionDiferencial()
+  const avisar = useAvisos()
+  const [elegidas, setElegidas] = useState(null) // null = las guardadas
+  const actual = elegidas ?? { ganancia: conf?.ganancia ?? null, perdida: conf?.perdida ?? null }
+  const invalida = (c) => c && c.valida === false
+
+  const onGuardar = () =>
+    guardar.mutate(
+      {
+        cuentaGananciaId: actual.ganancia?.id ?? null,
+        cuentaPerdidaId: actual.perdida?.id ?? null,
+      },
+      {
+        onSuccess: () => {
+          setElegidas(null)
+          avisar('Cuentas del diferencial cambiario guardadas', 'exito')
+        },
+        onError: (err) => avisar(err.message, 'alerta'),
+      },
+    )
+
+  return (
+    <section className="mt-4 rounded-2xl border border-linea bg-superficie p-6">
+      <h2 className="font-semibold">Diferencial cambiario</h2>
+      <p className="ayuda mt-1 max-w-3xl text-sm text-pizarra">
+        Al cerrar cada período, los auxiliares de las cuentas en divisas (USD y EUR con la tasa del
+        BCV, USDT con la referencia de Binance) se ajustan a la tasa del último día del mes. El
+        sistema registra un comprobante DIF: la ganancia va a la cuenta de ingreso y la pérdida a la
+        de gasto que elija aquí.
+      </p>
+      {isPending ? (
+        <p className="mt-4 text-sm text-pizarra">Cargando…</p>
+      ) : (
+        <>
+          <div className="mt-4 grid gap-4 sm:grid-cols-2">
+            <Campo
+              etiqueta="Ganancia en diferencial cambiario"
+              id="dif-ganancia"
+              ayuda="Cuenta de ingreso, de movimiento"
+              error={
+                invalida(actual.ganancia) ? 'La cuenta guardada ya no es válida: elija otra' : null
+              }
+            >
+              <AccountPicker
+                id="dif-ganancia"
+                value={actual.ganancia?.id ?? null}
+                seleccion={actual.ganancia}
+                disabled={!puedeEditar}
+                placeholder="Ej. 4.2.01 Ganancia en Diferencial Cambiario"
+                onChange={(c) => setElegidas({ ...actual, ganancia: c })}
+              />
+            </Campo>
+            <Campo
+              etiqueta="Pérdida en diferencial cambiario"
+              id="dif-perdida"
+              ayuda="Cuenta de gasto o costo, de movimiento"
+              error={
+                invalida(actual.perdida) ? 'La cuenta guardada ya no es válida: elija otra' : null
+              }
+            >
+              <AccountPicker
+                id="dif-perdida"
+                value={actual.perdida?.id ?? null}
+                seleccion={actual.perdida}
+                disabled={!puedeEditar}
+                placeholder="Ej. 6.2.01 Pérdida en Diferencial Cambiario"
+                onChange={(c) => setElegidas({ ...actual, perdida: c })}
+              />
+            </Campo>
+          </div>
+          {puedeEditar && (
+            <div className="mt-4 flex justify-end">
+              <Button onClick={onGuardar} disabled={!elegidas || guardar.isPending}>
+                {guardar.isPending ? 'Guardando…' : 'Guardar cuentas'}
+              </Button>
+            </div>
+          )}
+        </>
       )}
     </section>
   )
@@ -297,6 +388,8 @@ export default function EmpresaPage() {
 
         <Logo empresa={empresa} puedeEditar={puedeEditar} />
       </div>
+
+      <DiferencialCambiario puedeEditar={puedeEditar} />
     </div>
   )
 }

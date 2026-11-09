@@ -11,6 +11,7 @@ export const renglonVacio = (base = {}) => ({
   descripcion: '',
   debe: '',
   haber: '',
+  montoMoneda: '', // monto en la divisa de la cuenta (USD, EUR, USDT); vacío en bolívares
   referencia: '',
   ...base,
 })

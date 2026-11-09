@@ -33,6 +33,16 @@ const descripcion = z
 
 const naturaleza = z.enum(NATURALEZAS_CUENTA, 'La naturaleza debe ser DEUDORA o ACREEDORA')
 
+/** Divisas en que se puede llevar una cuenta; null o vacío = bolívares */
+export const MONEDAS_CUENTA = ['USD', 'EUR', 'USDT']
+/** Solo las partidas monetarias se reexpresan por diferencial cambiario */
+export const TIPOS_CON_MONEDA = ['ACTIVO', 'PASIVO']
+
+const moneda = z.preprocess(
+  (v) => (v === '' ? null : v),
+  z.enum(MONEDAS_CUENTA, 'Moneda inválida: use USD, EUR o USDT').nullish(),
+)
+
 export const crearCuentaSchema = z
   .object({
     codigo: z
@@ -51,6 +61,7 @@ export const crearCuentaSchema = z
     padreId: z.coerce.number().int().positive().nullish(),
     esMovimiento: z.boolean().default(false),
     activa: z.boolean().default(true),
+    moneda,
   })
   .refine((d) => d.padreId || d.tipo, {
     message: 'Indique el tipo de cuenta si no tiene una cuenta superior',
@@ -63,6 +74,7 @@ export const actualizarCuentaSchema = z.object({
   naturaleza: naturaleza.optional(),
   esMovimiento: z.boolean().optional(),
   activa: z.boolean().optional(),
+  moneda,
 })
 
 export const consultaCuentasSchema = z.object({

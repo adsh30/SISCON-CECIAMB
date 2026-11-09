@@ -7,6 +7,7 @@ const COLUMNAS = [
   'c.descripcion',
   'c.tipo',
   'c.naturaleza',
+  'c.moneda',
   'c.nivel',
   'c.padre_id',
   'c.es_movimiento',
@@ -85,6 +86,36 @@ export async function contarMovimientos(id, trx = db) {
     .count({ total: '*' })
     .first()
   return Number(res?.total ?? 0)
+}
+
+/** La cuenta y todos sus auxiliares (el código del padre es prefijo del de sus hijos) */
+const rama = (q, codigo) =>
+  q.where((w) => w.where('cu.codigo', codigo).orWhere('cu.codigo', 'like', `${codigo}.%`))
+
+/** Renglones de comprobantes en la cuenta o en cualquiera de sus subcuentas */
+export async function contarMovimientosRama(codigo, trx = db) {
+  const res = await rama(
+    trx('comprobante_detalle as d').join('cuentas as cu', 'cu.id', 'd.cuenta_id'),
+    codigo,
+  )
+    .count({ total: '*' })
+    .first()
+  return Number(res?.total ?? 0)
+}
+
+/** Fija la moneda de todas las subcuentas (de cualquier nivel); devuelve cuántas son */
+export function cambiarMonedaAuxiliares(codigo, moneda, actorId, trx) {
+  return trx('cuentas')
+    .where('codigo', 'like', `${codigo}.%`)
+    .update({ moneda, actualizado_por: actorId, actualizado_en: trx.fn.now() })
+}
+
+/** ¿Está elegida como cuenta de ganancia o pérdida cambiaria en Empresa? */
+export async function usadaEnEmpresa(id, trx = db) {
+  return !!(await trx('empresa')
+    .where('cuenta_ganancia_cambiaria_id', id)
+    .orWhere('cuenta_perdida_cambiaria_id', id)
+    .first('id'))
 }
 
 export async function crear(datos, trx = db) {

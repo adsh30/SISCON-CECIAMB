@@ -14,6 +14,10 @@ function useMutacionPeriodos(mutationFn) {
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: KEY })
       qc.invalidateQueries({ queryKey: ['dashboard'] })
+      // El cierre puede registrar el comprobante de diferencial cambiario
+      qc.invalidateQueries({ queryKey: ['comprobantes'] })
+      qc.invalidateQueries({ queryKey: ['libros'] })
+      qc.invalidateQueries({ queryKey: ['diferencial-cambiario'] })
     },
   })
 }
