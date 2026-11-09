@@ -3,13 +3,15 @@ import { claseCampo } from '../../components/ui/clasesCampo.js'
 import { Icono } from '../../components/ui/Icono.jsx'
 import { MontoInput } from '../../components/ui/MontoInput.jsx'
 import { esCero, totalesRenglones } from '../../lib/comprobantes.js'
+import { formatoTasa } from '../../lib/formato.js'
+import { tasaImplicita } from '../../lib/monedas.js'
 import { renglonVacio } from './renglones.js'
 
 const COLUMNAS =
   'lg:grid lg:grid-cols-[2rem_minmax(15rem,2.2fr)_minmax(8rem,0.9fr)_minmax(10rem,1.6fr)_9.5rem_9.5rem_2.25rem] lg:items-start lg:gap-2'
 
 // Orden en que Enter recorre los campos de un renglón
-const CAMPOS = ['cuenta', 'centro', 'desc', 'debe', 'haber']
+const CAMPOS = ['cuenta', 'divisa', 'centro', 'desc', 'debe', 'haber']
 
 const idCampo = (clave, campo) => `ren-${clave}-${campo}`
 
@@ -72,7 +74,9 @@ export function GrillaRenglones({ renglones, onChange, centros, errores = {} }) 
 
   const avanzar = (indice, campo) => {
     const r = renglones[indice]
-    const siguiente = CAMPOS[CAMPOS.indexOf(campo) + 1]
+    let siguiente = CAMPOS[CAMPOS.indexOf(campo) + 1]
+    // El monto en divisa solo existe en las cuentas en divisas
+    if (siguiente === 'divisa' && !r.cuenta?.moneda) siguiente = 'centro'
     // Con monto en Debe no hace falta pasar por Haber
     const saltarHaber = campo === 'debe' && !esCero(r.debe)
     if (siguiente && !saltarHaber) return enfocar(r.clave, siguiente)
@@ -131,11 +135,38 @@ export function GrillaRenglones({ renglones, onChange, centros, errores = {} }) 
                   onChange={(cuenta) => {
                     actualizar(r.clave, {
                       cuentaId: cuenta?.id ?? null,
-                      cuenta: cuenta ? { codigo: cuenta.codigo, nombre: cuenta.nombre } : null,
+                      cuenta: cuenta
+                        ? { codigo: cuenta.codigo, nombre: cuenta.nombre, moneda: cuenta.moneda }
+                        : null,
+                      ...(cuenta?.moneda ? {} : { montoMoneda: '' }),
                     })
-                    if (cuenta) enfocar(r.clave, 'centro')
+                    if (cuenta) enfocar(r.clave, cuenta.moneda ? 'divisa' : 'centro')
                   }}
                 />
+                {r.cuenta?.moneda && (
+                  <div className="mt-2 flex items-center gap-2">
+                    <span className="shrink-0 rounded bg-aviso-claro px-1.5 py-1 text-xs font-semibold text-aviso">
+                      {r.cuenta.moneda}
+                    </span>
+                    <MontoInput
+                      id={idCampo(r.clave, 'divisa')}
+                      aria-label={`Monto en ${r.cuenta.moneda} del renglón ${i + 1}`}
+                      value={r.montoMoneda}
+                      error={error?.campo === 'montoMoneda'}
+                      onChange={(m) => actualizar(r.clave, { montoMoneda: m })}
+                      onKeyDown={alEnter(i, 'divisa')}
+                      className="text-sm"
+                    />
+                    {tasaImplicita(r.debe || r.haber, r.montoMoneda) && (
+                      <span
+                        className="cifras shrink-0 text-xs text-pizarra"
+                        title="Bolívares del renglón ÷ monto en divisa"
+                      >
+                        Tasa {formatoTasa(tasaImplicita(r.debe || r.haber, r.montoMoneda))}
+                      </span>
+                    )}
+                  </div>
+                )}
               </div>
 
               <div>

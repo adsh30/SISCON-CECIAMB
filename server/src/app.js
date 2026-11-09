@@ -9,6 +9,7 @@ import { errorHandler, notFound } from './middlewares/errorHandler.js'
 import { authRoutes } from './modules/auth/auth.routes.js'
 import { bitacoraRoutes } from './modules/bitacora/bitacora.routes.js'
 import { dashboardRoutes } from './modules/dashboard/dashboard.routes.js'
+import { diferencialRoutes } from './modules/diferencial/diferencial.routes.js'
 import { empresaRoutes } from './modules/empresa/empresa.routes.js'
 import { healthRoutes } from './modules/health/health.routes.js'
 import { periodosRoutes } from './modules/periodos/periodos.routes.js'
@@ -54,6 +55,7 @@ export function createApp({ servirCliente = env.nodeEnv === 'production' && hayC
   api.use('/dashboard', dashboardRoutes)
   api.use('/empresa', empresaRoutes)
   api.use('/periodos', periodosRoutes)
+  api.use('/diferencial-cambiario', diferencialRoutes)
   api.use('/comprobantes', comprobantesRoutes)
   api.use('/importaciones', importacionesRoutes)
   api.use('/libros', librosRoutes)

@@ -97,6 +97,15 @@ function NodoCuenta({
               </span>
             )}
 
+            {cuenta.moneda && (
+              <span
+                className="rounded-md bg-aviso-claro px-1.5 py-0.5 font-semibold text-aviso"
+                title={`Cuenta en ${cuenta.moneda}: se ajusta por diferencial cambiario al cerrar cada período`}
+              >
+                {cuenta.moneda}
+              </span>
+            )}
+
             <span className={`rounded-md border px-1.5 py-0.5 font-medium uppercase ${claseTipo}`}>
               {cuenta.tipo}
             </span>

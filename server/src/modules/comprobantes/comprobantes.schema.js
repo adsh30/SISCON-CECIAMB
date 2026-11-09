@@ -27,12 +27,27 @@ export const monto = z.preprocess(
 
 const esCero = (m) => /^0+(\.0+)?$/.test(m)
 
+/** Tipo de los comprobantes de diferencial cambiario: ajustan solo bolívares */
+export const TIPO_DIFERENCIAL = 'DIF'
+
+/** Monto en la divisa de la cuenta (USD, EUR o USDT). Vacío o cero = no aplica */
+const montoDivisa = z.preprocess(
+  (v) => (v === '' || v == null ? null : typeof v === 'number' ? String(v) : v),
+  z
+    .string()
+    .trim()
+    .regex(/^\d{1,16}(\.\d{1,2})?$/, 'Monto en divisa inválido: use números con hasta 2 decimales')
+    .nullable()
+    .transform((v) => (v && !esCero(v) ? v : null)),
+)
+
 const renglon = z.object({
   cuentaId: z.coerce.number('Elija la cuenta').int().positive('Elija la cuenta'),
   centroCostoId: z.coerce.number().int().positive().nullish(),
   descripcion: textoOpcional(255, 'La descripción no puede pasar de 255 caracteres'),
   debe: monto,
   haber: monto,
+  montoMoneda: montoDivisa,
   referencia: textoOpcional(60, 'La referencia no puede pasar de 60 caracteres'),
 })
 
