@@ -1,4 +1,5 @@
 import { db } from '../../config/db.js'
+import { prefijoSubcuentas } from '../../utils/codigos.js'
 
 // Los libros solo leen comprobantes APROBADOS: los borradores aún no son contabilidad y los
 // anulados quedan fuera (su efecto se revierte con un comprobante de reverso, si hace falta).
@@ -116,14 +117,14 @@ export async function diario(filtros, { limite, desplazamiento = 0 } = {}) {
 // Los códigos se comparan byte a byte: así '1.1' va antes que '1.1.01' y que '1.2'
 const CODIGO = 'cu.codigo COLLATE utf8mb4_bin'
 
-/** Rango de cuentas por código. La cuenta final incluye sus subcuentas ('1.1' → '1.1.xx') */
+/** Rango de cuentas por código. La cuenta final incluye sus subcuentas ('1.1' → '1.1.xx', '1112' → '1112xx') */
 function enRango(q, { cuentaDesde, cuentaHasta }) {
   if (cuentaDesde) q.whereRaw(`${CODIGO} >= ?`, [cuentaDesde])
   if (cuentaHasta) {
     q.where((w) =>
       w
         .whereRaw(`${CODIGO} <= ?`, [cuentaHasta])
-        .orWhereRaw(`${CODIGO} LIKE ?`, [`${cuentaHasta}.%`]),
+        .orWhereRaw(`${CODIGO} LIKE ?`, [`${prefijoSubcuentas(cuentaHasta)}%`]),
     )
   }
   return q

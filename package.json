@@ -25,6 +25,7 @@
     "bd:importar": "node scripts/bd/bd.mjs importar",
     "bd:preparar": "node scripts/bd/bd.mjs preparar",
     "bd:demo": "node scripts/bd/sembrar-demo.mjs",
+    "bd:plan-hcc": "node scripts/bd/plan-hcc.mjs",
     "bd:importar-sparrow": "node scripts/bd/importar-sparrow.mjs",
     "cotejar": "node scripts/git/cotejar.mjs",
     "produccion": "node scripts/despliegue/bot.mjs",

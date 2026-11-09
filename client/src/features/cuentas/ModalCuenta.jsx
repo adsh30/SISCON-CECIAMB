@@ -5,6 +5,7 @@ import { claseCampo } from '../../components/ui/clasesCampo.js'
 import { Campo, Interruptor } from '../../components/ui/Formulario.jsx'
 import { Modal } from '../../components/ui/Modal.jsx'
 import { useAvisos } from '../../components/ui/Avisos.jsx'
+import { codigoDeSubcuentaValido } from '../../lib/codigos.js'
 import { MONEDAS, TIPOS_CON_MONEDA } from '../../lib/monedas.js'
 
 const TIPOS = [
@@ -24,9 +25,10 @@ function errorCodigo(codigo, padre) {
     return 'El código va en números separados por puntos, por ejemplo 1.1.01'
   }
   if (padre) {
-    const resto = codigo.slice(padre.codigo.length + 1)
-    if (!codigo.startsWith(`${padre.codigo}.`) || resto.includes('.')) {
-      return `El código debe ser ${padre.codigo}. seguido de un número, por ejemplo ${padre.codigo}.01`
+    if (!codigoDeSubcuentaValido(codigo, padre.codigo)) {
+      return padre.codigo.includes('.')
+        ? `El código debe ser ${padre.codigo}. seguido de un número, por ejemplo ${padre.codigo}.01`
+        : `El código debe empezar por ${padre.codigo} seguido de dígitos, por ejemplo ${padre.codigo}01 (o ${padre.codigo}.01)`
     }
   } else if (codigo.includes('.')) {
     return 'Una cuenta sin cuenta superior lleva un código de un solo número, por ejemplo 7'
@@ -169,7 +171,9 @@ export function ModalCuenta({ cuenta, padre, codigoSugerido, onClose }) {
               esEdicion
                 ? 'El código contable no puede modificarse'
                 : padre
-                  ? `${padre.codigo}. seguido de un número`
+                  ? (codigoSugerido ?? '').startsWith(`${padre.codigo}.`)
+                    ? `${padre.codigo}. seguido de un número`
+                    : `${padre.codigo} seguido de dígitos, por ejemplo ${codigoSugerido}`
                   : 'Un solo número, por ejemplo 7'
             }
           >

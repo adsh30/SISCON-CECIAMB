@@ -1072,11 +1072,11 @@
         <ul>
           <li>
             <strong>Ganancia en diferencial cambiario</strong>: una cuenta de ingreso, de
-            movimiento y en bolívares (de fábrica, <em>4.2.01 Ganancia en Diferencial Cambiario</em>).
+            movimiento y en bolívares (de fábrica, <em>711108 Ganancia en Diferencial Cambiario</em>).
           </li>
           <li>
             <strong>Pérdida en diferencial cambiario</strong>: una cuenta de gasto o costo, de
-            movimiento y en bolívares (de fábrica, <em>6.2.01 Pérdida en Diferencial Cambiario</em>).
+            movimiento y en bolívares (de fábrica, <em>811106 Pérdida en Diferencial Cambiario</em>).
           </li>
         </ul>
         <p>
@@ -1148,8 +1148,8 @@
 
         <h3 id="diferencial">Diferencial cambiario al cierre</h3>
         <p>
-          Las cuentas que se llevan en divisas (por ejemplo <em>Caja en Divisas</em> en USD o
-          <em>Activos Digitales</em> en USDT, vea el apartado
+          Las cuentas que se llevan en divisas (por ejemplo <em>111105 Caja en Divisas</em> o los
+          bancos en divisas, en USD; vea el apartado
           <a href="#cuentas-divisas">Cuentas en divisas</a>) se ajustan solas al cerrar cada
           período. Para cada <strong>auxiliar</strong> el sistema calcula:
         </p>
@@ -1242,14 +1242,55 @@
           </li>
         </ul>
 
+        <h3 id="plan-hcc">Plan de cuentas del hospital (HCC)</h3>
+        <p>
+          El sistema trae cargado el plan de cuentas del Hospital de Clínicas CECIAMB tal como se
+          usa en Sparrow: 607 cuentas en 5 niveles con los mismos códigos, sin puntos.
+        </p>
+        <ul>
+          <li>
+            Cada nivel agrega dígitos al código de su cuenta superior: <code>1</code> Activos →
+            <code>11</code> Activo circulante → <code>111</code> Disponible → <code>1111</code> Caja
+            → <code>111101</code> Caja principal. Al crear una subcuenta con
+            <span class="boton">+</span>, el sistema sugiere el siguiente código libre (por
+            ejemplo, bajo <code>1112</code> Banco sugiere <code>111226</code>).
+          </li>
+          <li>
+            Las raíces <code>7</code> Otros ingresos y <code>8</code> Otros egresos cuentan como
+            Ingreso y Gasto en el Estado de Resultados. Se agregaron
+            <code>711108</code> Ganancia y <code>811106</code> Pérdida en diferencial cambiario.
+          </li>
+          <li>
+            Las depreciaciones y amortizaciones acumuladas son de naturaleza acreedora; los
+            descuentos y devoluciones en ventas, deudora; y los descuentos y devoluciones en compras
+            y el inventario final, acreedora.
+          </li>
+          <li>
+            Todas las cuentas se pueden <strong>editar</strong> (nombre, naturaleza, moneda,
+            activa) y <strong>eliminar</strong> mientras no tengan subcuentas ni movimientos en
+            comprobantes; una cuenta con movimientos se puede desactivar.
+          </li>
+        </ul>
+        <p>
+          <strong>Saldos iniciales.</strong> Los saldos del plan HCC (Bs 46.158.288,30 al Debe y al
+          Haber) se cargan como un comprobante de tipo <em>APE · Apertura</em> en
+          <strong>borrador</strong>, con fecha del inicio del ejercicio en curso (o del primer mes
+          abierto). Búsquelo en Comprobantes, revise los montos y apruébelo con
+          <span class="boton">Guardar y aprobar</span>; mientras sea borrador puede modificarlo o
+          eliminarlo. En la Caja en Divisas el monto en USD viene calculado con la tasa BCV de esa
+          fecha: verifíquelo antes de aprobar. Si no había un ejercicio creado, la apertura queda
+          pendiente: cree el ejercicio en Períodos y pida al administrador del sistema que ejecute
+          <code>npm run bd:plan-hcc</code>.
+        </p>
+
         <h3 id="cuentas-divisas">Cuentas en divisas</h3>
         <p>
           Las cuentas de <strong>Activo</strong> o <strong>Pasivo</strong> se pueden llevar en
           <strong>USD</strong>, <strong>EUR</strong> o <strong>USDT</strong> con el campo
           <strong>Moneda de la cuenta</strong> al crearla o editarla. En el árbol muestran una
-          etiqueta con la divisa. El sistema trae de ejemplo <em>1.1.01.03 Caja en Divisas</em>
-          (USD, con su auxiliar <em>Caja Principal en Dólares</em>) y
-          <em>1.1.01.04 Activos Digitales</em> (USDT, con <em>Billetera Binance USDT</em>).
+          etiqueta con la divisa. En el plan HCC van en USD <em>111105 Caja en Divisas</em> y los
+          bancos en divisas <em>111206</em>, <em>111207</em>, <em>111211</em>, <em>111216</em> y
+          <em>111222</em>.
         </p>
         <ul>
           <li>

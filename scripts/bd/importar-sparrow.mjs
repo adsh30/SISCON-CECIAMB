@@ -143,7 +143,11 @@ try {
           tipo = 'GASTO'
           naturaleza = 'DEUDORA'
         } else if (primerDigito === '7') {
-          tipo = 'ORDEN'
+          // Plan HCC: 7 = Otros ingresos, 8 = Otros egresos (no son cuentas de orden)
+          tipo = 'INGRESO'
+          naturaleza = 'ACREEDORA'
+        } else if (primerDigito === '8') {
+          tipo = 'GASTO'
           naturaleza = 'DEUDORA'
         }
 

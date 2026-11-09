@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { esSubcuenta } from '../../utils/codigos.js'
 import { POR_PAGINA } from '../bitacora/bitacora.schema.js'
 import { booleanoConsulta } from '../cuentas/cuentas.schema.js'
 
@@ -44,7 +45,7 @@ export const mayorSchema = z
       !f.cuentaDesde ||
       !f.cuentaHasta ||
       f.cuentaDesde <= f.cuentaHasta ||
-      f.cuentaDesde.startsWith(`${f.cuentaHasta}.`),
+      esSubcuenta(f.cuentaDesde, f.cuentaHasta),
     {
       message: 'La cuenta inicial debe ir antes que la final en el plan de cuentas',
       path: ['cuentaDesde'],
@@ -65,7 +66,7 @@ export const balanceSchema = z
       !f.cuentaDesde ||
       !f.cuentaHasta ||
       f.cuentaDesde <= f.cuentaHasta ||
-      f.cuentaDesde.startsWith(`${f.cuentaHasta}.`),
+      esSubcuenta(f.cuentaDesde, f.cuentaHasta),
     {
       message: 'La cuenta inicial debe ir antes que la final en el plan de cuentas',
       path: ['cuentaDesde'],
@@ -93,4 +94,3 @@ export const estadoResultadosSchema = z
     todo: booleanoConsulta.default(true),
   })
   .refine(rangoValido, errorRango)
-
