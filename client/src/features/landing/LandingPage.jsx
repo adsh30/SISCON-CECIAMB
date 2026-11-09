@@ -50,10 +50,10 @@ export default function LandingPage() {
       <main className="flex-1">
         <section className="mx-auto grid max-w-6xl items-center gap-12 px-4 pt-8 pb-16 sm:px-6 lg:grid-cols-[1.05fr_1fr] lg:pt-16 lg:pb-24">
           <div>
-            <h1 className="max-w-xl text-4xl leading-[1.1] font-bold tracking-tight text-balance sm:text-5xl">
+            <h1 className="mx-auto max-w-xl text-center text-4xl leading-[1.1] font-bold tracking-tight text-balance sm:text-5xl">
               La contabilidad del hospital, siempre cuadrada y con su historia.
             </h1>
-            <p className="mt-6 max-w-lg text-lg leading-relaxed text-pizarra">
+            <p className="mx-auto mt-6 max-w-xl text-justify hyphens-auto text-lg leading-relaxed text-pizarra">
               Registre los comprobantes del día, consulte el Libro Diario y el Mayor, y sepa en todo
               momento quién hizo cada movimiento.
             </p>
@@ -75,12 +75,16 @@ export default function LandingPage() {
 
         <section className="border-t border-linea bg-superficie">
           <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
-            <h2 className="text-2xl font-bold tracking-tight">Lo que hace el sistema</h2>
+            <h2 className="text-center text-2xl font-bold tracking-tight">
+              Lo que hace el sistema
+            </h2>
             <dl className="mt-8 grid gap-x-12 sm:grid-cols-2">
               {modulos.map((m) => (
                 <div key={m.titulo} className="border-t border-linea py-6">
-                  <dt className="font-semibold">{m.titulo}</dt>
-                  <dd className="mt-2 max-w-md leading-relaxed text-pizarra">{m.texto}</dd>
+                  <dt className="text-center font-semibold">{m.titulo}</dt>
+                  <dd className="mt-2 text-justify hyphens-auto leading-relaxed text-pizarra">
+                    {m.texto}
+                  </dd>
                 </div>
               ))}
             </dl>
@@ -97,11 +101,13 @@ export default function LandingPage() {
               className="aspect-[4/3] w-full rounded-2xl object-cover shadow-lg shadow-tinta/10"
             />
             <div>
-              <h2 className="text-2xl font-bold tracking-tight">Hospital de Clínicas CECIAMB</h2>
-              <p className="mt-2 text-lg font-medium text-marca">
+              <h2 className="text-center text-2xl font-bold tracking-tight">
+                Hospital de Clínicas CECIAMB
+              </h2>
+              <p className="mt-2 text-center text-lg font-medium text-marca">
                 Salud total y accesible con sensibilidad humana
               </p>
-              <p className="mt-4 max-w-xl leading-relaxed text-pizarra">
+              <p className="mt-4 text-justify hyphens-auto leading-relaxed text-pizarra">
                 Desde 1991 el Grupo CECIAMB atiende a Ciudad Guayana con hospitalización, cirugía,
                 maternidad, laboratorio, banco de sangre, imagenología y rehabilitación. Este
                 sistema lleva la contabilidad de esa operación con el mismo cuidado.
