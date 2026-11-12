@@ -1,8 +1,9 @@
 import { db } from '../../config/db.js'
 import { AppError } from '../../middlewares/errorHandler.js'
+import { codigoDeSubcuentaValido } from '../../utils/codigos.js'
 import { ACCIONES, registrar } from '../bitacora/bitacora.service.js'
 import * as repo from './cuentas.repository.js'
-import { NATURALEZA_POR_DEFECTO } from './cuentas.schema.js'
+import { NATURALEZA_POR_DEFECTO, TIPOS_CON_MONEDA } from './cuentas.schema.js'
 
 const aPublico = (c) => {
   if (!c) return null
@@ -13,6 +14,7 @@ const aPublico = (c) => {
     descripcion: c.descripcion ?? null,
     tipo: c.tipo,
     naturaleza: c.naturaleza,
+    moneda: c.moneda ?? null,
     nivel: c.nivel,
     padreId: c.padre_id ?? null,
     padreCodigo: c.padre_codigo ?? null,
@@ -36,6 +38,7 @@ const instantanea = (c) => {
     descripcion: p.descripcion,
     tipo: p.tipo,
     naturaleza: p.naturaleza,
+    moneda: p.moneda,
     nivel: p.nivel,
     padreId: p.padreId,
     esMovimiento: p.esMovimiento,
@@ -81,6 +84,30 @@ export async function obtener(id) {
 const duplicado = (codigo) =>
   new AppError(409, 'CODIGO_DUPLICADO', `Ya existe una cuenta con el código ${codigo}`)
 
+const monedaDelPadre = (padre) =>
+  new AppError(
+    400,
+    'MONEDA_DEL_PADRE',
+    `Los auxiliares de ${padre.codigo} ${padre.nombre} se llevan en ${padre.moneda}: la moneda la define la cuenta superior`,
+  )
+
+function exigirTipoConMoneda(tipo) {
+  if (!TIPOS_CON_MONEDA.includes(tipo)) {
+    throw new AppError(
+      400,
+      'MONEDA_TIPO',
+      'Solo las cuentas de activo o pasivo se pueden llevar en divisas',
+    )
+  }
+}
+
+const enUsoCambiario = () =>
+  new AppError(
+    400,
+    'CUENTA_EN_USO',
+    'Es la cuenta de ganancia o pérdida cambiaria de la empresa: elija otra en Empresa → Diferencial cambiario',
+  )
+
 export async function crear(datos, actor, ctx) {
   return db.transaction(async (trx) => {
     if (await repo.buscarPorCodigo(datos.codigo, trx)) throw duplicado(datos.codigo)
@@ -88,6 +115,7 @@ export async function crear(datos, actor, ctx) {
     let nivel = 1
     let tipo = datos.tipo
     let naturaleza = datos.naturaleza || NATURALEZA_POR_DEFECTO[tipo]
+    let moneda = datos.moneda ?? null
 
     if (datos.padreId) {
       // El padre queda bloqueado para que nadie lo convierta en cuenta de movimiento a la vez
@@ -110,18 +138,24 @@ export async function crear(datos, actor, ctx) {
           `La cuenta superior ${padre.codigo} está inactiva; actívela antes de crearle subcuentas`,
         )
       }
-      // Un solo nivel más que el padre: 1.1 → 1.1.01, nunca 1.1.01.05
-      const resto = datos.codigo.slice(padre.codigo.length + 1)
-      if (!datos.codigo.startsWith(`${padre.codigo}.`) || resto.includes('.')) {
+      // Un solo nivel más que el padre: 1.1 → 1.1.01 (con puntos) o 1112 → 111201 (compacto)
+      if (!codigoDeSubcuentaValido(datos.codigo, padre.codigo)) {
         throw new AppError(
           400,
           'CODIGO_NO_COINCIDE_CON_PADRE',
-          `El código debe ser ${padre.codigo}. seguido de un número, por ejemplo ${padre.codigo}.01`,
+          padre.codigo.includes('.')
+            ? `El código debe ser ${padre.codigo}. seguido de un número, por ejemplo ${padre.codigo}.01`
+            : `El código debe empezar por ${padre.codigo} seguido de dígitos, por ejemplo ${padre.codigo}01 (o ${padre.codigo}.01)`,
         )
       }
       nivel = padre.nivel + 1
       tipo = padre.tipo
       naturaleza = datos.naturaleza || padre.naturaleza
+      // Los auxiliares de una cuenta en divisas se llevan en la misma divisa
+      if (padre.moneda) {
+        if (moneda && moneda !== padre.moneda) throw monedaDelPadre(padre)
+        moneda = padre.moneda
+      }
     } else if (datos.codigo.includes('.')) {
       throw new AppError(
         400,
@@ -129,6 +163,7 @@ export async function crear(datos, actor, ctx) {
         'Una cuenta sin cuenta superior lleva un código de un solo número, por ejemplo 7',
       )
     }
+    if (moneda) exigirTipoConMoneda(tipo)
 
     let creada
     try {
@@ -139,6 +174,7 @@ export async function crear(datos, actor, ctx) {
           descripcion: datos.descripcion ?? null,
           tipo,
           naturaleza,
+          moneda,
           nivel,
           padre_id: datos.padreId || null,
           es_movimiento: datos.esMovimiento,
@@ -187,6 +223,9 @@ export async function actualizar(id, datos, actor, ctx) {
     if (datos.activa !== undefined && datos.activa !== Boolean(antes.activa)) {
       cambios.activa = datos.activa
     }
+    if (datos.moneda !== undefined && (datos.moneda ?? null) !== (antes.moneda ?? null)) {
+      cambios.moneda = datos.moneda ?? null
+    }
 
     // Nada que guardar: no se toca la fila ni se ensucia la bitácora
     if (Object.keys(cambios).length === 0) return aPublico(antes)
@@ -209,6 +248,23 @@ export async function actualizar(id, datos, actor, ctx) {
         'La cuenta ya tiene movimientos en comprobantes: no se puede cambiar su naturaleza ni convertirla en cuenta de grupo',
       )
     }
+    if ('moneda' in cambios) {
+      if (antes.padre_id) {
+        const padre = await repo.buscarPorId(antes.padre_id, trx)
+        if (padre.moneda) throw monedaDelPadre(padre)
+      }
+      if (cambios.moneda) exigirTipoConMoneda(antes.tipo)
+      // Los movimientos ya registrados no tienen su monto en divisa: cambiar la moneda
+      // desvirtuaría el saldo y el diferencial del cierre
+      if ((await repo.contarMovimientosRama(antes.codigo, trx)) > 0) {
+        throw new AppError(
+          400,
+          'TIENE_MOVIMIENTOS',
+          'La cuenta o sus auxiliares ya tienen movimientos: no se puede cambiar su moneda. Cree un auxiliar nuevo en la divisa y traspase el saldo con un comprobante',
+        )
+      }
+    }
+    if (cambios.activa === false && (await repo.usadaEnEmpresa(id, trx))) throw enUsoCambiario()
     if (cambios.activa === false && (await repo.contarHijosActivos(id, trx)) > 0) {
       throw new AppError(
         400,
@@ -232,6 +288,11 @@ export async function actualizar(id, datos, actor, ctx) {
       { ...cambios, actualizado_por: actor?.id ?? null, actualizado_en: trx.fn.now() },
       trx,
     )
+    // La moneda de una cuenta de grupo la heredan todos sus auxiliares
+    const auxiliares =
+      'moneda' in cambios
+        ? await repo.cambiarMonedaAuxiliares(antes.codigo, cambios.moneda, actor?.id ?? null, trx)
+        : 0
 
     let accion = ACCIONES.EDITAR
     if (cambios.activa !== undefined && Object.keys(cambios).length === 1) {
@@ -244,7 +305,10 @@ export async function actualizar(id, datos, actor, ctx) {
       entidad: 'cuentas',
       entidadId: id,
       antes: instantanea(antes),
-      despues: instantanea(actualizada),
+      despues: {
+        ...instantanea(actualizada),
+        ...(auxiliares > 0 ? { auxiliaresConLaMismaMoneda: auxiliares } : {}),
+      },
       ctx,
     })
 
@@ -272,6 +336,7 @@ export async function eliminar(id, actor, ctx) {
         'No se puede eliminar una cuenta con movimientos en comprobantes. Puede desactivarla',
       )
     }
+    if (await repo.usadaEnEmpresa(id, trx)) throw enUsoCambiario()
 
     await repo.eliminar(id, trx)
 

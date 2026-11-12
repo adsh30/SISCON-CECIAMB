@@ -118,9 +118,11 @@ export function renglones(id, trx = db) {
       'd.descripcion',
       'd.debe',
       'd.haber',
+      'd.monto_moneda',
       'd.referencia',
       'cu.codigo as cuenta_codigo',
       'cu.nombre as cuenta_nombre',
+      'cu.moneda as cuenta_moneda',
       'cc.codigo as centro_codigo',
       'cc.nombre as centro_nombre',
     )
@@ -140,6 +142,7 @@ export async function reemplazarRenglones(id, filas, trx) {
         descripcion: r.descripcion ?? null,
         debe: r.debe,
         haber: r.haber,
+        monto_moneda: r.montoMoneda ?? null,
         referencia: r.referencia ?? null,
       })),
     )
@@ -147,7 +150,9 @@ export async function reemplazarRenglones(id, filas, trx) {
 }
 
 export const cuentasPorId = (ids, trx) =>
-  trx('cuentas').select('id', 'codigo', 'nombre', 'es_movimiento', 'activa').whereIn('id', ids)
+  trx('cuentas')
+    .select('id', 'codigo', 'nombre', 'es_movimiento', 'activa', 'moneda')
+    .whereIn('id', ids)
 
 export const centrosPorId = (ids, trx) =>
   trx('centros_costo').select('id', 'codigo', 'nombre', 'activo').whereIn('id', ids)
@@ -215,9 +220,7 @@ export function listarAdjuntos(comprobanteId, trx = db) {
 }
 
 export function adjuntoPorId(comprobanteId, adjuntoId, trx = db) {
-  return trx('comprobante_adjuntos')
-    .where({ id: adjuntoId, comprobante_id: comprobanteId })
-    .first()
+  return trx('comprobante_adjuntos').where({ id: adjuntoId, comprobante_id: comprobanteId }).first()
 }
 
 export async function guardarAdjunto(datos, trx = db) {
@@ -226,9 +229,7 @@ export async function guardarAdjunto(datos, trx = db) {
 }
 
 export function eliminarAdjunto(comprobanteId, adjuntoId, trx = db) {
-  return trx('comprobante_adjuntos')
-    .where({ id: adjuntoId, comprobante_id: comprobanteId })
-    .del()
+  return trx('comprobante_adjuntos').where({ id: adjuntoId, comprobante_id: comprobanteId }).del()
 }
 
 // --- Consulta analítica de detalles de comprobantes (Replicación Sparrow) ---
@@ -283,12 +284,11 @@ function filtradaDetalles(filtros) {
 export async function listarDetalles(filtros, { sinLimite = false } = {}) {
   const { pagina = 1, porPagina = 50 } = filtros
 
-  const [totales] = await filtradaDetalles(filtros)
-    .select(
-      db.raw('COUNT(*) as total_filas'),
-      db.raw('COALESCE(SUM(d.debe), 0) as total_debe'),
-      db.raw('COALESCE(SUM(d.haber), 0) as total_haber'),
-    )
+  const [totales] = await filtradaDetalles(filtros).select(
+    db.raw('COUNT(*) as total_filas'),
+    db.raw('COALESCE(SUM(d.debe), 0) as total_debe'),
+    db.raw('COALESCE(SUM(d.haber), 0) as total_haber'),
+  )
 
   let consulta = filtradaDetalles(filtros)
     .select(

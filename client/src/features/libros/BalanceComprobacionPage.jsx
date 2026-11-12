@@ -5,6 +5,7 @@ import { AccountPicker } from '../../components/ui/AccountPicker.jsx'
 import { Button } from '../../components/ui/Button.jsx'
 import { Insignia } from '../../components/ui/Formulario.jsx'
 import { Icono } from '../../components/ui/Icono.jsx'
+import { despuesDe } from '../../lib/codigos.js'
 import { formatoEntero, formatoMonto } from '../../lib/formato.js'
 import { BotonesExportar, FiltrosLibro, Paginacion } from './ComponentesLibro.jsx'
 import { useFiltrosLibro } from './filtros.js'
@@ -20,7 +21,6 @@ const CLAVES = [
   'incluirCeros',
 ]
 
-const despuesDe = (codigo, hasta) => codigo > hasta && !codigo.startsWith(`${hasta}.`)
 
 function FiltroCuentas({ filtros, cambiar }) {
   const { data: cuentas = [] } = useCuentas({ soloMovimiento: undefined, soloActivas: undefined })

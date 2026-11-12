@@ -7,7 +7,7 @@ import { ACCIONES, registrar } from '../bitacora/bitacora.service.js'
 import { fechaVE, nombrePeriodo } from '../periodos/periodos.fechas.js'
 import { exigirPeriodoAbierto } from '../periodos/periodos.service.js'
 import * as repo from './comprobantes.repository.js'
-import { ADJUNTO_MAX_BYTES } from './comprobantes.schema.js'
+import { ADJUNTO_MAX_BYTES, TIPO_DIFERENCIAL } from './comprobantes.schema.js'
 
 const ENTIDAD = 'comprobantes'
 
@@ -39,6 +39,8 @@ const aRenglon = (r) => ({
   descripcion: r.descripcion,
   debe: r.debe,
   haber: r.haber,
+  cuentaMoneda: r.cuenta_moneda ?? null,
+  montoMoneda: r.monto_moneda ?? null,
   referencia: r.referencia,
 })
 
@@ -87,6 +89,7 @@ const instantanea = (c, renglones) => ({
     centro: r.centro_codigo ?? null,
     debe: r.debe,
     haber: r.haber,
+    ...(r.monto_moneda ? { divisa: `${r.cuenta_moneda} ${r.monto_moneda}` } : {}),
     descripcion: r.descripcion,
   })),
 })
@@ -139,8 +142,13 @@ async function tipoActivo(tipoId, trx) {
   return tipo
 }
 
-/** Cuentas de movimiento activas y centros de costo activos, renglón por renglón */
-async function validarRenglones(renglones, trx) {
+/**
+ * Cuentas de movimiento activas y centros de costo activos, renglón por renglón.
+ * En las cuentas en divisas el renglón lleva su monto en la divisa (salvo en los comprobantes
+ * de diferencial cambiario, que solo ajustan bolívares); en las demás se descarta.
+ * Devuelve los renglones normalizados.
+ */
+async function validarRenglones(renglones, trx, { tipoCodigo } = {}) {
   const idsCuentas = [...new Set(renglones.map((r) => r.cuentaId))]
   const idsCentros = [...new Set(renglones.map((r) => r.centroCostoId).filter(Boolean))]
   const [cuentas, centros] = await Promise.all([
@@ -150,7 +158,7 @@ async function validarRenglones(renglones, trx) {
   const cuenta = new Map(cuentas.map((c) => [c.id, c]))
   const centro = new Map(centros.map((c) => [c.id, c]))
 
-  renglones.forEach((r, i) => {
+  return renglones.map((r, i) => {
     const n = `Renglón ${i + 1}`
     const cu = cuenta.get(r.cuentaId)
     if (!cu) throw invalido('CUENTA_INVALIDA', `${n}: la cuenta no existe`)
@@ -170,6 +178,15 @@ async function validarRenglones(renglones, trx) {
         throw invalido('CENTRO_INACTIVO', `${n}: el centro de costo ${cc.codigo} está inactivo`)
       }
     }
+    const montoMoneda =
+      cu.moneda && r.montoMoneda && aEscalado(r.montoMoneda) > 0n ? r.montoMoneda : null
+    if (cu.moneda && !montoMoneda && tipoCodigo !== TIPO_DIFERENCIAL) {
+      throw invalido(
+        'FALTA_MONTO_DIVISA',
+        `${n}: ${cu.codigo} ${cu.nombre} se lleva en ${cu.moneda}; indique el monto en ${cu.moneda}`,
+      )
+    }
+    return { ...r, montoMoneda }
   })
 }
 
@@ -216,9 +233,9 @@ function exigirBorrador(c, accion) {
 // --- Escrituras ---
 
 async function insertarBorrador(datos, actor, trx, origen) {
-  await tipoActivo(datos.tipoId, trx)
+  const tipo = await tipoActivo(datos.tipoId, trx)
   const periodo = await exigirPeriodoAbierto(datos.fecha, trx)
-  await validarRenglones(datos.renglones, trx)
+  const renglones = await validarRenglones(datos.renglones, trx, { tipoCodigo: tipo.codigo })
 
   const [id] = await trx('comprobantes').insert({
     tipo_id: datos.tipoId,
@@ -227,13 +244,13 @@ async function insertarBorrador(datos, actor, trx, origen) {
     concepto: datos.concepto,
     referencia: datos.referencia ?? null,
     beneficiario: datos.beneficiario ?? null,
-    ...totales(datos.renglones),
+    ...totales(renglones),
     origen_id: origen?.id ?? null,
     origen_tipo: origen?.tipo ?? null,
     creado_por: actor.id,
     actualizado_por: actor.id,
   })
-  await repo.reemplazarRenglones(id, datos.renglones, trx)
+  await repo.reemplazarRenglones(id, renglones, trx)
   return id
 }
 
@@ -267,9 +284,9 @@ export async function actualizar(id, datos, actor, ctx) {
     await exigirPeriodoAbierto(c.fecha, trx)
     const antes = instantanea(c, await repo.renglones(id, trx))
 
-    await tipoActivo(datos.tipoId, trx)
+    const tipo = await tipoActivo(datos.tipoId, trx)
     const periodo = await exigirPeriodoAbierto(datos.fecha, trx)
-    await validarRenglones(datos.renglones, trx)
+    const renglones = await validarRenglones(datos.renglones, trx, { tipoCodigo: tipo.codigo })
 
     await trx('comprobantes')
       .where({ id })
@@ -280,11 +297,11 @@ export async function actualizar(id, datos, actor, ctx) {
         concepto: datos.concepto,
         referencia: datos.referencia ?? null,
         beneficiario: datos.beneficiario ?? null,
-        ...totales(datos.renglones),
+        ...totales(renglones),
         actualizado_por: actor.id,
         actualizado_en: trx.fn.now(),
       })
-    await repo.reemplazarRenglones(id, datos.renglones, trx)
+    await repo.reemplazarRenglones(id, renglones, trx)
     await registrarCambio(trx, { actor, accion: ACCIONES.EDITAR, id, antes, ctx })
   })
   return detalle(id)
@@ -318,9 +335,10 @@ export async function aprobar(id, actor, ctx) {
       centroCostoId: r.centro_costo_id,
       debe: r.debe,
       haber: r.haber,
+      montoMoneda: r.monto_moneda,
     }))
-    // Las cuentas pudieron desactivarse desde que se guardó el borrador
-    await validarRenglones(renglones, trx)
+    // Las cuentas pudieron desactivarse (o pasar a divisas) desde que se guardó el borrador
+    await validarRenglones(renglones, trx, { tipoCodigo: c.tipo_codigo })
     exigirCuadre(renglones, c)
     const antes = instantanea(c, filas)
 
@@ -385,6 +403,7 @@ async function copiar(id, { fecha }, actor, ctx, tipoCopia) {
         descripcion: r.descripcion,
         debe: reverso ? r.haber : r.debe,
         haber: reverso ? r.debe : r.haber,
+        montoMoneda: r.monto_moneda, // el signo lo da el lado: al invertirlo, se revierte
         referencia: r.referencia,
       })),
     }
@@ -503,11 +522,19 @@ export async function listarAdjuntos(comprobanteId) {
   return filas.map(aAdjuntoPublico)
 }
 
-export async function subirAdjunto(comprobanteId, { nombre: nombreArchivo, contenido }, actor, ctx) {
+export async function subirAdjunto(
+  comprobanteId,
+  { nombre: nombreArchivo, contenido },
+  actor,
+  ctx,
+) {
   const comprobante = await repo.porId(comprobanteId)
   if (!comprobante) throw noExiste()
   if (comprobante.estado === 'ANULADO') {
-    throw invalido('COMPROBANTE_ANULADO', 'No se pueden adjuntar documentos a un comprobante anulado')
+    throw invalido(
+      'COMPROBANTE_ANULADO',
+      'No se pueden adjuntar documentos a un comprobante anulado',
+    )
   }
 
   const buffer = Buffer.from(contenido, 'base64')
@@ -518,7 +545,10 @@ export async function subirAdjunto(comprobanteId, { nombre: nombreArchivo, conte
 
   const mime = detectarTipoMime(buffer)
   if (!mime) {
-    throw invalido('FORMATO_NO_PERMITIDO', 'Formato no admitido. Use documentos PDF o imágenes JPG, PNG o WEBP')
+    throw invalido(
+      'FORMATO_NO_PERMITIDO',
+      'Formato no admitido. Use documentos PDF o imágenes JPG, PNG o WEBP',
+    )
   }
 
   const hash = crypto.createHash('sha256').update(buffer).digest('hex')
@@ -578,7 +608,10 @@ export async function eliminarAdjunto(comprobanteId, adjuntoId, actor, ctx) {
     const comprobante = await repo.porId(comprobanteId, trx)
     if (!comprobante) throw noExiste()
     if (comprobante.estado === 'ANULADO') {
-      throw invalido('COMPROBANTE_ANULADO', 'No se pueden eliminar adjuntos de un comprobante anulado')
+      throw invalido(
+        'COMPROBANTE_ANULADO',
+        'No se pueden eliminar adjuntos de un comprobante anulado',
+      )
     }
 
     const adjunto = await repo.adjuntoPorId(comprobanteId, adjuntoId, trx)

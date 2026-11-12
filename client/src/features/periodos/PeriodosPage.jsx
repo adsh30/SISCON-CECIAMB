@@ -1,5 +1,7 @@
 import { useState } from 'react'
+import { Link } from 'react-router'
 import { usePermisos } from '../../api/auth.js'
+import { useVistaPreviaDiferencial } from '../../api/diferencial.js'
 import {
   useCerrarPeriodo,
   useEliminarEjercicio,
@@ -12,7 +14,7 @@ import { Insignia } from '../../components/ui/Formulario.jsx'
 import { claseCampo } from '../../components/ui/clasesCampo.js'
 import { Icono } from '../../components/ui/Icono.jsx'
 import { ConfirmDialog, Modal } from '../../components/ui/Modal.jsx'
-import { formatoFecha, formatoFechaHora } from '../../lib/formato.js'
+import { formatoFecha, formatoFechaHora, formatoMonto, formatoTasa } from '../../lib/formato.js'
 import { NuevoEjercicioModal } from './NuevoEjercicioModal.jsx'
 
 function ReabrirModal({ periodo, onClose, onListo }) {
@@ -61,6 +63,163 @@ function ReabrirModal({ periodo, onClose, onListo }) {
       {reabrir.isError && (
         <p className="mt-3 rounded-lg bg-alerta-claro px-3 py-2 text-sm text-alerta">
           {reabrir.error.message}
+        </p>
+      )}
+    </Modal>
+  )
+}
+
+const signo = (m) =>
+  m && m.startsWith('-') ? 'text-alerta' : m && m !== '0.00' ? 'text-exito' : ''
+
+/** Cierre del período con la vista previa del diferencial cambiario que se registrará */
+function CerrarModal({ periodo, onClose, onListo }) {
+  const cerrar = useCerrarPeriodo()
+  const { data: previa, isPending, isError, error } = useVistaPreviaDiferencial(periodo.id)
+  const { can } = usePermisos()
+  const cuentas = previa?.cuentas ?? []
+  const hayAjuste = cuentas.some((c) => c.diferencia && c.diferencia !== '0.00')
+  const problemas = previa?.problemas ?? []
+  const faltaCuenta = problemas.some((p) => p.codigo.startsWith('SIN_CUENTA'))
+
+  return (
+    <Modal
+      titulo={`Cerrar ${periodo.nombre}`}
+      descripcion={`Después del cierre no se podrán registrar ni modificar comprobantes con fecha entre el ${formatoFecha(periodo.fechaInicio)} y el ${formatoFecha(periodo.fechaFin)}. Solo el administrador puede reabrirlo, indicando el motivo.`}
+      tamano={cuentas.length ? 'xl' : 'md'}
+      onClose={onClose}
+      pie={
+        <>
+          <Button variante="secundario" onClick={onClose}>
+            Cancelar
+          </Button>
+          <Button
+            disabled={cerrar.isPending || isPending || problemas.length > 0}
+            onClick={() => cerrar.mutate(periodo.id, { onSuccess: onListo })}
+          >
+            <Icono nombre="candado" className="size-4" />
+            {cerrar.isPending
+              ? 'Cerrando…'
+              : hayAjuste
+                ? 'Registrar diferencial y cerrar'
+                : 'Cerrar período'}
+          </Button>
+        </>
+      }
+    >
+      <h3 className="font-semibold">Diferencial cambiario</h3>
+      {isPending && (
+        <p className="mt-2 text-sm text-pizarra">Calculando el ajuste de las cuentas en divisas…</p>
+      )}
+      {isError && <p className="mt-2 text-sm text-alerta">{error.message}</p>}
+      {previa && !cuentas.length && (
+        <p className="mt-2 text-sm text-pizarra">
+          No hay cuentas en divisas con saldo al {formatoFecha(previa.fecha)}: el cierre no registra
+          diferencial cambiario.
+        </p>
+      )}
+      {cuentas.length > 0 && (
+        <>
+          <p className="ayuda mt-1 text-sm text-pizarra">
+            Cada auxiliar en divisas se ajusta a la tasa del {formatoFecha(previa.fecha)}: saldo en
+            divisa × tasa − saldo en bolívares.{' '}
+            {hayAjuste
+              ? 'Al cerrar se registra y aprueba un comprobante DIF con estos ajustes.'
+              : 'Los saldos ya están a la tasa del cierre: no hace falta ajuste.'}
+          </p>
+          <div className="mt-3 overflow-x-auto rounded-xl border border-linea">
+            <table className="w-full min-w-[760px] text-sm">
+              <thead className="bg-papel text-left text-xs text-pizarra">
+                <tr>
+                  <th className="px-3 py-2 font-medium">Auxiliar</th>
+                  <th className="px-3 py-2 text-right font-medium">Saldo en divisa</th>
+                  <th className="px-3 py-2 text-right font-medium">Tasa</th>
+                  <th className="px-3 py-2 text-right font-medium">Saldo en Bs</th>
+                  <th className="px-3 py-2 text-right font-medium">Saldo ajustado</th>
+                  <th className="px-3 py-2 text-right font-medium">Diferencia</th>
+                </tr>
+              </thead>
+              <tbody>
+                {cuentas.map((f) => (
+                  <tr key={f.cuenta.id} className="border-t border-linea">
+                    <td className="px-3 py-2">
+                      <span className="cifras font-mono text-xs font-semibold text-marca">
+                        {f.cuenta.codigo}
+                      </span>{' '}
+                      {f.cuenta.nombre}
+                      {f.cuenta.grupo && (
+                        <span className="block text-xs text-pizarra">{f.cuenta.grupo.nombre}</span>
+                      )}
+                    </td>
+                    <td className="cifras px-3 py-2 text-right">
+                      {f.cuenta.moneda} {formatoMonto(f.saldoDivisa)}
+                    </td>
+                    <td className="cifras px-3 py-2 text-right">
+                      {f.tasa ? (
+                        <>
+                          {formatoTasa(f.tasa)}
+                          <span className="block text-xs text-pizarra">
+                            {f.fuente} {formatoFecha(f.fechaTasa)}
+                          </span>
+                        </>
+                      ) : (
+                        <span className="text-alerta">Sin tasa</span>
+                      )}
+                    </td>
+                    <td className="cifras px-3 py-2 text-right">{formatoMonto(f.saldoBs)}</td>
+                    <td className="cifras px-3 py-2 text-right">{formatoMonto(f.saldoAjustado)}</td>
+                    <td
+                      className={`cifras px-3 py-2 text-right font-semibold ${signo(f.diferencia)}`}
+                    >
+                      {formatoMonto(f.diferencia)}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <dl className="cifras mt-3 flex flex-wrap justify-end gap-x-6 gap-y-1 text-sm">
+            <div>
+              <dt className="text-xs text-pizarra">
+                Ganancia cambiaria
+                {previa.configuracion.ganancia && ` · ${previa.configuracion.ganancia.codigo}`}
+              </dt>
+              <dd className="font-semibold text-exito">{formatoMonto(previa.totales.ganancia)}</dd>
+            </div>
+            <div>
+              <dt className="text-xs text-pizarra">
+                Pérdida cambiaria
+                {previa.configuracion.perdida && ` · ${previa.configuracion.perdida.codigo}`}
+              </dt>
+              <dd className="font-semibold text-alerta">{formatoMonto(previa.totales.perdida)}</dd>
+            </div>
+            <div>
+              <dt className="text-xs text-pizarra">Efecto neto</dt>
+              <dd className={`font-semibold ${signo(previa.totales.neto)}`}>
+                {formatoMonto(previa.totales.neto)}
+              </dd>
+            </div>
+          </dl>
+        </>
+      )}
+      {problemas.length > 0 && (
+        <div role="alert" className="mt-4 rounded-lg bg-alerta-claro px-3 py-2 text-sm text-alerta">
+          <p className="font-semibold">Corrija esto antes de cerrar:</p>
+          <ul className="mt-1 list-disc pl-5">
+            {problemas.map((p) => (
+              <li key={p.codigo + p.mensaje}>{p.mensaje}</li>
+            ))}
+          </ul>
+          {faltaCuenta && can('empresa', 'escritura') && (
+            <Link to="/app/empresa" className="mt-1 inline-block font-semibold underline">
+              Ir a Empresa → Diferencial cambiario
+            </Link>
+          )}
+        </div>
+      )}
+      {cerrar.isError && (
+        <p className="mt-3 rounded-lg bg-alerta-claro px-3 py-2 text-sm text-alerta">
+          {cerrar.error.message}
         </p>
       )}
     </Modal>
@@ -327,21 +486,19 @@ export default function PeriodosPage() {
         />
       )}
       {modal.tipo === 'cerrar' && (
-        <ConfirmDialog
-          titulo={`Cerrar ${modal.periodo.nombre}`}
-          mensaje={`Después del cierre no se podrán registrar ni modificar comprobantes con fecha entre el ${formatoFecha(modal.periodo.fechaInicio)} y el ${formatoFecha(modal.periodo.fechaFin)}. Solo el administrador puede reabrirlo, indicando el motivo.`}
-          textoConfirmar="Cerrar período"
-          pendiente={cerrar.isPending}
-          error={cerrar.error?.message}
-          onCancel={cerrarModal}
-          onConfirm={() =>
-            cerrar.mutate(modal.periodo.id, {
-              onSuccess: (p) => {
-                avisar('Período cerrado', 'exito', p.nombre)
-                cerrarModal()
-              },
-            })
-          }
+        <CerrarModal
+          periodo={modal.periodo}
+          onClose={cerrarModal}
+          onListo={(p) => {
+            avisar(
+              'Período cerrado',
+              'exito',
+              p.diferencial
+                ? `${p.nombre} · diferencial cambiario ${p.diferencial.codigo}`
+                : p.nombre,
+            )
+            cerrarModal()
+          }}
         />
       )}
       {modal.tipo === 'reabrir' && (

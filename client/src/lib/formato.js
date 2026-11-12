@@ -11,6 +11,17 @@ export function formatoMonto(valor) {
   return montoFmt.format(Number(valor))
 }
 
+const tasaFmt = new Intl.NumberFormat('es-VE', {
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 4,
+})
+
+/** Tasa de cambio con hasta 4 decimales: 36,5025 */
+export function formatoTasa(valor) {
+  if (valor === null || valor === undefined || valor === '') return ''
+  return tasaFmt.format(Number(valor))
+}
+
 export function formatoPorcentaje(valor) {
   return `${montoFmt.format(Number(valor))} %`
 }

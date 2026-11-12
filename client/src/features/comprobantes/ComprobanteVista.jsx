@@ -6,7 +6,13 @@ import { Insignia } from '../../components/ui/Formulario.jsx'
 import { Icono } from '../../components/ui/Icono.jsx'
 import { nombreAccion } from '../../lib/bitacora.js'
 import { ESTADOS, esCero, numeroComprobante } from '../../lib/comprobantes.js'
-import { formatoFecha, formatoFechaHoraCaracas, formatoMonto } from '../../lib/formato.js'
+import {
+  formatoFecha,
+  formatoFechaHoraCaracas,
+  formatoMonto,
+  formatoTasa,
+} from '../../lib/formato.js'
+import { tasaImplicita } from '../../lib/monedas.js'
 import { AnularModal, CopiarModal } from './AccionesComprobante.jsx'
 import { AdjuntosComprobante } from './AdjuntosComprobante.jsx'
 
@@ -126,6 +132,13 @@ export function ComprobanteVista({ comprobante: c }) {
                     {r.cuentaCodigo}
                   </span>{' '}
                   {r.cuentaNombre}
+                  {r.montoMoneda && (
+                    <span className="cifras mt-0.5 block text-xs text-pizarra">
+                      {r.cuentaMoneda} {formatoMonto(r.montoMoneda)}
+                      {tasaImplicita(esCero(r.debe) ? r.haber : r.debe, r.montoMoneda) &&
+                        ` · tasa ${formatoTasa(tasaImplicita(esCero(r.debe) ? r.haber : r.debe, r.montoMoneda))}`}
+                    </span>
+                  )}
                 </td>
                 <td className="px-4 py-2.5 text-pizarra">{r.centroCodigo ?? '—'}</td>
                 <td className="px-4 py-2.5 text-pizarra">{r.descripcion ?? ''}</td>
