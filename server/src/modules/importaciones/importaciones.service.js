@@ -38,6 +38,8 @@ export async function analizar(filas) {
       referencia: f.referencia || null,
       debe: '0',
       haber: '0',
+      moneda: null,
+      montoMoneda: null,
       error: null,
     }
 
@@ -50,6 +52,17 @@ export async function analizar(filas) {
     else {
       fila.cuentaId = cu.id
       fila.cuentaNombre = cu.nombre
+      fila.moneda = cu.moneda || null
+      if (cu.moneda) {
+        const montoMoneda = parsearMonto(f.montoDivisa)
+        if (montoMoneda === null) {
+          fila.error = `La columna «monto divisa» tiene un valor inválido en ${cu.codigo}`
+        } else if (esCero(montoMoneda)) {
+          fila.error = `${cu.codigo} ${cu.nombre} se lleva en ${cu.moneda}: agregue la columna «monto divisa» con el monto en ${cu.moneda}`
+        } else {
+          fila.montoMoneda = montoMoneda
+        }
+      }
     }
 
     if (f.centro) {
@@ -122,6 +135,7 @@ export async function crearBorrador(datos, actor, ctx) {
         descripcion: r.descripcion,
         debe: r.debe,
         haber: r.haber,
+        montoMoneda: r.montoMoneda,
         referencia: r.referencia,
       })),
     },

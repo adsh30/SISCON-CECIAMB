@@ -11,6 +11,7 @@ const ALIAS = {
   haber: ['haber'],
   centro: ['centro', 'centro de costo', 'centro_costo', 'cc'],
   referencia: ['referencia', 'ref', 'documento'],
+  montoDivisa: ['monto divisa', 'monto_divisa', 'divisa', 'monto moneda', 'monto en divisa'],
 }
 
 const invalido = (mensaje) => new AppError(400, 'CSV_INVALIDO', mensaje)
@@ -108,6 +109,7 @@ export function parsearCsv(texto) {
       haber: valor('haber'),
       centro: valor('centro'),
       referencia: valor('referencia'),
+      montoDivisa: valor('montoDivisa'),
     }
   })
   return { filas }

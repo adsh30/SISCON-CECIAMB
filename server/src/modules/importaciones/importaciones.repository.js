@@ -3,7 +3,7 @@ import { db } from '../../config/db.js'
 /** Cuentas de movimiento activas por código exacto (el CSV trae el código, no el id) */
 export const cuentasPorCodigo = (codigos, trx = db) =>
   trx('cuentas')
-    .select('id', 'codigo', 'nombre', 'es_movimiento', 'activa')
+    .select('id', 'codigo', 'nombre', 'es_movimiento', 'activa', 'moneda')
     .whereIn('codigo', codigos)
 
 /** Centros de costo por código exacto (columna opcional del archivo) */
