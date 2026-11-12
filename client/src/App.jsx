@@ -21,6 +21,11 @@ import LoginPage from './features/auth/LoginPage.jsx'
 import InicioPage from './features/inicio/InicioPage.jsx'
 import LandingPage from './features/landing/LandingPage.jsx'
 import UsuariosPage from './features/usuarios/UsuariosPage.jsx'
+import FasesSistemaPage from './features/fases/FasesSistemaPage.jsx'
+import ImprimirFases from './features/fases/ImprimirFases.jsx'
+import ConciliacionesPage from './features/conciliaciones/ConciliacionesPage.jsx'
+import ConciliacionDetallePage from './features/conciliaciones/ConciliacionDetallePage.jsx'
+import CxcPage from './features/cxc/CxcPage.jsx'
 import AppLayout from './layouts/AppLayout.jsx'
 import { useAplicarPreferencias } from './lib/preferencias.js'
 import { RequireModulo, RutaProtegida } from './routes/RutaProtegida.jsx'
@@ -51,6 +56,7 @@ export default function App() {
                 </RequireModulo>
               }
             />
+            <Route path="/imprimir/fases" element={<ImprimirFases />} />
             <Route path="/app" element={<AppLayout />}>
               <Route index element={<InicioPage />} />
               <Route
@@ -126,6 +132,30 @@ export default function App() {
                 }
               />
               <Route
+                path="conciliaciones"
+                element={
+                  <RequireModulo modulo="libros">
+                    <ConciliacionesPage />
+                  </RequireModulo>
+                }
+              />
+              <Route
+                path="conciliaciones/:id"
+                element={
+                  <RequireModulo modulo="libros">
+                    <ConciliacionDetallePage />
+                  </RequireModulo>
+                }
+              />
+              <Route
+                path="cxc"
+                element={
+                  <RequireModulo modulo="comprobantes">
+                    <CxcPage />
+                  </RequireModulo>
+                }
+              />
+              <Route
                 path="usuarios"
                 element={
                   <RequireModulo modulo="usuarios">
@@ -165,6 +195,7 @@ export default function App() {
                   </RequireModulo>
                 }
               />
+              <Route path="fases" element={<FasesSistemaPage />} />
               <Route path="ajustes" element={<AjustesPage />} />
             </Route>
           </Route>

@@ -1577,9 +1577,15 @@
           <li>
             Pulse <span class="boton">Descargar plantilla</span> si no tiene el archivo a mano, y
             complétela en Excel: columnas <code>cuenta</code>, <code>descripcion</code>,
-            <code>debe</code>, <code>haber</code>, y opcionalmente <code>centro</code> y
-            <code>referencia</code> (los nombres de columna no distinguen mayúsculas ni el orden).
-            Hasta 500 filas y 200 KB.
+            <code>debe</code>, <code>haber</code>, y opcionalmente <code>centro</code>,
+            <code>referencia</code> y <code>monto divisa</code> (los nombres de columna no
+            distinguen mayúsculas ni el orden). Hasta 500 filas y 200 KB.
+          </li>
+          <li>
+            Si una fila toca una cuenta que se lleva en <strong>USD, EUR o USDT</strong> (por
+            ejemplo, Caja en Dólares), la columna <code>monto divisa</code> es obligatoria para esa
+            fila: lleve igual el monto en bolívares en Debe o Haber (al tipo de cambio del día) y,
+            además, el monto en la divisa de la cuenta.
           </li>
           <li>
             Pulse <span class="boton">Elegir archivo CSV</span>. El sistema analiza cada fila: si el

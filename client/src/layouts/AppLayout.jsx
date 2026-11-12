@@ -25,6 +25,12 @@ const SECCIONES = [
         icono: 'buscar',
         modulo: 'comprobantes',
       },
+      {
+        to: '/app/cxc',
+        etiqueta: 'Cuentas por Cobrar',
+        icono: 'cxc',
+        modulo: 'comprobantes',
+      },
       { to: '/app/libros/diario', etiqueta: 'Libro Diario', icono: 'libros', modulo: 'libros' },
       { to: '/app/libros/mayor', etiqueta: 'Libro Mayor', icono: 'mayor', modulo: 'libros' },
       {
@@ -45,6 +51,12 @@ const SECCIONES = [
         icono: 'estadoResultados',
         modulo: 'libros',
       },
+      {
+        to: '/app/conciliaciones',
+        etiqueta: 'Conciliación bancaria',
+        icono: 'balance',
+        modulo: 'libros',
+      },
       { to: '/app/cuentas', etiqueta: 'Plan de cuentas', icono: 'cuentas', modulo: 'plan_cuentas' },
       { to: '/app/periodos', etiqueta: 'Períodos', icono: 'periodos', modulo: 'periodos' },
     ],
@@ -52,6 +64,7 @@ const SECCIONES = [
   {
     titulo: 'Sistema',
     items: [
+      { to: '/app/fases', etiqueta: 'Fases y arquitectura', icono: 'capas' },
       { to: '/app/empresa', etiqueta: 'Empresa', icono: 'edificio', modulo: 'empresa' },
       { to: '/app/usuarios', etiqueta: 'Usuarios y roles', icono: 'usuarios', modulo: 'usuarios' },
       { to: '/app/bitacora', etiqueta: 'Bitácora', icono: 'bitacora', modulo: 'bitacora' },

@@ -93,6 +93,42 @@ describe('previsualizar', () => {
   })
 })
 
+describe('cuentas en divisa', () => {
+  const csvSinDivisa = [
+    'cuenta;descripcion;debe;haber',
+    '1.1.01.03.001;Cobro en dólares;3600,00;0',
+    '4.1.01;Cobro en dólares;0;3600,00',
+  ].join('\n')
+
+  const csvConDivisa = [
+    'cuenta;descripcion;debe;haber;monto divisa',
+    '1.1.01.03.001;Cobro en dólares;3600,00;0;24,00',
+    '4.1.01;Cobro en dólares;0;3600,00;',
+  ].join('\n')
+
+  it('exige el monto en divisa cuando la cuenta se lleva en USD/EUR/USDT', async () => {
+    const res = await analista
+      .post('/api/v1/importaciones/previsualizar')
+      .send({ csv: csvSinDivisa })
+    expect(res.status).toBe(200)
+    expect(res.body.data.conErrores).toBe(1)
+    expect(res.body.data.filas[0].error).toMatch(/se lleva en USD/)
+  })
+
+  it('crea el borrador con el monto en divisa cuando viene en el archivo', async () => {
+    const res = await analista.post('/api/v1/importaciones/borrador').send({
+      csv: csvConDivisa,
+      tipoId: tipo.VEN,
+      fecha: HOY,
+      concepto: 'Cobro en dólares en efectivo',
+    })
+    expect(res.status).toBe(201)
+    const renglon = res.body.data.renglones.find((r) => r.cuentaCodigo === '1.1.01.03.001')
+    expect(renglon.cuentaMoneda).toBe('USD')
+    expect(renglon.montoMoneda).toBe('24.00')
+  })
+})
+
 describe('crear borrador', () => {
   it('arma el borrador cuando todas las filas están sanas', async () => {
     const res = await analista.post('/api/v1/importaciones/borrador').send({
